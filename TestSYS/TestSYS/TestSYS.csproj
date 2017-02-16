@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CC04934A-E326-4C09-BC2C-A470DD6E7C4F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TestSYS</RootNamespace>
+    <AssemblyName>TestSYS</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DBConnectHome.cs" />
+    <Compile Include="DBConnectITT.cs" />
+    <Compile Include="frmLecMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLecMenu.Designer.cs">
+      <DependentUpon>frmLecMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLecStudSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLecStudSearch.Designer.cs">
+      <DependentUpon>frmLecStudSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmLogin.Designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmQAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQAdd.Designer.cs">
+      <DependentUpon>frmQAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmQAmd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQAmd.Designer.cs">
+      <DependentUpon>frmQAmd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStudentList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStudentList.Designer.cs">
+      <DependentUpon>frmStudentList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStudMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStudMenu.Designer.cs">
+      <DependentUpon>frmStudMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmQDel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmQDel.Designer.cs">
+      <DependentUpon>frmQDel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStudAmd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStudAmd.Designer.cs">
+      <DependentUpon>frmStudAmd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmStudDel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStudDel.Designer.cs">
+      <DependentUpon>frmStudDel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTProfile.Designer.cs">
+      <DependentUpon>frmTProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTRevw.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTRevw.Designer.cs">
+      <DependentUpon>frmTRevw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTTake.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTTake.Designer.cs">
+      <DependentUpon>frmTTake.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmWelcome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmWelcome.Designer.cs">
+      <DependentUpon>frmWelcome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="frmStudAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmStudAdd.Designer.cs">
+      <DependentUpon>frmStudAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Question.cs" />
+    <Compile Include="Student.cs" />
+    <Compile Include="Test.cs" />
+    <Compile Include="TestQuest.cs" />
+    <Compile Include="TestQuestion.cs" />
+    <EmbeddedResource Include="frmLecMenu.resx">
+      <DependentUpon>frmLecMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLecStudSearch.resx">
+      <DependentUpon>frmLecStudSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmQAdd.resx">
+      <DependentUpon>frmQAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmQAmd.resx">
+      <DependentUpon>frmQAmd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStudentList.resx">
+      <DependentUpon>frmStudentList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStudMenu.resx">
+      <DependentUpon>frmStudMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmQDel.resx">
+      <DependentUpon>frmQDel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStudAmd.resx">
+      <DependentUpon>frmStudAmd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmStudDel.resx">
+      <DependentUpon>frmStudDel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTProfile.resx">
+      <DependentUpon>frmTProfile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTRevw.resx">
+      <DependentUpon>frmTRevw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTTake.resx">
+      <DependentUpon>frmTTake.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmWelcome.resx">
+      <DependentUpon>frmWelcome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="frmStudAdd.resx">
+      <DependentUpon>frmStudAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\prototype-image.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
