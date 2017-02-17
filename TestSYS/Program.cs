@@ -15,12 +15,13 @@ namespace TestSYS
 
         static void Main()
         {
+            //DbSetup.SetUpDb();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.Run(new frmWelcome());
+            //Application.Run(new frmWelcome());
             //Application.Run(new frmMenu()); 
-            //Application.Run(new frmQAdd());
+            Application.Run(new frmQAdd());
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.OracleClient;
+using System.Data.SqlClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
@@ -151,20 +153,20 @@ namespace TestSYS
             int intNextQId;
 
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
             String strSQL = "SELECT MAX(QuestId) FROM Questions";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            var dr = cmd.ExecuteReader();
 
             //Read the record in dr
             dr.Read();
@@ -187,7 +189,7 @@ namespace TestSYS
         public void insertQuestion()
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which inserts the question in to the database
@@ -197,7 +199,7 @@ namespace TestSYS
 
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
@@ -214,20 +216,20 @@ namespace TestSYS
         public void getQuestionDetails(int qId)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX StudId in Students
             String strSQL = "SELECT *  FROM Questions WHERE QuestId = " + qId;
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            var dr = cmd.ExecuteReader();
 
             //Read the record in dr
             dr.Read();
@@ -248,7 +250,7 @@ namespace TestSYS
         public void updateQuestion()
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
@@ -257,7 +259,7 @@ namespace TestSYS
                             "', QAmd = '" + String.Format("{0:dd-MMM-yy}", this.qAmd) + "', Status = 'a' WHERE QuestId = " + this.questId;
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
@@ -272,14 +274,14 @@ namespace TestSYS
         public void deleteQuestion(int questId)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
             String strSQL = "UPDATE Questions SET Status = 'd', QAmd = '" + String.Format("{0:dd-MMM-yy}", this.qAmd) + "' WHERE QuestId = " + this.questId;
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
@@ -297,20 +299,20 @@ namespace TestSYS
         {
             int countQuest;
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SQL query which retrieves number of questions in level
             String strSQL = "SELECT COUNT(*)  FROM Questions";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            SQLiteCommand cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            var dr = cmd.ExecuteReader();
 
             //Read the record in dr
             dr.Read();
@@ -334,24 +336,23 @@ namespace TestSYS
         {
             int countQuest;
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SQL query which retrieves number of questions in level
             String strSQL = "SELECT COUNT(*)  FROM Questions WHERE LevelCode = '" + level + "' AND Status = 'a'";
             
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            var dr = cmd.ExecuteReader();
 
             //Read the record in dr
             dr.Read();
-
 
             //Check if MAX QuestId Null
             if (dr.IsDBNull(0))
@@ -371,20 +372,20 @@ namespace TestSYS
             Question quest = new Question();
 
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
             String strSQL = "SELECT QuestId  FROM Questions WHERE LevelCode = '" + level + "' AND Status = 'a'";  //"' AND Status = 'a'"
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            var dr = cmd.ExecuteReader();
 
             //Find out how many questions in required level then 
             //create array to hold questions ids of the selected level
@@ -409,20 +410,20 @@ namespace TestSYS
         public void displayQuestion(int[] ids, int i)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX StudId in Students
             String strSQL = "SELECT *  FROM Questions WHERE QuestId = " + ids[i];
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            var dr = cmd.ExecuteReader();
 
             //Read the record in dr
             dr.Read();

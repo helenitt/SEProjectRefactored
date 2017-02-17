@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OracleClient;
+using System.Data.SqlClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
@@ -153,20 +155,20 @@ namespace TestSYS
         public void loadLevels()
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
             String strSQL = "SELECT * FROM Levels";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            var dr = cmd.ExecuteReader();
 
             //Move data from dr to cboQLvls
             while (dr.Read())
@@ -177,7 +179,5 @@ namespace TestSYS
             //Close DB connection
             myConn.Close();
         }
-
-
     }
 }
