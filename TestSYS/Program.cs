@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TestSYS
@@ -19,8 +16,6 @@ namespace TestSYS
             Application.SetCompatibleTextRenderingDefault(false);
 
             Application.Run(new frmWelcome());
-            //Application.Run(new frmMenu()); 
-            //Application.Run(new frmQAdd());
         }
     }
 }

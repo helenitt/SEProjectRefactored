@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.OracleClient;
 
 namespace TestSYS
@@ -10,21 +6,16 @@ namespace TestSYS
     class Test
     {
         private int testId;
-        private String dateTaken;
+        private string dateTaken;
         private int testScore;
         private int studId;
-        private String tLevel;
+        private string tLevel;
 
         public Test()
         {
-            testId = 0;
-            dateTaken = "";
-            testScore = 0;
-            studId = 0;
-            tLevel = "";
         }
 
-        public Test(int tId, String dTaken, int tScore, int sId, String tLvl)
+        public Test(int tId, string dTaken, int tScore, int sId, string tLvl)
         {
             testId = tId;
             dateTaken = dTaken;
@@ -38,7 +29,7 @@ namespace TestSYS
             return testId;
         }
 
-        public String getDateTaken()
+        public string getDateTaken()
         {
             return dateTaken;
         }
@@ -53,7 +44,7 @@ namespace TestSYS
             return studId;
         }
 
-        public String getTLevel()
+        public string getTLevel()
         {
             return tLevel;
         }

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.OracleClient;
 
 namespace TestSYS
@@ -10,18 +6,14 @@ namespace TestSYS
     class Lecturer
     {
         private int lecId;
-        private String passwd;        
-        private String sName;
-        private String fName;
+        private string passwd;        
+        private string sName;
+        private string fName;
         
         public Lecturer() {
-            lecId = 0;
-            passwd = "";            
-            sName = "";
-            fName = "";
         }
      
-        public Lecturer(int id, String pword, String sn, String fn)
+        public Lecturer(int id, string pword, string sn, string fn)
         {
             lecId = id;
             passwd = pword;
@@ -34,15 +26,15 @@ namespace TestSYS
         {
             return lecId;
         }
-        public String getPasswd()
+        public string getPasswd()
         {
             return passwd;
         }
-        public String getSName()
+        public string getSName()
         {
             return sName;
         }
-        public String getFName()
+        public string getFName()
         {
             return fName;
         }
@@ -53,15 +45,15 @@ namespace TestSYS
         {
             lecId = id;
         }
-        public void setPasswd(String pword)
+        public void setPasswd(string pword)
         {
             passwd = pword;
         }
-         public void setSName(String name)
+         public void setSName(string name)
         {
             sName = name;
         }
-        public void setFName(String name)
+        public void setFName(string name)
         {
             fName = name;
         }
@@ -122,8 +114,8 @@ namespace TestSYS
             dr.Read();
 
             //Set variables
-            this.setLecId(Convert.ToInt32(dr.GetValue(0)));
-            this.setFName(dr.GetString(1));
+            setLecId(Convert.ToInt32(dr.GetValue(0)));
+            setFName(dr.GetString(1));
 
             //Close DB connection
             myConn.Close();

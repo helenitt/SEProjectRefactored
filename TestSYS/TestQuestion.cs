@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.OracleClient;
 
 namespace TestSYS
@@ -15,15 +11,6 @@ namespace TestSYS
 
         public TestQuestion()
         {
-            testId = 0;
-            questId[0] = 0;
-            questId[1] = 0;
-            questId[2] = 0;
-            questId[3] = 0;
-            ansGiven[0] = 0;
-            ansGiven[1] = 0;
-            ansGiven[2] = 0;
-            ansGiven[3] = 0;
         }
 
         public TestQuestion(int tId, int[] qId, int[] ansGiven)

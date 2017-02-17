@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.OracleClient;
 
 namespace TestSYS
@@ -10,27 +6,17 @@ namespace TestSYS
     class Student
     {
         private int studId;
-        private String email;
-        private String password;        
-        private String sName;
-        private String fName;
-        private String dob;
-        private String status;
-        private String regDate;
-        private String amdDate;
-        private String expDate;
+        private string email;
+        private string password;        
+        private string sName;
+        private string fName;
+        private string dob;
+        private string status;
+        private string regDate;
+        private string amdDate;
+        private string expDate;
         
         public Student() {
-            studId = 0;
-            email = "";
-            password = "";            
-            sName = "";
-            fName = "";
-            dob = "";
-            status = "r";
-            regDate = "";
-            amdDate = "";
-            expDate = "";
         }
      
         public Student(int id, String mail, String pword, String sn, String fn, String dd, String rd, String ad, String ed)
@@ -52,39 +38,39 @@ namespace TestSYS
         {
             return studId;
         }
-         public String getEmail()
+         public string getEmail()
         {
             return email;
         }
-        public String getPassword()
+        public string getPassword()
         {
             return password;
         }
-       public String getSName()
+       public string getSName()
         {
             return sName;
         }
-        public String getFName()
+        public string getFName()
         {
             return fName;
         }
-        public String getDOB()
+        public string getDOB()
         {
             return dob;
         }
-        public String getStatus()
+        public string getStatus()
         {
             return status;
         }
-        public String getRegDate()
+        public string getRegDate()
         {
             return regDate;
         }
-        public String getAmdDate()
+        public string getAmdDate()
         {
             return amdDate;
         }
-        public String getExpDate()
+        public string getExpDate()
         {
             return expDate;
         }
@@ -95,40 +81,40 @@ namespace TestSYS
         {
             studId = id;
         }
-        public void setEmail(String mail)
+        public void setEmail(string mail)
         {
             email = mail;
         }
-        public void setPassword(String pword)
+        public void setPassword(string pword)
         {
             password = pword;
         }
-         public void setSName(String name)
+         public void setSName(string name)
         {
             sName = name;
         }
-        public void setFName(String name)
+        public void setFName(string name)
         {
             fName = name;
         }
 
-        public void setDOB(String bd)
+        public void setDOB(string bd)
         {
             dob = bd;
         }
-        public void setStatus(String stat)
+        public void setStatus(string stat)
         {
             status = stat;
         }
-       public void setRegDate(String rDate)
+       public void setRegDate(string rDate)
         {
             regDate = rDate;
         }
-       public void setAmdDate(String aDate)
+       public void setAmdDate(string aDate)
        {
            amdDate = aDate;
        }
-       public void setExpDate(String eDate)
+       public void setExpDate(string eDate)
        {
            expDate = eDate;
        }
@@ -171,7 +157,7 @@ namespace TestSYS
         }
 
         // CHECK STUDENT LOGIN IS VALID
-        public Boolean validStudLogin(int id, String psw)
+        public Boolean validStudLogin(int id, string psw)
         {
             //Create Database connection string
             OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
@@ -211,9 +197,9 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which inserts the students details
-            String strSQL = "INSERT INTO Students (StudId,Email,Passwd,Sname,FName,DOB,Status,RegDate,ExpDate) VALUES (" + this.studId + ", '" + this.email +
-                            "', " + this.password + ", '" + this.sName + "', '" + this.fName + "', '" + String.Format("{0:dd-MMM-yy}", this.dob) +
-                            "', '" + this.status + "', '" + String.Format("{0:dd-MMM-yy}", this.regDate) + "','" + this.expDate + "')";  
+            String strSQL = "INSERT INTO Students (StudId,Email,Passwd,Sname,FName,DOB,Status,RegDate,ExpDate) VALUES (" + studId + ", '" + email +
+                            "', " + password + ", '" + sName + "', '" + fName + "', '" + String.Format("{0:dd-MMM-yy}", dob) +
+                            "', '" + status + "', '" + String.Format("{0:dd-MMM-yy}", regDate) + "','" + expDate + "')";  
 
             //Define Oracle Command
             OracleCommand cmd = new OracleCommand(strSQL, myConn);
@@ -237,9 +223,9 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
-            String strSQL = "UPDATE Students SET Email = '" + this.email + "', Passwd =  " + this.password + ", Sname = '" + this.sName + "', Fname = '" + this.fName + 
-                            "', DOB = '" + String.Format("{0:dd-MMM-yy}", this.dob) + "', Status = '" + this.status + 
-                            "', AmdDate = '" + String.Format("{0:dd-MMM-yy}", this.amdDate) + "' WHERE StudId = " + this.studId;  
+            String strSQL = "UPDATE Students SET Email = '" + email + "', Passwd =  " + password + ", Sname = '" + sName + "', Fname = '" + fName + 
+                            "', DOB = '" + String.Format("{0:dd-MMM-yy}", dob) + "', Status = '" + status + 
+                            "', AmdDate = '" + String.Format("{0:dd-MMM-yy}", amdDate) + "' WHERE StudId = " + studId;  
 
             //Define Oracle Command
             OracleCommand cmd = new OracleCommand(strSQL, myConn);
@@ -279,23 +265,19 @@ namespace TestSYS
             dr.Read();
 
             //Set variables
-            this.setStudId(Convert.ToInt32(dr.GetValue(0)));  //Doesn't make sense to reset
-            this.setEmail(dr.GetString(1));
-            this.setPassword(dr.GetString(2));
-            this.setSName(dr.GetString(3));
-            this.setFName(dr.GetString(4));
-            this.setDOB(String.Format("{0:dd-MMM-yy}",(dr.GetDateTime(5))));
-            //ONLY RESET WHAT YOU NEED!!
-            //this.setStatus(dr.GetString(6));
-            //this.setRegDate(String.Format("{0:dd-MMM-yy}",dr.GetDateTime(7)));
-            //this.setAmdDate(String.Format("{0:dd-MMM-yy}",dr.GetDateTime(8)));
+            setStudId(Convert.ToInt32(dr.GetValue(0)));  //Doesn't make sense to reset
+            setEmail(dr.GetString(1));
+            setPassword(dr.GetString(2));
+            setSName(dr.GetString(3));
+            setFName(dr.GetString(4));
+            setDOB(String.Format("{0:dd-MMM-yy}",(dr.GetDateTime(5))));
 
             if (!dr.IsDBNull(8))
-                this.setAmdDate(String.Format("{0:dd-MMM-yy}",dr.GetDateTime(8)));
+                setAmdDate(String.Format("{0:dd-MMM-yy}",dr.GetDateTime(8)));
 
 
             if (!dr.IsDBNull(9))
-                this.setExpDate(String.Format("{0:dd-MMM-yy}",dr.GetDateTime(9)));
+                setExpDate(String.Format("{0:dd-MMM-yy}",dr.GetDateTime(9)));
 
             //Close DB connection
             myConn.Close();
@@ -309,7 +291,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which inserts the students details
-            String strSQL = "UPDATE Students SET Status = 'd', AmdDate = '" + String.Format("{0:dd-MMM-yy}", this.amdDate) + "' WHERE StudId = " + studId;  
+            String strSQL = "UPDATE Students SET Status = 'd', AmdDate = '" + String.Format("{0:dd-MMM-yy}", amdDate) + "' WHERE StudId = " + studId;  
 
             //Define Oracle Command
             OracleCommand cmd = new OracleCommand(strSQL, myConn);

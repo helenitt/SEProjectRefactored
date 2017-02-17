@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.OracleClient;
 
 namespace TestSYS
@@ -10,33 +6,22 @@ namespace TestSYS
     class Question
     {
         private int questId;
-        private String qLevel;
-        private String qText;
-        private String ans1;
-        private String ans2;
-        private String ans3;
-        private String ans4;
+        private string qLevel;
+        private string qText;
+        private string ans1;
+        private string ans2;
+        private string ans3;
+        private string ans4;
         private int correctAns;
-        private String qAdd;
-        private String qAmd;
-        private String status;
+        private string qAdd;
+        private string qAmd;
+        private string status;
 
         public Question()
         {
-            questId = 0;
-            qLevel = "";
-            qText = "";
-            ans1 = "";
-            ans2 = "";
-            ans3 = "";
-            ans4 = "";
-            correctAns = 0;
-            qAdd = "";
-            qAmd = "";
-            status = "";
         }
 
-        public Question(int id, String lvl, String txt, String a1, String a2, String a3, String a4, int corAns, String qAdd, String qAmd, String stat)
+        public Question(int id, string lvl, string txt, string a1, string a2, string a3, string a4, int corAns, string qAdd, string qAmd, string stat)
         {
             questId = id;
             qLevel = lvl;
@@ -57,27 +42,27 @@ namespace TestSYS
         {
             return questId;
         }
-        public String getQLevel()
+        public string getQLevel()
         {
             return qLevel;
         }
-        public String getQText()
+        public string getQText()
         {
             return qText;       
         }
-        public String getAns1()
+        public string getAns1()
         {
             return ans1;
         }
-        public String getAns2()
+        public string getAns2()
         {
             return ans2;
         }
-        public String getAns3()
+        public string getAns3()
         {
             return ans3;
         }
-        public String getAns4()
+        public string getAns4()
         {
             return ans4;
         }
@@ -85,15 +70,15 @@ namespace TestSYS
         {
             return correctAns;
         }
-        public String getQAdd()
+        public string getQAdd()
         {
             return qAdd;
         }
-        public String getQAmd()
+        public string getQAmd()
         {
             return qAmd;
         }
-        public String getStatus()
+        public string getStatus()
         {
             return status;
         }
@@ -103,27 +88,27 @@ namespace TestSYS
         {
             questId = id;
         }
-        public void setQLevel(String lvl)
+        public void setQLevel(string lvl)
         {
             qLevel = lvl;
         }
-        public void setQText(String qTxt)
+        public void setQText(string qTxt)
         {
             qText = qTxt;
         }
-        public void setAns1(String a1)
+        public void setAns1(string a1)
         {
             ans1 = a1;
         }
-        public void setAns2(String a2)
+        public void setAns2(string a2)
         {
             ans2 = a2;
         }
-        public void setAns3(String a3)
+        public void setAns3(string a3)
         {
             ans3 = a3;
         }
-        public void setAns4(String a4)
+        public void setAns4(string a4)
         {
             ans4 = a4;
         }
@@ -131,15 +116,15 @@ namespace TestSYS
         {
             correctAns = corrAns;
         }
-        public void setQAdd(String qAdd)
+        public void setQAdd(string qAdd)
         {
             this.qAdd = qAdd;
         }
-        public void setQAmd(String qAmd)
+        public void setQAmd(string qAmd)
         {
             this.qAmd = qAmd;
         }
-        public void setStatus(String stat)
+        public void setStatus(string stat)
         {
             status = stat;
         }
@@ -233,14 +218,14 @@ namespace TestSYS
             dr.Read();
 
             //Set variables
-            this.setQuestId(Convert.ToInt32(dr.GetValue(0)));  
-            this.setQLevel(dr.GetString(1));
-            this.setQText(dr.GetString(2));
-            this.setAns1(dr.GetString(3));
-            this.setAns2(dr.GetString(4));
-            this.setAns3(dr.GetString(5));
-            this.setAns4(dr.GetString(6));
-            this.setCorrectAns(Convert.ToInt32(dr.GetValue(7)));  
+            setQuestId(Convert.ToInt32(dr.GetValue(0)));  
+            setQLevel(dr.GetString(1));
+            setQText(dr.GetString(2));
+            setAns1(dr.GetString(3));
+            setAns2(dr.GetString(4));
+            setAns3(dr.GetString(5));
+            setAns4(dr.GetString(6));
+            setCorrectAns(Convert.ToInt32(dr.GetValue(7)));  
             
             myConn.Close();
         }
@@ -428,14 +413,14 @@ namespace TestSYS
             dr.Read();
 
             //Set variables
-            this.setQuestId(Convert.ToInt32(dr.GetValue(0)));
-            this.setQLevel(dr.GetString(1));
-            this.setQText(dr.GetString(2));
-            this.setAns1(dr.GetString(3));
-            this.setAns2(dr.GetString(4));
-            this.setAns3(dr.GetString(5));
-            this.setAns4(dr.GetString(6));
-            this.setCorrectAns(Convert.ToInt32(dr.GetValue(7)));
+            setQuestId(Convert.ToInt32(dr.GetValue(0)));
+            setQLevel(dr.GetString(1));
+            setQText(dr.GetString(2));
+            setAns1(dr.GetString(3));
+            setAns2(dr.GetString(4));
+            setAns3(dr.GetString(5));
+            setAns4(dr.GetString(6));
+            setCorrectAns(Convert.ToInt32(dr.GetValue(7)));
             
             //Close DB connection
             myConn.Close();
