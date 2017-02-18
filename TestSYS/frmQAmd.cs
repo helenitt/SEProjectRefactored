@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OracleClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
     public partial class frmQAmd : Form
     {
         Question quest = new Question();
-        String fName;
+        string fName;
         int questId, lecId;
 
         public frmQAmd()
@@ -22,7 +15,7 @@ namespace TestSYS
             InitializeComponent();
         }
 
-        public frmQAmd(String name, int id)
+        public frmQAmd(string name, int id)
         {
             InitializeComponent();
             fName = name;
@@ -38,7 +31,7 @@ namespace TestSYS
         {
             frmMenu frmNext = new frmMenu(fName, lecId);
 
-            this.Close();
+            Close();
             frmNext.Show();
         }
         private void mnuQuit_Click(object sender, EventArgs e)
@@ -83,6 +76,7 @@ namespace TestSYS
             loadLevels();
             
             txtQText.Text = quest.getQText().TrimEnd();
+
             //Make sure first radio button is checked          
             optAmd1.Checked = true;
             
@@ -96,13 +90,13 @@ namespace TestSYS
         {
             frmMenu frmNext = new frmMenu(fName, lecId);
 
-            this.Close();
+            Close();
             frmNext.Show();
         }
 
         private void btnAmdSubmit_Click(object sender, EventArgs e)
         {
-            String amdDate = (String.Format("{0:dd-MMM-yy}", DateTime.Now));
+            string amdDate = (string.Format("{0:dd-MMM-yy}", DateTime.Now));
 
             // Instantiate instance variables with updated values from form controls
             quest.setQLevel(cboQLvl.Text.Substring(0, 1));
@@ -129,10 +123,9 @@ namespace TestSYS
             {
                 quest.setCorrectAns(4);
             }                                       
-            quest.setQAmd(String.Format("{0:dd-MMM-yy}", DateTime.Now));
+            quest.setQAmd(string.Format("{0:dd-MMM-yy}", DateTime.Now));
 
             // INSERT QUESTION IN TO DATABASE
-
             try
             {
                 quest.updateQuestion();
@@ -146,6 +139,7 @@ namespace TestSYS
                 MessageBox.Show("An Error has Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            // Extract
             // Clear UI
             txtAmdQID.Text = "";
             txtAmdQID.Focus();
@@ -166,20 +160,21 @@ namespace TestSYS
         public void loadLevels()
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
-            String strSQL = "SELECT * FROM Levels";
+            string strSQL = "SELECT * FROM Levels";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            //OracleDataReader dr = cmd.ExecuteReader();
+            SQLiteDataReader dr = cmd.ExecuteReader();
 
             //Move data from dr to cboQLvls
             while (dr.Read())

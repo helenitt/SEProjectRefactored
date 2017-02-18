@@ -1,14 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OracleClient;
-using System.Data.SqlClient;
 using System.Data.SQLite;
 
 namespace TestSYS
@@ -16,7 +7,7 @@ namespace TestSYS
     public partial class frmQAdd : Form
     {
         Question quest = new Question();
-        String fName;
+        string fName;
         int lecId;
         
         public frmQAdd()
@@ -24,7 +15,7 @@ namespace TestSYS
             InitializeComponent();
         }
 
-        public frmQAdd(String name, int id)
+        public frmQAdd(string name, int id)
         {
             InitializeComponent();
             fName = name;
@@ -41,9 +32,9 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, lecId);
+            var frmNext = new frmMenu(fName, lecId);
 
-            this.Close();
+            Close();
             frmNext.Show();
         }        
         
@@ -64,6 +55,8 @@ namespace TestSYS
                 return;
             }
 
+            // Use for loop and concatenate txtAddAns1 and i
+            // Use for each loop and look at cycling through controls
             if (txtAddAns1.Text.Equals(""))
             {
                 MessageBox.Show("First answer must be entered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -73,7 +66,7 @@ namespace TestSYS
 
             if (txtAddAns2.Text.Equals(""))
             {
-                MessageBox.Show("second answer must be entered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Second answer must be entered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtAddAns2.Focus();
                 return;
             }
@@ -120,7 +113,7 @@ namespace TestSYS
             quest.setAns2(txtAddAns2.Text);
             quest.setAns3(txtAddAns3.Text);
             quest.setAns4(txtAddAns4.Text);
-            quest.setQAdd(String.Format("{0:dd-MMM-yy}", DateTime.Now));
+            quest.setQAdd(string.Format("{0:dd-MMM-yy}", DateTime.Now));
             quest.setStatus("a");
 
             // INSERT QUESTION IN TO DATABASE
@@ -130,6 +123,7 @@ namespace TestSYS
             MessageBox.Show("Question Created", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
            
             // Clear UI
+            // Extract
             txtQuestId.Text = quest.getNextQuestId().ToString("0000");
             cboQLvl.SelectedIndex = -1;
             txtQText.Text = "";
@@ -149,7 +143,7 @@ namespace TestSYS
         {
             frmMenu frmNext = new frmMenu(fName, lecId);
 
-            this.Close();
+            Close();
             frmNext.Show();
         }
         public void loadLevels()
@@ -159,7 +153,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
-            String strSQL = "SELECT * FROM Levels";
+            string strSQL = "SELECT * FROM Levels";
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);

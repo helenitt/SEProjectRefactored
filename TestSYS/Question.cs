@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.OracleClient;
-using System.Data.SqlClient;
 using System.Data.SQLite;
 
 namespace TestSYS
@@ -12,16 +6,16 @@ namespace TestSYS
     class Question
     {
         private int questId;
-        private String qLevel;
-        private String qText;
-        private String ans1;
-        private String ans2;
-        private String ans3;
-        private String ans4;
+        private string qLevel;
+        private string qText;
+        private string ans1;
+        private string ans2;
+        private string ans3;
+        private string ans4;
         private int correctAns;
-        private String qAdd;
-        private String qAmd;
-        private String status;
+        private string qAdd;
+        private string qAmd;
+        private string status;
 
         public Question()
         {
@@ -38,7 +32,7 @@ namespace TestSYS
             status = "";
         }
 
-        public Question(int id, String lvl, String txt, String a1, String a2, String a3, String a4, int corAns, String qAdd, String qAmd, String stat)
+        public Question(int id, string lvl, string txt, string a1, string a2, string a3, string a4, int corAns, string qAdd, string qAmd, string stat)
         {
             questId = id;
             qLevel = lvl;
@@ -59,27 +53,27 @@ namespace TestSYS
         {
             return questId;
         }
-        public String getQLevel()
+        public string getQLevel()
         {
             return qLevel;
         }
-        public String getQText()
+        public string getQText()
         {
             return qText;       
         }
-        public String getAns1()
+        public string getAns1()
         {
             return ans1;
         }
-        public String getAns2()
+        public string getAns2()
         {
             return ans2;
         }
-        public String getAns3()
+        public string getAns3()
         {
             return ans3;
         }
-        public String getAns4()
+        public string getAns4()
         {
             return ans4;
         }
@@ -87,15 +81,15 @@ namespace TestSYS
         {
             return correctAns;
         }
-        public String getQAdd()
+        public string getQAdd()
         {
             return qAdd;
         }
-        public String getQAmd()
+        public string getQAmd()
         {
             return qAmd;
         }
-        public String getStatus()
+        public string getStatus()
         {
             return status;
         }
@@ -105,27 +99,27 @@ namespace TestSYS
         {
             questId = id;
         }
-        public void setQLevel(String lvl)
+        public void setQLevel(string lvl)
         {
             qLevel = lvl;
         }
-        public void setQText(String qTxt)
+        public void setQText(string qTxt)
         {
             qText = qTxt;
         }
-        public void setAns1(String a1)
+        public void setAns1(string a1)
         {
             ans1 = a1;
         }
-        public void setAns2(String a2)
+        public void setAns2(string a2)
         {
             ans2 = a2;
         }
-        public void setAns3(String a3)
+        public void setAns3(string a3)
         {
             ans3 = a3;
         }
-        public void setAns4(String a4)
+        public void setAns4(string a4)
         {
             ans4 = a4;
         }
@@ -133,15 +127,15 @@ namespace TestSYS
         {
             correctAns = corrAns;
         }
-        public void setQAdd(String qAdd)
+        public void setQAdd(string qAdd)
         {
             this.qAdd = qAdd;
         }
-        public void setQAmd(String qAmd)
+        public void setQAmd(string qAmd)
         {
             this.qAmd = qAmd;
         }
-        public void setStatus(String stat)
+        public void setStatus(string stat)
         {
             status = stat;
         }
@@ -157,7 +151,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
-            String strSQL = "SELECT MAX(QuestId) FROM Questions";
+            string strSQL = "SELECT MAX(QuestId) FROM Questions";
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -193,9 +187,9 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which inserts the question in to the database
-            String strSQL = "INSERT INTO Questions (QuestId,LevelCode,Text,Ans1,Ans2,Ans3,Ans4,CorrectAns,QAdd,Status) VALUES (" + this.questId +
+            string strSQL = "INSERT INTO Questions (QuestId,LevelCode,Text,Ans1,Ans2,Ans3,Ans4,CorrectAns,QAdd,Status) VALUES (" + this.questId +
                             ", '" + this.qLevel + "', '" + this.qText + "', '" + this.ans1 + "', '" + this.ans2 + "', '" + this.ans3 + "', '" + this.ans4 +
-                            "', " + this.correctAns + ", '" + String.Format("{0:dd-MMM-yy}", this.qAdd) + "', '" + this.status + "')";
+                            "', " + this.correctAns + ", '" + string.Format("{0:dd-MMM-yy}", this.qAdd) + "', '" + this.status + "')";
 
 
             //Define Oracle Command
@@ -220,7 +214,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX StudId in Students
-            String strSQL = "SELECT *  FROM Questions WHERE QuestId = " + qId;
+            string strSQL = "SELECT *  FROM Questions WHERE QuestId = " + qId;
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -254,9 +248,9 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
-            String strSQL = "UPDATE Questions SET LevelCode = '" + this.qLevel + "', Text =  '" + this.qText + "', Ans1 = '" + this.ans1 + 
+            string strSQL = "UPDATE Questions SET LevelCode = '" + this.qLevel + "', Text =  '" + this.qText + "', Ans1 = '" + this.ans1 + 
                             "', Ans2 = '" + this.ans2 + "', Ans3 = '" + this.ans3 + "', Ans4 = '" + this.ans4 +
-                            "', QAmd = '" + String.Format("{0:dd-MMM-yy}", this.qAmd) + "', Status = 'a' WHERE QuestId = " + this.questId;
+                            "', QAmd = '" + string.Format("{0:dd-MMM-yy}", this.qAmd) + "', Status = 'a' WHERE QuestId = " + this.questId;
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -278,7 +272,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
-            String strSQL = "UPDATE Questions SET Status = 'd', QAmd = '" + String.Format("{0:dd-MMM-yy}", this.qAmd) + "' WHERE QuestId = " + this.questId;
+            string strSQL = "UPDATE Questions SET Status = 'd', QAmd = '" + string.Format("{0:dd-MMM-yy}", this.qAmd) + "' WHERE QuestId = " + this.questId;
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -303,7 +297,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SQL query which retrieves number of questions in level
-            String strSQL = "SELECT COUNT(*)  FROM Questions";
+            string strSQL = "SELECT COUNT(*)  FROM Questions";
 
             //Define Oracle Command
             SQLiteCommand cmd = new SQLiteCommand(strSQL, myConn);
@@ -332,7 +326,7 @@ namespace TestSYS
       
         // METHODS FOR TAKE TEST
         // RETURNS NUMBER OF QUESTIONS IN SELECTED LEVEL 
-        public int getQuestCount(String level)
+        public int getQuestCount(string level)
         {
             int countQuest;
             //Create Database connection string
@@ -340,7 +334,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SQL query which retrieves number of questions in level
-            String strSQL = "SELECT COUNT(*)  FROM Questions WHERE LevelCode = '" + level + "' AND Status = 'a'";
+            string strSQL = "SELECT COUNT(*)  FROM Questions WHERE LevelCode = '" + level + "' AND Status = 'a'";
             
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -367,7 +361,7 @@ namespace TestSYS
         }
 
         //GET ALL QUESTION IDS OF QUESTIONS FOR SELECTED LEVEL
-        public int[] getLevelQuestIds(String level)
+        public int[] getLevelQuestIds(string level)
         {
             Question quest = new Question();
 
@@ -376,7 +370,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
-            String strSQL = "SELECT QuestId  FROM Questions WHERE LevelCode = '" + level + "' AND Status = 'a'";  //"' AND Status = 'a'"
+            string strSQL = "SELECT QuestId  FROM Questions WHERE LevelCode = '" + level + "' AND Status = 'a'";  //"' AND Status = 'a'"
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -414,7 +408,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX StudId in Students
-            String strSQL = "SELECT *  FROM Questions WHERE QuestId = " + ids[i];
+            string strSQL = "SELECT *  FROM Questions WHERE QuestId = " + ids[i];
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);

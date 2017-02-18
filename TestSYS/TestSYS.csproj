@@ -68,8 +68,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBConnectHome.cs" />
-    <Compile Include="DBConnectITT.cs" />
     <Compile Include="DbSetup.cs" />
     <Compile Include="frmLogin.cs">
       <SubType>Form</SubType>

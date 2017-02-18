@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OracleClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
@@ -15,8 +8,9 @@ namespace TestSYS
     {
         Test test = new Test();
         TestQuestion testQuest = new TestQuestion();
-        Question quest = new Question();       
-        String fName;
+        Question quest = new Question();
+               
+        string fName;
         int id, score, questNo;
         int[] testQuestId;
         int []answers = new int[4];
@@ -26,7 +20,7 @@ namespace TestSYS
             InitializeComponent();
         }
 
-        public frmTTake(String foreName, int id)
+        public frmTTake(string foreName, int id)
         {
             InitializeComponent();
             fName = foreName;
@@ -186,12 +180,13 @@ namespace TestSYS
             string toDisplay = string.Join(Environment.NewLine, answers);
             MessageBox.Show("Answers Array \n" + toDisplay);      */
 
-            //Instantiate instance variables with values from form controls
+            // Instantiate instance variables with values from form controls
             test.setTestId(Convert.ToInt32(txtTestId.Text));
-            test.setDateTaken(String.Format("{0:dd-MMM-yy}", DateTime.Now));
+            test.setDateTaken(string.Format("{0:dd-MMM-yy}", DateTime.Now));
             test.setTestScore(score);
             test.setStudId(id);
             test.setTLevel(cboTTLvl.Text.Substring(0,1));
+
             // Save Test
             test.saveTest();
 
@@ -202,32 +197,32 @@ namespace TestSYS
 
             frmMenu frmNext = new frmMenu(fName, id);
 
-            this.Close();
+            Close();
             frmNext.Show();   
         }
 
         private void loadLevels()
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
-            String strSQL = "SELECT * FROM Levels";
+            string strSQL = "SELECT * FROM Levels";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            SQLiteDataReader dataReader = cmd.ExecuteReader();
 
-            //Move data from dr to cboQLvls
-            while (dr.Read())
+            //Move data from dataReader to cboQLvls
+            while (dataReader.Read())
             {
-                cboTTLvl.Items.Add(dr.GetString(0) + " " + dr.GetString(1));
+                cboTTLvl.Items.Add(dataReader.GetString(0) + " " + dataReader.GetString(1));
             }
 
             //Close DB connection

@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.OracleClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
     class Lecturer
     {
         private int lecId;
-        private String passwd;        
-        private String sName;
-        private String fName;
+        private string passwd;        
+        private string sName;
+        private string fName;
         
         public Lecturer() {
             lecId = 0;
@@ -21,7 +17,7 @@ namespace TestSYS
             fName = "";
         }
      
-        public Lecturer(int id, String pword, String sn, String fn)
+        public Lecturer(int id, string pword, string sn, string fn)
         {
             lecId = id;
             passwd = pword;
@@ -34,15 +30,15 @@ namespace TestSYS
         {
             return lecId;
         }
-        public String getPasswd()
+        public string getPasswd()
         {
             return passwd;
         }
-        public String getSName()
+        public string getSName()
         {
             return sName;
         }
-        public String getFName()
+        public string getFName()
         {
             return fName;
         }
@@ -53,40 +49,40 @@ namespace TestSYS
         {
             lecId = id;
         }
-        public void setPasswd(String pword)
+        public void setPasswd(string pword)
         {
             passwd = pword;
         }
-         public void setSName(String name)
+         public void setSName(string name)
         {
             sName = name;
         }
-        public void setFName(String name)
+        public void setFName(string name)
         {
             fName = name;
         }
 
         // CHECK LECTURER LOGIN IS VALID
-        public Boolean validLecLogin(int id, String psw)
+        public Boolean validLecLogin(int id, string psw)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX StudId in Students
-            String strSQL = "SELECT *  FROM Lecturers WHERE LecId = " + id + " AND Passwd = '" + psw + "'";
+            string strSQL = "SELECT *  FROM Lecturers WHERE LecId = " + id + " AND Passwd = '" + psw + "'";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            SQLiteDataReader dataReader = cmd.ExecuteReader();
 
-            //Check if there is anything to read in dr
-            if (dr.Read())
+            //Check if there is anything to read in dataReader
+            if (dataReader.Read())
             {
                 myConn.Close();
                 return true;
@@ -103,27 +99,27 @@ namespace TestSYS
         {
 
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX StudId in Students
-            String strSQL = "SELECT LecId, FName  FROM Lecturers WHERE LecId = " + id;
+            string strSQL = "SELECT LecId, FName  FROM Lecturers WHERE LecId = " + id;
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            SQLiteDataReader dataReader = cmd.ExecuteReader();
 
-            //Read the record in dr
-            dr.Read();
+            //Read the record in dataReader
+            dataReader.Read();
 
             //Set variables
-            this.setLecId(Convert.ToInt32(dr.GetValue(0)));
-            this.setFName(dr.GetString(1));
+            setLecId(Convert.ToInt32(dataReader.GetValue(0)));
+            setFName(dataReader.GetString(1));
 
             //Close DB connection
             myConn.Close();

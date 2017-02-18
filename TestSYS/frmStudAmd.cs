@@ -1,23 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OracleClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
     public partial class frmStudAmd : Form
     {
-        String fName;
-        int id;
-        int sId;
         Student amdStud = new Student();
         Lecturer lec = new Lecturer();
+
+        string fName;
+        int id;
+        int sId;
+        
   
         public frmStudAmd()
         {
@@ -26,14 +22,14 @@ namespace TestSYS
         public frmStudAmd(int Id)
         {
             InitializeComponent();
-            this.id = Id;
+            id = Id;
         }
 
-        public frmStudAmd(String foreName, int Id)
+        public frmStudAmd(string foreName, int Id)
         {
             InitializeComponent();
             fName = foreName;
-            this.id = Id;
+            id = Id;
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -45,14 +41,15 @@ namespace TestSYS
         {
             frmMenu nextForm = new frmMenu(fName, id);
 
-            this.Close();
+            Close();
             nextForm.Show();
         }
 
         private void frmStudAmd_Load(object sender, EventArgs e)
         {
             dtpAmdDob.MaxDate = DateTime.Today.AddYears(-17);
-
+       
+            //Get rid of magic number
             //Check if student or lecturer
             if (id < 9000)
             {
@@ -102,7 +99,7 @@ namespace TestSYS
                 return;
             }
 
-            String dob = String.Format("{0:dd-MMM-yy}", dtpAmdDob.Value);
+            string dob = string.Format("{0:dd-MMM-yy}", dtpAmdDob.Value);
 
             if (dtpAmdDob.Text.Equals(""))
             {
@@ -132,7 +129,7 @@ namespace TestSYS
                 return;
             }
            
-            String amdDate = (String.Format("{0:dd-MMM-yy}", DateTime.Now));
+            string amdDate = (string.Format("{0:dd-MMM-yy}", DateTime.Now));
 
             // Instantiate instance variables with updated values from form controls
             amdStud.setSName(txtAmdSname.Text.ToUpper());
@@ -141,6 +138,7 @@ namespace TestSYS
             amdStud.setDOB(dob);
             amdStud.setAmdDate(amdDate);
 
+            // Get rid of magic number
             if (id < 9000)
             {
                 amdStud.setPassword(txtAmdPsw.Text);
@@ -173,7 +171,7 @@ namespace TestSYS
                 frmNext = new frmMenu(fName, id);
             }
             
-            this.Close();
+            Close();
             frmNext.Show();
         }
 
@@ -181,7 +179,7 @@ namespace TestSYS
         {
             frmMenu frmNext = new frmMenu(fName, id);
 
-            this.Close();
+            Close();
             frmNext.Show();
         }
 
@@ -216,7 +214,7 @@ namespace TestSYS
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            String strId = grdStudList.Rows[grdStudList.CurrentCell.RowIndex].Cells[0].Value.ToString();
+            string strId = grdStudList.Rows[grdStudList.CurrentCell.RowIndex].Cells[0].Value.ToString();
             sId = Convert.ToInt32(strId);
 
             grpLecAmd.Visible = false;
@@ -235,90 +233,85 @@ namespace TestSYS
         {
             frmMenu frmNext = new frmMenu(fName, id);
 
-            this.Close();
+            Close();
             frmNext.Show();
         }
 
         public void fillLecGrid(String sortOrder)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves Students details
-            String strSQL = "SELECT StudId,Sname,Fname,DOB,RegDate FROM Students ORDER BY " + sortOrder;
+            string strSQL = "SELECT StudId, Sname, Fname, DOB, RegDate FROM Students ORDER BY " + sortOrder;
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Execute Query using Oracle Data Adapter
-            OracleDataAdapter da = new OracleDataAdapter(cmd);
-            DataSet ds = new DataSet();
+            var dataAdpter = new SQLiteDataAdapter(cmd);
+            var dataSet = new DataSet();
 
-            da.Fill(ds, "Students");
-            grdStudList.DataSource = ds.Tables["Students"];
+            dataAdpter.Fill(dataSet, "Students");
+            grdStudList.DataSource = dataSet.Tables["Students"];
 
             //Close DB
             myConn.Close();
-
         }
 
-        public void fillLecGridId(String idString)
+        public void fillLecGridId(string idString)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
 
             //Define SDQL query which retrieves MAX StudId in Students
             int id = Convert.ToInt32(idString);
-            String strSQL = "SELECT StudId,Sname,Fname,DOB,RegDate FROM Students WHERE StudId = " + id;
+            string strSQL = "SELECT StudId, Sname, Fname, DOB, RegDate FROM Students WHERE StudId = " + id;
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Execute Query using Oracle Data Adapter
-            OracleDataAdapter da = new OracleDataAdapter(cmd);
-            DataSet ds = new DataSet();
+            var dataAdapter = new SQLiteDataAdapter(cmd);
+            var dataSet = new DataSet();
 
-            da.Fill(ds, "Students");
-            grdStudList.DataSource = ds.Tables["Students"];
+            dataAdapter.Fill(dataSet, "Students");
+            grdStudList.DataSource = dataSet.Tables["Students"];
 
             //Close DB
             myConn.Close();
-
         }
 
-        public void fillLecGridName(String name)
+        public void fillLecGridName(string name)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
 
             //Define SDQL query which retrieves MAX StudId in Students                              
-            String strSQL = "SELECT StudId,Sname,Fname,DOB,RegDate FROM Students WHERE Sname LIKE '" + name + "%'";
+            string strSQL = "SELECT StudId, Sname, Fname, DOB, RegDate FROM Students WHERE Sname LIKE '" + name + "%'";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Execute Query using Oracle Data Adapter
-            OracleDataAdapter da = new OracleDataAdapter(cmd);
-            DataSet ds = new DataSet();
+            var dataAdapter = new SQLiteDataAdapter(cmd);
+            DataSet dataSet = new DataSet();
 
-            da.Fill(ds, "Students");
-            grdStudList.DataSource = ds.Tables["Students"];
+            dataAdapter.Fill(dataSet, "Students");
+            grdStudList.DataSource = dataSet.Tables["Students"];
 
             //Close DB
             myConn.Close();
-
         }
     }
 }

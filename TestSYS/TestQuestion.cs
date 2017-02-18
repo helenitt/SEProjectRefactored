@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.OracleClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
@@ -67,7 +63,7 @@ namespace TestSYS
 
             for (int i = 0; i < testQuestions.Length; i++)
             {
-                Random rnd = new Random();
+                var rnd = new Random();
                 int ranNum = rnd.Next(0, ids.Length);
                 testQuestions[i] = ids[ranNum];
 
@@ -93,16 +89,15 @@ namespace TestSYS
         public void saveTestQuest()
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
 
-            for(int i=0; i<4; i++) 
+            for(int i=0; i < 4; i++) 
             {
                 //Define SDQL query which inserts the question in to the database
-                String strSQL = "INSERT INTO TestQuestions (TestId,QuestId,AnsGiven) VALUES (" + this.testId + ", '" +  this.questId[i] + "', '" + this.ansGiven[i] + "')";
+                string strSQL = "INSERT INTO TestQuestions (TestId, QuestId, AnsGiven) VALUES (" + testId + ", '" +  questId[i] + "', '" + ansGiven[i] + "')";
 
                 //Define Oracle Command
-                OracleCommand cmd = new OracleCommand(strSQL, myConn);
+                var cmd = new SQLiteCommand(strSQL, myConn);
 
                 //Open DB Connection
                 myConn.Open();

@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.OracleClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
     class Test
     {
         private int testId;
-        private String dateTaken;
+        private string dateTaken;
         private int testScore;
         private int studId;
-        private String tLevel;
+        private string tLevel;
 
         public Test()
         {
@@ -24,7 +20,7 @@ namespace TestSYS
             tLevel = "";
         }
 
-        public Test(int tId, String dTaken, int tScore, int sId, String tLvl)
+        public Test(int tId, string dTaken, int tScore, int sId, string tLvl)
         {
             testId = tId;
             dateTaken = dTaken;
@@ -38,7 +34,7 @@ namespace TestSYS
             return testId;
         }
 
-        public String getDateTaken()
+        public string getDateTaken()
         {
             return dateTaken;
         }
@@ -53,7 +49,7 @@ namespace TestSYS
             return studId;
         }
 
-        public String getTLevel()
+        public string getTLevel()
         {
             return tLevel;
         }
@@ -63,7 +59,7 @@ namespace TestSYS
             testId = tId;
         }
 
-        public void setDateTaken(String dTaken)
+        public void setDateTaken(string dTaken)
         {
             dateTaken = dTaken;
         }
@@ -78,7 +74,7 @@ namespace TestSYS
             studId = sId;
         }
 
-        public void setTLevel(String tLvl)
+        public void setTLevel(string tLvl)
         {
             tLevel = tLvl;
         }
@@ -90,29 +86,28 @@ namespace TestSYS
             int intNextTId;
 
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
-            String strSQL = "SELECT MAX(TestId) FROM Tests";
+            string strSQL = "SELECT MAX(TestId) FROM Tests";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            SQLiteDataReader dataReader = cmd.ExecuteReader();
 
             //Read the record in dr
-            dr.Read();
+            dataReader.Read();
 
             //Check if MAX QuestId Null
-            if (dr.IsDBNull(0))
+            if (dataReader.IsDBNull(0))
                 intNextTId = 1;
             else
-                intNextTId = Convert.ToInt32(dr.GetValue(0)) + 1;
+                intNextTId = Convert.ToInt32(dataReader.GetValue(0)) + 1;
 
             //Close DB connection
             myConn.Close();
@@ -124,15 +119,14 @@ namespace TestSYS
         public void saveTest()
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(Db.ConnectionString);
 
             //Define SDQL query which inserts the question in to the database
-            String strSQL = "INSERT INTO Tests (TestId,TestDate,Score,StudId,LevelCode) VALUES (" + this.testId + ", '" + String.Format("{0:dd-MMM-yy}", this.dateTaken) +
-                            "', '" + this.testScore + "', '" + this.studId + "', '" + this.tLevel + "')";
+            string strSQL = "INSERT INTO Tests (TestId,TestDate,Score,StudId,LevelCode) VALUES (" + testId + ", '" + string.Format("{0:dd-MMM-yy}", dateTaken) +
+                            "', '" + testScore + "', '" + studId + "', '" + tLevel + "')";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
