@@ -148,7 +148,6 @@ namespace TestSYS
 
             //Create Database connection string
             var myConn = new SQLiteConnection(Db.ConnectionString);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
             string strSQL = "SELECT MAX(QuestId) FROM Questions";
@@ -160,16 +159,16 @@ namespace TestSYS
             myConn.Open();
 
             //Exectute SQL command
-            var dr = cmd.ExecuteReader();
+            var dataReader = cmd.ExecuteReader();
 
-            //Read the record in dr
-            dr.Read();
+            //Read the record in dataReader
+            dataReader.Read();
 
             //Check if MAX QuestId Null
-            if (dr.IsDBNull(0))
+            if (dataReader.IsDBNull(0))
                 intNextQId = 1;
             else
-                intNextQId = Convert.ToInt32(dr.GetValue(0)) + 1;
+                intNextQId = Convert.ToInt32(dataReader.GetValue(0)) + 1;
 
             //Close DB connection
             myConn.Close();
@@ -184,12 +183,11 @@ namespace TestSYS
         {
             //Create Database connection string
             var myConn = new SQLiteConnection(Db.ConnectionString);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which inserts the question in to the database
-            string strSQL = "INSERT INTO Questions (QuestId,LevelCode,Text,Ans1,Ans2,Ans3,Ans4,CorrectAns,QAdd,Status) VALUES (" + this.questId +
-                            ", '" + this.qLevel + "', '" + this.qText + "', '" + this.ans1 + "', '" + this.ans2 + "', '" + this.ans3 + "', '" + this.ans4 +
-                            "', " + this.correctAns + ", '" + string.Format("{0:dd-MMM-yy}", this.qAdd) + "', '" + this.status + "')";
+            string strSQL = "INSERT INTO Questions (QuestId,LevelCode,Text,Ans1,Ans2,Ans3,Ans4,CorrectAns,QAdd,Status) VALUES (" + questId +
+                            ", '" + qLevel + "', '" + qText + "', '" + ans1 + "', '" + ans2 + "', '" + ans3 + "', '" + ans4 +
+                            "', " + correctAns + ", '" + string.Format("{0:dd-MMM-yy}", qAdd) + "', '" + status + "')";
 
 
             //Define Oracle Command
@@ -229,14 +227,14 @@ namespace TestSYS
             dr.Read();
 
             //Set variables
-            this.setQuestId(Convert.ToInt32(dr.GetValue(0)));  
-            this.setQLevel(dr.GetString(1));
-            this.setQText(dr.GetString(2));
-            this.setAns1(dr.GetString(3));
-            this.setAns2(dr.GetString(4));
-            this.setAns3(dr.GetString(5));
-            this.setAns4(dr.GetString(6));
-            this.setCorrectAns(Convert.ToInt32(dr.GetValue(7)));  
+            setQuestId(Convert.ToInt32(dr.GetValue(0)));  
+            setQLevel(dr.GetString(1));
+            setQText(dr.GetString(2));
+            setAns1(dr.GetString(3));
+            setAns2(dr.GetString(4));
+            setAns3(dr.GetString(5));
+            setAns4(dr.GetString(6));
+            setCorrectAns(Convert.ToInt32(dr.GetValue(7)));  
             
             myConn.Close();
         }
@@ -248,9 +246,9 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
-            string strSQL = "UPDATE Questions SET LevelCode = '" + this.qLevel + "', Text =  '" + this.qText + "', Ans1 = '" + this.ans1 + 
-                            "', Ans2 = '" + this.ans2 + "', Ans3 = '" + this.ans3 + "', Ans4 = '" + this.ans4 +
-                            "', QAmd = '" + string.Format("{0:dd-MMM-yy}", this.qAmd) + "', Status = 'a' WHERE QuestId = " + this.questId;
+            string strSQL = "UPDATE Questions SET LevelCode = '" + qLevel + "', Text =  '" + qText + "', Ans1 = '" + ans1 + 
+                            "', Ans2 = '" + ans2 + "', Ans3 = '" + ans3 + "', Ans4 = '" + ans4 +
+                            "', QAmd = '" + string.Format("{0:dd-MMM-yy}", qAmd) + "', Status = 'a' WHERE QuestId = " + questId;
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -272,7 +270,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
-            string strSQL = "UPDATE Questions SET Status = 'd', QAmd = '" + string.Format("{0:dd-MMM-yy}", this.qAmd) + "' WHERE QuestId = " + this.questId;
+            string strSQL = "UPDATE Questions SET Status = 'd', QAmd = '" + string.Format("{0:dd-MMM-yy}", qAmd) + "' WHERE QuestId = " + questId;
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -423,14 +421,14 @@ namespace TestSYS
             dr.Read();
 
             //Set variables
-            this.setQuestId(Convert.ToInt32(dr.GetValue(0)));
-            this.setQLevel(dr.GetString(1));
-            this.setQText(dr.GetString(2));
-            this.setAns1(dr.GetString(3));
-            this.setAns2(dr.GetString(4));
-            this.setAns3(dr.GetString(5));
-            this.setAns4(dr.GetString(6));
-            this.setCorrectAns(Convert.ToInt32(dr.GetValue(7)));
+            setQuestId(Convert.ToInt32(dr.GetValue(0)));
+            setQLevel(dr.GetString(1));
+            setQText(dr.GetString(2));
+            setAns1(dr.GetString(3));
+            setAns2(dr.GetString(4));
+            setAns3(dr.GetString(5));
+            setAns4(dr.GetString(6));
+            setCorrectAns(Convert.ToInt32(dr.GetValue(7)));
             
             //Close DB connection
             myConn.Close();

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TestSYS
@@ -25,16 +18,14 @@ namespace TestSYS
         private void btnRegister_Click(object sender, EventArgs e)
         {
             frmStudAdd frmNext = new frmStudAdd(this);
-
-            this.Hide();
+            Hide();
             frmNext.Show();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
             frmLogin frmNext = new frmLogin(this);
-
-            this.Hide();
+            Hide();
             frmNext.Show();
         }
 

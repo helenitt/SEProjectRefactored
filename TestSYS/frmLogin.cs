@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OracleClient;
 
 namespace TestSYS
 {
@@ -20,7 +12,6 @@ namespace TestSYS
         public frmLogin()
         {
             InitializeComponent();
-
         }
 
         public frmLogin(frmWelcome Parent)
@@ -36,7 +27,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
             parent.Visible = true;
         }
 
@@ -60,6 +51,7 @@ namespace TestSYS
                 return;
             }
 
+            // Get rid of magic number config??
             // CHECK IF STUDENT OR LECTURER            
             if (Convert.ToInt32(txtID.Text) < 9000)
             {
@@ -70,9 +62,9 @@ namespace TestSYS
                     // get and set details
                     logStud.getStudDetails(Convert.ToInt16(txtID.Text));
                     
-                    frmMenu frmNext = new frmMenu(logStud.getFName(), logStud.getStudId());
+                    var frmNext = new frmMenu(logStud.getFName(), logStud.getStudId());
 
-                    this.Close();
+                    Close();
                     frmNext.Show();
                 }
                 else
@@ -91,9 +83,9 @@ namespace TestSYS
                     // get and set details
                     logLec.getLecDetails(Convert.ToInt16(txtID.Text));                 
                     
-                    frmMenu frmNext = new frmMenu(logLec.getFName(), logLec.getLecId());
+                    var frmNext = new frmMenu(logLec.getFName(), logLec.getLecId());
                     
-                    this.Close();
+                    Close();
                     frmNext.Show();
                 }
                 else

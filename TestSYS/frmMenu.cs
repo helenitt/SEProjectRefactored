@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TestSYS
@@ -14,7 +7,7 @@ namespace TestSYS
     {
         Student stud;
         Lecturer lec;
-        String fName;
+        string fName;
         int id;
         
         public frmMenu()
@@ -22,8 +15,9 @@ namespace TestSYS
             InitializeComponent();
         }
 
-        public frmMenu(String foreName, int id)
+        public frmMenu(string foreName, int id)
         {
+            // Get rid of magic number cnfig??? maxStudentUsers = 9000??? lec id 9001 -> 9999???
             InitializeComponent();
             if (id < 9000)
             {
@@ -63,7 +57,7 @@ namespace TestSYS
         {
             frmTTake frmNext = new frmTTake(fName, id);
 
-            this.Close();
+            Close();
             frmNext.Show();
         }
 
@@ -74,76 +68,66 @@ namespace TestSYS
 
         private void btnStudProf_Click(object sender, EventArgs e)
         {
-            frmTProfile frmNext = new frmTProfile(fName, id);
-
-            this.Close();
+            var frmNext = new frmTProfile(fName, id);
+            Close();
             frmNext.Show();
         }
 
         private void btnAmdStudDet_Click(object sender, EventArgs e)
         {
-            frmStudAmd frmNext = new frmStudAmd(fName, id);
-
-            this.Close();
+            var frmNext = new frmStudAmd(fName, id);
+            Close();
             frmNext.Show();
         }
 
         private void btnDelStud_Click(object sender, EventArgs e)
         {
-            frmStudDel frmNext = new frmStudDel(fName, id);
-
-            this.Close();
+            var frmNext = new frmStudDel(fName, id);
+            Close();
             frmNext.Show();
         }
 
 
         private void btnAddQuest_Click(object sender, EventArgs e)
         {
-            frmQAdd frmNext = new frmQAdd(fName, id);
-
-            this.Close();
+            var frmNext = new frmQAdd(fName, id);
+            Close();
             frmNext.Show();
         }
 
         private void btnAmdQuest_Click(object sender, EventArgs e)
         {
-            frmQAmd frmNext = new frmQAmd(fName, id);
-
-            this.Close();
+            var frmNext = new frmQAmd(fName, id);
+            Close();
             frmNext.Show();
         }
 
         private void btnDelQuest_Click(object sender, EventArgs e)
         {
-            frmQDel frmNext = new frmQDel(fName, id);
-
-            this.Close();
+            var frmNext = new frmQDel(fName, id);
+            Close();
             frmNext.Show();
         }
 
         private void btnLStudProf_Click(object sender, EventArgs e)
         {
-            frmTProfile frmNext = new frmTProfile(fName, id);
-
-            this.Close();
+            var frmNext = new frmTProfile(fName, id);
+            Close();
             frmNext.Show();
         }
 
         private void btnLAmdStud_Click(object sender, EventArgs e)
         {
-            frmStudAmd frmNext = new frmStudAmd(fName, id);
-
-            this.Close();
+            var frmNext = new frmStudAmd(fName, id);
+            Close();
             frmNext.Show();
         }
 
         private void btnLDelStud_Click(object sender, EventArgs e)
         {
-            frmStudDel frmNext = new frmStudDel(fName, id);
-
-            this.Close();
+            var frmNext = new frmStudDel(fName, id);
+            Close();
             frmNext.Show();
         }
-
     }
 }

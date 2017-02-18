@@ -149,7 +149,7 @@ namespace TestSYS
             //Exectute SQL command
             SQLiteDataReader dataReader = cmd.ExecuteReader();
 
-            //Read the record in dr
+            //Read the record in dataReader
             dataReader.Read();
 
             //Check if MAX StudId Null
@@ -182,6 +182,10 @@ namespace TestSYS
 
             //Exectute SQL command
             var dataReader = cmd.ExecuteReader();
+
+            // Is this not the sme as 
+            //myConn.Close();
+            //return dataReader.Read();
 
             //Check if there is anything to read in dataReader
             if (dataReader.Read())

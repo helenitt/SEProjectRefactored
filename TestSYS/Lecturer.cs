@@ -63,7 +63,7 @@ namespace TestSYS
         }
 
         // CHECK LECTURER LOGIN IS VALID
-        public Boolean validLecLogin(int id, string psw)
+        public bool validLecLogin(int id, string psw)
         {
             //Create Database connection string
             var myConn = new SQLiteConnection(Db.ConnectionString);
@@ -100,7 +100,6 @@ namespace TestSYS
 
             //Create Database connection string
             var myConn = new SQLiteConnection(Db.ConnectionString);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX StudId in Students
             string strSQL = "SELECT LecId, FName  FROM Lecturers WHERE LecId = " + id;
