@@ -6,7 +6,7 @@ namespace TestSYS
     public partial class frmStudAdd : Form
     {
         frmWelcome parent;
-        Student newStud = new Student();
+        Student newStudent = new Student();
 
         public frmStudAdd()
         {
@@ -22,7 +22,7 @@ namespace TestSYS
         private void frmStudAdd_Load(object sender, EventArgs e)
         {
             //get next stud id to assign
-            txtStudId.Text = newStud.getNextStudId().ToString("0000");
+            txtStudId.Text = newStudent.getNextStudId().ToString("0000");
             dtpAddDob.MaxDate = DateTime.Today.AddYears(-17);
 
         }
@@ -93,19 +93,19 @@ namespace TestSYS
             }
            
             //Instantiate instance variables with values from form controls
-            newStud.setStudId(Convert.ToInt16(txtStudId.Text));
-            newStud.setSName(txtAddSNm.Text.ToUpper());
-            newStud.setFName(txtAddFNm.Text.ToUpper());
-            newStud.setDOB(String.Format("{0:dd-MMM-yy}", dtpAddDob.Value));
-            newStud.setEmail(txtAddEmail.Text);
-            newStud.setPassword(txtAddSPsw.Text);
-            newStud.setRegDate(String.Format("{0:dd-MMM-yy}", DateTime.Now));
+            newStudent.setStudId(Convert.ToInt16(txtStudId.Text));
+            newStudent.setSName(txtAddSNm.Text.ToUpper());
+            newStudent.setFName(txtAddFNm.Text.ToUpper());
+            newStudent.setDOB(String.Format("{0:dd-MMM-yy}", dtpAddDob.Value));
+            newStudent.setEmail(txtAddEmail.Text);
+            newStudent.setPassword(txtAddSPsw.Text);
+            newStudent.setRegDate(String.Format("{0:dd-MMM-yy}", DateTime.Now));
 
-            DateTime expDate = Convert.ToDateTime(newStud.getRegDate()).AddDays(91);
-            newStud.setExpDate(String.Format("{0:dd-MMM-yy}", expDate));
+            DateTime expDate = Convert.ToDateTime(newStudent.getRegDate()).AddDays(91);
+            newStudent.setExpDate(String.Format("{0:dd-MMM-yy}", expDate));
             
             //Insert into Database
-            newStud.insertStudent();
+            newStudent.insertStudent();
 
             //Confirm message
             MessageBox.Show("Student Registered", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);

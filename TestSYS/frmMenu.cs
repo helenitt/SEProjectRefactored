@@ -5,9 +5,9 @@ namespace TestSYS
 {
     public partial class frmMenu : Form
     {
-        Student stud;
-        Lecturer lec;
-        string fName;
+        Student student;
+        Lecturer lecturer;
+        string forename;
         int id;
         
         public frmMenu()
@@ -21,19 +21,19 @@ namespace TestSYS
             InitializeComponent();
             if (id < 9000)
             {
-                stud = new Student();
+                student = new Student();
             }
             else
             {
-                lec = new Lecturer();
+                lecturer = new Lecturer();
             }
-            fName = foreName;
+            forename = foreName;
             this.id = id;
         }
 
         private void frmStudMenu_Load(object sender, EventArgs e)
         {
-            txtName.Text = fName;
+            txtName.Text = forename;
             
             //Check if student or lecturer
             if (id < 9000)
@@ -55,70 +55,70 @@ namespace TestSYS
 
         private void btnTakeTest_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmTTake(fName, id);
+            var frmNext = new frmTTake(forename, id);
             Close();
             frmNext.Show();
         }
 
         private void btnStudProf_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmTProfile(fName, id);
+            var frmNext = new frmTProfile(forename, id);
             Close();
             frmNext.Show();
         }
 
         private void btnAmdStudDet_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmStudAmd(fName, id);
+            var frmNext = new frmStudAmd(forename, id);
             Close();
             frmNext.Show();
         }
 
         private void btnDelStud_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmStudDel(fName, id);
+            var frmNext = new frmStudDel(forename, id);
             Close();
             frmNext.Show();
         }
 
         private void btnAddQuest_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmQAdd(fName, id);
+            var frmNext = new frmQAdd(forename, id);
             Close();
             frmNext.Show();
         }
 
         private void btnAmdQuest_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmQAmd(fName, id);
+            var frmNext = new frmQAmd(forename, id);
             Close();
             frmNext.Show();
         }
 
         private void btnDelQuest_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmQDel(fName, id);
+            var frmNext = new frmQDel(forename, id);
             Close();
             frmNext.Show();
         }
 
         private void btnLStudProf_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmTProfile(fName, id);
+            var frmNext = new frmTProfile(forename, id);
             Close();
             frmNext.Show();
         }
 
         private void btnLAmdStud_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmStudAmd(fName, id);
+            var frmNext = new frmStudAmd(forename, id);
             Close();
             frmNext.Show();
         }
 
         private void btnLDelStud_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmStudDel(fName, id);
+            var frmNext = new frmStudDel(forename, id);
             Close();
             frmNext.Show();
         }

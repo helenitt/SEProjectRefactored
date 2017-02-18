@@ -8,16 +8,16 @@ namespace TestSYS
         private int testId;
         private string dateTaken;
         private int testScore;
-        private int studId;
-        private string tLevel;
+        private int studentId;
+        private string testLevel;
 
         public Test()
         {
             testId = 0;
             dateTaken = "";
             testScore = 0;
-            studId = 0;
-            tLevel = "";
+            studentId = 0;
+            testLevel = "";
         }
 
         public Test(int tId, string dTaken, int tScore, int sId, string tLvl)
@@ -25,60 +25,21 @@ namespace TestSYS
             testId = tId;
             dateTaken = dTaken;
             testScore = tScore;
-            studId = sId;
-            tLevel = tLvl;
+            studentId = sId;
+            testLevel = tLvl;
         }
 
-        public int getTestId()
-        {
-            return testId;
-        }
+        public int getTestId() { return testId; }
+        public string getDateTaken() { return dateTaken; }
+        public int getTestScore() { return testScore; }
+        public int getStudId() { return studentId; }
+        public string getTLevel() { return testLevel; }
 
-        public string getDateTaken()
-        {
-            return dateTaken;
-        }
-
-        public int getTestScore()
-        {
-            return testScore;
-        }
-
-        public int getStudId()
-        {
-            return studId;
-        }
-
-        public string getTLevel()
-        {
-            return tLevel;
-        }
-
-        public void setTestId(int tId)
-        {
-            testId = tId;
-        }
-
-        public void setDateTaken(string dTaken)
-        {
-            dateTaken = dTaken;
-        }
-
-        public void setTestScore(int tScore)
-        {
-            testScore = tScore;
-        }
-
-        public void setStudId(int sId)
-        {
-            studId = sId;
-        }
-
-        public void setTLevel(string tLvl)
-        {
-            tLevel = tLvl;
-        }
-
+        public void setTestId(int tId) { testId = tId; }
+        public void setDateTaken(string dTaken) { dateTaken = dTaken; }
+        public void setTestScore(int tScore) { testScore = tScore; }
+        public void setStudId(int sId) { studentId = sId; }
+        public void setTLevel(string tLvl) { testLevel = tLvl; }
 
         //GET NEXT TEST ID
         public int getNextTestId()
@@ -123,7 +84,7 @@ namespace TestSYS
 
             //Define SDQL query which inserts the question in to the database
             string strSQL = "INSERT INTO Tests (TestId, TestDate, Score, StudId, LevelCode) VALUES (" + testId + ", '" + string.Format("{0:dd-MMM-yy}", dateTaken) +
-                            "', '" + testScore + "', '" + studId + "', '" + tLevel + "')";
+                            "', '" + testScore + "', '" + studentId + "', '" + testLevel + "')";
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);

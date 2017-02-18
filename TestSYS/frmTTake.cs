@@ -7,30 +7,31 @@ namespace TestSYS
     public partial class frmTTake : Form
     {
         Test test = new Test();
-        TestQuestion testQuest = new TestQuestion();
-        Question quest = new Question();
+        TestQuestion testQuestion = new TestQuestion();
+        Question question = new Question();
                
-        string fName;
-        int id, score, questNo;
+        string forename;
+        int id;
+        int score;
+        int questionNumber;
         int[] testQuestId;
-        int []answers = new int[4];
+        int[] answers = new int[4];
 
         public frmTTake()
         {
             InitializeComponent();
         }
 
-        public frmTTake(string foreName, int id)
+        public frmTTake(string forename, int id)
         {
             InitializeComponent();
-            fName = foreName;
+            this.forename = forename;
             this.id = id;
         }
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, id);
-
+            var frmNext = new frmMenu(forename, id);
             Close();
             frmNext.Show();
         }
@@ -44,7 +45,7 @@ namespace TestSYS
         {
             //Get next test id to assign
             txtTestId.Text = test.getNextTestId().ToString("0000");
-            txtName.Text = fName;
+            txtName.Text = forename;
             loadLevels();
             pgbTestProgress.Visible = false;
             btnTTNxQ.Visible = false;
@@ -62,25 +63,25 @@ namespace TestSYS
             }
 
             //Get all question id of that level store in array levelQuestIds            
-            int[] levelQuestIds = quest.getLevelQuestIds(cboTTLvl.Text.Substring(0, 1));
+            int[] levelQuestIds = question.getLevelQuestIds(cboTTLvl.Text.Substring(0, 1));
 
             // CREATE TEST - store in array testQuestId      
-            testQuestId = testQuest.getTestQuestions(levelQuestIds);
+            testQuestId = testQuestion.getTestQuestions(levelQuestIds);
  
             //initialise score and questNo
             score = 0;
-            questNo = 1;
+            questionNumber = 1;
 
             // GET NEXT QUESTION 
-            quest.displayQuestion(testQuestId, questNo-1);
+            question.displayQuestion(testQuestId, questionNumber-1);
 
             // Load question details into form controls
-            grpTTQ1.Text = "Question" + questNo.ToString();
-            txtQText.Text = quest.getQText();    //.TrimEnd();
-            txtAns1.Text = quest.getAns1();
-            txtAns2.Text = quest.getAns2();
-            txtAns3.Text = quest.getAns3();
-            txtAns4.Text = quest.getAns4();
+            grpTTQ1.Text = "Question" + questionNumber.ToString();
+            txtQText.Text = question.getQText();    //.TrimEnd();
+            txtAns1.Text = question.getAns1();
+            txtAns2.Text = question.getAns2();
+            txtAns3.Text = question.getAns3();
+            txtAns4.Text = question.getAns4();
             //Make sure first radio button is checked  
             optOne.Checked = true;
             //Load question group box
@@ -99,45 +100,45 @@ namespace TestSYS
             //SAVE ANSWER
             if (optOne.Checked == true)
             {
-                answers[questNo - 1] = 1;
+                answers[questionNumber - 1] = 1;
             }
             if (optTwo.Checked == true)
             {
-                answers[questNo - 1] = 2;
+                answers[questionNumber - 1] = 2;
             }
             if (optThree.Checked == true)
             {
-                answers[questNo - 1] = 3;
+                answers[questionNumber - 1] = 3;
             }
             if (optFour.Checked == true)
             {
-                answers[questNo - 1] = 4;
+                answers[questionNumber - 1] = 4;
             }
 
             //CHECK ANSWER GIVEN AGAINST CORRECT ANSWER & INCREMENT SCORE                        
-            if (answers[questNo - 1] == quest.getCorrectAns())
+            if (answers[questionNumber - 1] == question.getCorrectAns())
             {
                 score += 25;
             }
 
             //INCREMENT PROGRESS BAR AND GET NEXT QUESTION
-            questNo++;
+            questionNumber++;
             pgbTestProgress.PerformStep();
-            quest.displayQuestion(testQuestId, questNo - 1);
+            question.displayQuestion(testQuestId, questionNumber - 1);
 
             // Load question details into form controls
-            grpTTQ1.Text = "Question" + (questNo);
-            txtQText.Text = quest.getQText();    //.TrimEnd();
-            txtAns1.Text = quest.getAns1();
-            txtAns2.Text = quest.getAns2();
-            txtAns3.Text = quest.getAns3();
-            txtAns4.Text = quest.getAns4();
+            grpTTQ1.Text = "Question" + (questionNumber);
+            txtQText.Text = question.getQText();    //.TrimEnd();
+            txtAns1.Text = question.getAns1();
+            txtAns2.Text = question.getAns2();
+            txtAns3.Text = question.getAns3();
+            txtAns4.Text = question.getAns4();
             //Make sure first radio button is checked  
             optOne.Checked = true;
             //Load group box
             grpTTQ1.Visible = true;
  
-            if (questNo == 4)
+            if (questionNumber == 4)
             {
                 btnTTNxQ.Visible = false;
                 btnTTSubmit.Visible = true;
@@ -150,26 +151,26 @@ namespace TestSYS
             //SAVE ANSWER
             if (optOne.Checked == true)
             {
-                answers[questNo - 1] = 1;
+                answers[questionNumber - 1] = 1;
             }
             if (optTwo.Checked == true)
             {
-                answers[questNo - 1] = 2;
+                answers[questionNumber - 1] = 2;
             }
             if (optThree.Checked == true)
             {
-                answers[questNo - 1] = 3;
+                answers[questionNumber - 1] = 3;
             }
             if (optFour.Checked == true)
             {
-                answers[questNo - 1] = 4;
+                answers[questionNumber - 1] = 4;
             }
 
             //Increment Progress Bar
             pgbTestProgress.PerformStep();
 
             //CHECK ANSWER GIVEN AGAINST CORRECT ANSWER & INCREMENT SCORE                        
-            if (answers[questNo - 1] == quest.getCorrectAns())
+            if (answers[questionNumber - 1] == question.getCorrectAns())
             {
                 score += 25;
             }
@@ -190,13 +191,12 @@ namespace TestSYS
             // Save Test
             test.saveTest();
 
-            testQuest.setTestId(Convert.ToInt32(txtTestId.Text));
-            testQuest.setQuestId(testQuestId);                                     
-            testQuest.setAnsGiven(answers);                                      
-            testQuest.saveTestQuest();
+            testQuestion.setTestId(Convert.ToInt32(txtTestId.Text));
+            testQuestion.setQuestId(testQuestId);                                     
+            testQuestion.setAnsGiven(answers);                                      
+            testQuestion.saveTestQuest();
 
-            var frmNext = new frmMenu(fName, id);
-
+            var frmNext = new frmMenu(forename, id);
             Close();
             frmNext.Show();   
         }

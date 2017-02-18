@@ -7,7 +7,7 @@ namespace TestSYS
     {
         private int testId;
         private int[] questId = new int[4];
-        private int[] ansGiven = new int[4];
+        private int[] answerGiven = new int[4];
 
         public TestQuestion()
         {
@@ -16,44 +16,26 @@ namespace TestSYS
             questId[1] = 0;
             questId[2] = 0;
             questId[3] = 0;
-            ansGiven[0] = 0;
-            ansGiven[1] = 0;
-            ansGiven[2] = 0;
-            ansGiven[3] = 0;
+            answerGiven[0] = 0;
+            answerGiven[1] = 0;
+            answerGiven[2] = 0;
+            answerGiven[3] = 0;
         }
 
         public TestQuestion(int tId, int[] qId, int[] ansGiven)
         {
             testId = tId;
             questId = qId;
-            this.ansGiven = ansGiven;
+            answerGiven = ansGiven;
         }
 
-        public int getTestId()
-        {
-            return testId;
-        }
-        public int[] getQuestId()
-        {
-            return questId;
-        }
-        public int[] getAnsGiven()
-        {
-            return ansGiven;
-        }
+        public int getTestId() { return testId; }
+        public int[] getQuestId() { return questId; }
+        public int[] getAnsGiven() { return answerGiven; }
 
-        public void setTestId(int tId)
-        {
-            testId = tId;
-        }
-        public void setQuestId(int[] qId)
-        {
-            questId = qId;
-        }
-        public void setAnsGiven(int[] aGiven)
-        {
-            ansGiven = aGiven;
-        }
+        public void setTestId(int tId) { testId = tId; }
+        public void setQuestId(int[] qId) { questId = qId; }
+        public void setAnsGiven(int[] aGiven) { answerGiven = aGiven; }
 
         // CRETE AN ARRAY TO HOLD 4 QUESTIONS FOR THE TEST 
         // GENERATE RANDOM NUMBER BETWEEN 0 AND NUM OF QUESTIONS IN THAT LEVEL
@@ -94,7 +76,7 @@ namespace TestSYS
             for(int i=0; i < 4; i++) 
             {
                 //Define SDQL query which inserts the question in to the database
-                string strSQL = "INSERT INTO TestQuestions (TestId, QuestId, AnsGiven) VALUES (" + testId + ", '" +  questId[i] + "', '" + ansGiven[i] + "')";
+                string strSQL = "INSERT INTO TestQuestions (TestId, QuestId, AnsGiven) VALUES (" + testId + ", '" +  questId[i] + "', '" + answerGiven[i] + "')";
 
                 //Define Oracle Command
                 var cmd = new SQLiteCommand(strSQL, myConn);

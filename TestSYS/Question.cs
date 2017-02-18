@@ -5,141 +5,73 @@ namespace TestSYS
 {
     class Question
     {
-        private int questId;
-        private string qLevel;
-        private string qText;
-        private string ans1;
-        private string ans2;
-        private string ans3;
-        private string ans4;
+        private int questionId;
+        private string questionLevel;
+        private string questionText;
+        private string answer1;
+        private string answer2;
+        private string answer3;
+        private string answer4;
         private int correctAns;
-        private string qAdd;
-        private string qAmd;
+        private string questionAdd;
+        private string questAmend;
         private string status;
 
         public Question()
         {
-            questId = 0;
-            qLevel = "";
-            qText = "";
-            ans1 = "";
-            ans2 = "";
-            ans3 = "";
-            ans4 = "";
+            questionId = 0;
+            questionLevel = "";
+            questionText = "";
+            answer1 = "";
+            answer2 = "";
+            answer3 = "";
+            answer4 = "";
             correctAns = 0;
-            qAdd = "";
-            qAmd = "";
+            questionAdd = "";
+            questAmend = "";
             status = "";
         }
 
         public Question(int id, string lvl, string txt, string a1, string a2, string a3, string a4, int corAns, string qAdd, string qAmd, string stat)
         {
-            questId = id;
-            qLevel = lvl;
-            qText = txt;
-            ans1 = a1;
-            ans2 = a2;
-            ans3 = a3;
-            ans4 = a4;
+            questionId = id;
+            questionLevel = lvl;
+            questionText = txt;
+            answer1 = a1;
+            answer2 = a2;
+            answer3 = a3;
+            answer4 = a4;
             correctAns = corAns;
-            this.qAdd = qAdd;
-            this.qAmd = qAmd;
+            questionAdd = qAdd;
+            questAmend = qAmd;
             status = stat;
         }
 
         // Accessors
-
-        public int getQuestId()
-        {
-            return questId;
-        }
-        public string getQLevel()
-        {
-            return qLevel;
-        }
-        public string getQText()
-        {
-            return qText;       
-        }
-        public string getAns1()
-        {
-            return ans1;
-        }
-        public string getAns2()
-        {
-            return ans2;
-        }
-        public string getAns3()
-        {
-            return ans3;
-        }
-        public string getAns4()
-        {
-            return ans4;
-        }
-        public int getCorrectAns()
-        {
-            return correctAns;
-        }
-        public string getQAdd()
-        {
-            return qAdd;
-        }
-        public string getQAmd()
-        {
-            return qAmd;
-        }
-        public string getStatus()
-        {
-            return status;
-        }
+        public int getQuestId() { return questionId; }
+        public string getQLevel() { return questionLevel; }
+        public string getQText() { return questionText; }
+        public string getAns1() { return answer1; }
+        public string getAns2() { return answer2; }
+        public string getAns3() { return answer3; }
+        public string getAns4() { return answer4; }
+        public int getCorrectAns() { return correctAns; }
+        public string getQAdd() { return questionAdd; }
+        public string getQAmd() { return questAmend; }
+        public string getStatus() { return status; }
 
         // Mutators
-        public void setQuestId(int id)
-        {
-            questId = id;
-        }
-        public void setQLevel(string lvl)
-        {
-            qLevel = lvl;
-        }
-        public void setQText(string qTxt)
-        {
-            qText = qTxt;
-        }
-        public void setAns1(string a1)
-        {
-            ans1 = a1;
-        }
-        public void setAns2(string a2)
-        {
-            ans2 = a2;
-        }
-        public void setAns3(string a3)
-        {
-            ans3 = a3;
-        }
-        public void setAns4(string a4)
-        {
-            ans4 = a4;
-        }
-        public void setCorrectAns(int corrAns)
-        {
-            correctAns = corrAns;
-        }
-        public void setQAdd(string qAdd)
-        {
-            this.qAdd = qAdd;
-        }
-        public void setQAmd(string qAmd)
-        {
-            this.qAmd = qAmd;
-        }
-        public void setStatus(string stat)
-        {
-            status = stat;
-        }
-
+        public void setQuestId(int id) { questionId = id; }
+        public void setQLevel(string lvl) { questionLevel = lvl; }
+        public void setQText(string qTxt) { questionText = qTxt; }
+        public void setAns1(string a1) { answer1 = a1; }
+        public void setAns2(string a2) { answer2 = a2; }
+        public void setAns3(string a3) { answer3 = a3; }
+        public void setAns4(string a4) { answer4 = a4; }
+        public void setCorrectAns(int corrAns) { correctAns = corrAns; }
+        public void setQAdd(string qAdd) {questionAdd = qAdd; }
+        public void setQAmd(string qAmd) { questAmend = qAmd; }
+        public void setStatus(string stat) { status = stat; }
 
         // GET NEXT QUESTION ID
         public int getNextQuestId()
@@ -185,9 +117,9 @@ namespace TestSYS
             var myConn = new SQLiteConnection(Db.ConnectionString);
 
             //Define SDQL query which inserts the question in to the database
-            string strSQL = "INSERT INTO Questions (QuestId, LevelCode, Text, Ans1, Ans2, Ans3, Ans4, CorrectAns, QAdd, Status) VALUES (" + questId +
-                            ", '" + qLevel + "', '" + qText + "', '" + ans1 + "', '" + ans2 + "', '" + ans3 + "', '" + ans4 +
-                            "', " + correctAns + ", '" + string.Format("{0:dd-MMM-yy}", qAdd) + "', '" + status + "')";
+            string strSQL = "INSERT INTO Questions (QuestId, LevelCode, Text, Ans1, Ans2, Ans3, Ans4, CorrectAns, QAdd, Status) VALUES (" + questionId +
+                            ", '" + questionLevel + "', '" + questionText + "', '" + answer1 + "', '" + answer2 + "', '" + answer3 + "', '" + answer4 +
+                            "', " + correctAns + ", '" + string.Format("{0:dd-MMM-yy}", questionAdd) + "', '" + status + "')";
 
 
             //Define Oracle Command
@@ -246,9 +178,9 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
-            string strSQL = "UPDATE Questions SET LevelCode = '" + qLevel + "', Text =  '" + qText + "', Ans1 = '" + ans1 + 
-                            "', Ans2 = '" + ans2 + "', Ans3 = '" + ans3 + "', Ans4 = '" + ans4 +
-                            "', QAmd = '" + string.Format("{0:dd-MMM-yy}", qAmd) + "', Status = 'a' WHERE QuestId = " + questId;
+            string strSQL = "UPDATE Questions SET LevelCode = '" + questionLevel + "', Text =  '" + questionText + "', Ans1 = '" + answer1 + 
+                            "', Ans2 = '" + answer2 + "', Ans3 = '" + answer3 + "', Ans4 = '" + answer4 +
+                            "', QAmd = '" + string.Format("{0:dd-MMM-yy}", questAmend) + "', Status = 'a' WHERE QuestId = " + questionId;
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -270,7 +202,7 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
-            string strSQL = "UPDATE Questions SET Status = 'd', QAmd = '" + string.Format("{0:dd-MMM-yy}", qAmd) + "' WHERE QuestId = " + questId;
+            string strSQL = "UPDATE Questions SET Status = 'd', QAmd = '" + string.Format("{0:dd-MMM-yy}", questAmend) + "' WHERE QuestId = " + questId;
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);

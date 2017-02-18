@@ -7,28 +7,28 @@ namespace TestSYS
 {
     public partial class frmStudAmd : Form
     {
-        Student amdStud = new Student();
-        Lecturer lec = new Lecturer();
+        Student amendStudent = new Student();
+        Lecturer lecturer = new Lecturer();
 
-        string fName;
+        string forname;
         int id;
-        int sId;
+        int studentId;
        
         public frmStudAmd()
         {
             InitializeComponent();
         }
-        public frmStudAmd(int Id)
+        public frmStudAmd(int id)
         {
             InitializeComponent();
-            id = Id;
+            this.id = id;
         }
 
-        public frmStudAmd(string foreName, int Id)
+        public frmStudAmd(string foreName, int id)
         {
             InitializeComponent();
-            fName = foreName;
-            id = Id;
+            forname = foreName;
+            this.id = id;
         }
 
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -38,7 +38,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var nextForm = new frmMenu(fName, id);
+            var nextForm = new frmMenu(forname, id);
             Close();
             nextForm.Show();
         }
@@ -56,13 +56,13 @@ namespace TestSYS
     
                 txtAmdSname.Focus();
 
-                amdStud.getStudDetails(id);
+                amendStudent.getStudDetails(id);
 
                 // Load student details into form controls
-                txtAmdSname.Text = amdStud.getSName().TrimEnd();
-                txtAmdFname.Text = amdStud.getFName().TrimEnd();
-                txtAmdEmail.Text = amdStud.getEmail().TrimEnd();
-                dtpAmdDob.Value = Convert.ToDateTime(amdStud.getDOB());
+                txtAmdSname.Text = amendStudent.getSName().TrimEnd();
+                txtAmdFname.Text = amendStudent.getFName().TrimEnd();
+                txtAmdEmail.Text = amendStudent.getEmail().TrimEnd();
+                dtpAmdDob.Value = Convert.ToDateTime(amendStudent.getDOB());
 
             }
             else
@@ -130,22 +130,22 @@ namespace TestSYS
             string amdDate = (string.Format("{0:dd-MMM-yy}", DateTime.Now));
 
             // Instantiate instance variables with updated values from form controls
-            amdStud.setSName(txtAmdSname.Text.ToUpper());
-            amdStud.setFName(txtAmdFname.Text.ToUpper());
-            amdStud.setEmail(txtAmdEmail.Text);
-            amdStud.setDOB(dob);
-            amdStud.setAmdDate(amdDate);
+            amendStudent.setSName(txtAmdSname.Text.ToUpper());
+            amendStudent.setFName(txtAmdFname.Text.ToUpper());
+            amendStudent.setEmail(txtAmdEmail.Text);
+            amendStudent.setDOB(dob);
+            amendStudent.setAmdDate(amdDate);
 
             // Get rid of magic number
             if (id < 9000)
             {
-                amdStud.setPassword(txtAmdPsw.Text);
+                amendStudent.setPassword(txtAmdPsw.Text);
             }
             else
             {
                 try
                 {
-                    lec.validLecLogin(id, txtAmdPsw.Text);
+                    lecturer.validLecLogin(id, txtAmdPsw.Text);
                 }
                 catch
                 {
@@ -154,7 +154,7 @@ namespace TestSYS
             }
 
             //Update Database
-            amdStud.updateStudent();
+            amendStudent.updateStudent();
 
             //Confirm message
             MessageBox.Show("Student Details Amended", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -166,7 +166,7 @@ namespace TestSYS
             }
             else
             {
-                frmNext = new frmMenu(fName, id);
+                frmNext = new frmMenu(forname, id);
             }
             
             Close();
@@ -175,21 +175,19 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, id);
-
+            var frmNext = new frmMenu(forname, id);
             Close();
             frmNext.Show();
         }
 
         // LECTURER'S GROUP STUDENT SEARCH
-
         private void txtStudId_TextChanged(object sender, EventArgs e)
         {
             try
             {
                 if (!txtStudId.Text.Equals(""))
                 {
-                    sId = Convert.ToInt32(txtStudId.Text);
+                    studentId = Convert.ToInt32(txtStudId.Text);
                     fillLecGridId((txtStudId.Text));
                 }
                 else
@@ -212,23 +210,23 @@ namespace TestSYS
         private void btnSelect_Click(object sender, EventArgs e)
         {
             string strId = grdStudList.Rows[grdStudList.CurrentCell.RowIndex].Cells[0].Value.ToString();
-            sId = Convert.ToInt32(strId);
+            studentId = Convert.ToInt32(strId);
 
             grpLecAmd.Visible = false;
             grpStudAmd.Visible = true;
 
-            amdStud.getStudDetails(sId);
+            amendStudent.getStudDetails(studentId);
 
             // Load student details into form controls
-            txtAmdSname.Text = amdStud.getSName().TrimEnd();
-            txtAmdFname.Text = amdStud.getFName().TrimEnd();
-            txtAmdEmail.Text = amdStud.getEmail().TrimEnd();
-            dtpAmdDob.Value = Convert.ToDateTime(amdStud.getDOB());
+            txtAmdSname.Text = amendStudent.getSName().TrimEnd();
+            txtAmdFname.Text = amendStudent.getFName().TrimEnd();
+            txtAmdEmail.Text = amendStudent.getEmail().TrimEnd();
+            dtpAmdDob.Value = Convert.ToDateTime(amendStudent.getDOB());
         }
 
         private void btnMenuSearch_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(fName, id);
+            var frmNext = new frmMenu(forname, id);
             Close();
             frmNext.Show();
         }

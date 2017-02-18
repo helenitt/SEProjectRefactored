@@ -5,65 +5,65 @@ namespace TestSYS
 {
     class Student
     {
-        private int studId;
+        private int studentId;
         private string email;
-        private string password;        
-        private string sName;
-        private string fName;
+        private string passwd;        
+        private string surname;
+        private string forname;
         private string dob;
         private string status;
         private string regDate;
-        private string amdDate;
-        private string expDate;
+        private string amendDate;
+        private string expiryDate;
         
         public Student() {
-            studId = 0;
+            studentId = 0;
             email = "";
-            password = "";            
-            sName = "";
-            fName = "";
+            passwd = "";            
+            surname = "";
+            forname = "";
             dob = "";
             status = "r";
             regDate = "";
-            amdDate = "";
-            expDate = "";
+            amendDate = "";
+            expiryDate = "";
         }
      
-        public Student(int id, string mail, string pword, string sn, string fn, string dd, string rd, string ad, string ed)
+        public Student(int id, string mail, string pword, string surname, string forename, string bDate, string rDate, string aDate, string eDate)
         {
-            studId = id;
+            studentId = id;
             email = mail;
-            password = pword;
-            sName = sn;           
-            fName = fn;
-            dob = dd;
+            passwd = pword;
+            this.surname = surname;           
+            forname = forename;
+            dob = bDate;
             status = "r";
-            regDate = rd;
-            amdDate = ad;
-            expDate = ed;
+            regDate = rDate;
+            amendDate = aDate;
+            expiryDate = eDate;
         }
         
-        public int getStudId() { return studId; }
+        public int getStudId() { return studentId; }
         public string getEmail() { return email; }
-        public string getPassword() { return password; }
-        public string getSName() { return sName; }
-        public string getFName() { return fName; }
+        public string getPassword() { return passwd; }
+        public string getSName() { return surname; }
+        public string getFName() { return forname; }
         public string getDOB() { return dob; }
         public string getStatus() { return status; }
         public string getRegDate() { return regDate; }
-        public string getAmdDate() { return amdDate; }
-        public string getExpDate() { return expDate; }
+        public string getAmdDate() { return amendDate; }
+        public string getExpDate() { return expiryDate; }
 
-        public void setStudId(int id) { studId = id; }
+        public void setStudId(int id) { studentId = id; }
         public void setEmail(string mail) { email = mail; }
-        public void setPassword(string pword) { password = pword; }
-        public void setSName(string name) { sName = name; }
-        public void setFName(string name) { fName = name; }
+        public void setPassword(string pword) { passwd = pword; }
+        public void setSName(string name) { surname = name; }
+        public void setFName(string name) { forname = name; }
         public void setDOB(string bd) { dob = bd; }
         public void setStatus(string stat) { status = stat; }
         public void setRegDate(string rDate) { regDate = rDate; }
-        public void setAmdDate(string aDate) { amdDate = aDate; }
-        public void setExpDate(string eDate) { expDate = eDate; }
+        public void setAmdDate(string aDate) { amendDate = aDate; }
+        public void setExpDate(string eDate) { expiryDate = eDate; }
 
         // GET NEXT STUDENT ID
         public int getNextStudId()
@@ -143,9 +143,9 @@ namespace TestSYS
             var myConn = new SQLiteConnection(Db.ConnectionString);
 
             //Define SDQL query which inserts the students details
-            string strSQL = "INSERT INTO Students (StudId, Email, Passwd, Sname, FName, DOB, Status, RegDate, ExpDate) VALUES (" + studId + ", '" + email +
-                            "', " + password + ", '" + sName + "', '" + fName + "', '" + string.Format("{0:dd-MMM-yy}", dob) +
-                            "', '" + status + "', '" + string.Format("{0:dd-MMM-yy}", regDate) + "','" + expDate + "')";  
+            string strSQL = "INSERT INTO Students (StudId, Email, Passwd, Sname, FName, DOB, Status, RegDate, ExpDate) VALUES (" + studentId + ", '" + email +
+                            "', " + passwd + ", '" + surname + "', '" + forname + "', '" + string.Format("{0:dd-MMM-yy}", dob) +
+                            "', '" + status + "', '" + string.Format("{0:dd-MMM-yy}", regDate) + "','" + expiryDate + "')";  
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -169,9 +169,9 @@ namespace TestSYS
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
-            string strSQL = "UPDATE Students SET Email = '" + email + "', Passwd =  " + password + ", Sname = '" + sName + "', Fname = '" + fName + 
+            string strSQL = "UPDATE Students SET Email = '" + email + "', Passwd =  " + passwd + ", Sname = '" + surname + "', Fname = '" + forname + 
                             "', DOB = '" + string.Format("{0:dd-MMM-yy}", dob) + "', Status = '" + status + 
-                            "', AmdDate = '" + string.Format("{0:dd-MMM-yy}", amdDate) + "' WHERE StudId = " + studId;  
+                            "', AmdDate = '" + string.Format("{0:dd-MMM-yy}", amendDate) + "' WHERE StudId = " + studentId;  
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
@@ -224,7 +224,7 @@ namespace TestSYS
             var myConn = new SQLiteConnection(Db.ConnectionString);
 
             //Define SDQL query which inserts the students details
-            string strSQL = "UPDATE Students SET Status = 'd', AmdDate = '" + string.Format("{0:dd-MMM-yy}", amdDate) + "' WHERE StudId = " + studId;  
+            string strSQL = "UPDATE Students SET Status = 'd', AmdDate = '" + string.Format("{0:dd-MMM-yy}", amendDate) + "' WHERE StudId = " + studId;  
 
             //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);

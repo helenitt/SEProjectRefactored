@@ -6,9 +6,9 @@ namespace TestSYS
 {
     public partial class frmQAdd : Form
     {
-        Question quest = new Question();
-        string fName;
-        int lecId;
+        Question question = new Question();
+        string forname;
+        int lecturerId;
         
         public frmQAdd()
         {
@@ -18,13 +18,13 @@ namespace TestSYS
         public frmQAdd(string name, int id)
         {
             InitializeComponent();
-            fName = name;
-            lecId = id;
+            forname = name;
+            lecturerId = id;
         }
         private void frmQAdd_Load(object sender, EventArgs e)
         {
             //get next question id to assign
-            txtQuestId.Text = quest.getNextQuestId().ToString("0000");
+            txtQuestId.Text = question.getNextQuestId().ToString("0000");
 
             loadLevels();
             optAddQ1.Checked = true;
@@ -32,7 +32,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(fName, lecId);
+            var frmNext = new frmMenu(forname, lecturerId);
 
             Close();
             frmNext.Show();
@@ -90,41 +90,41 @@ namespace TestSYS
 
             if (optAddQ1.Checked == true)
             {
-                quest.setCorrectAns(1);
+                question.setCorrectAns(1);
             }
             if (optAddQ2.Checked == true)
             {
-                quest.setCorrectAns(2);
+                question.setCorrectAns(2);
             }
             if (optAddQ3.Checked == true)
             {
-                quest.setCorrectAns(3);
+                question.setCorrectAns(3);
             }
             if (optAddQ4.Checked == true)
             {
-                quest.setCorrectAns(4);
+                question.setCorrectAns(4);
             }
 
             //Instantiate instance variables with values from form controls
-            quest.setQuestId(Convert.ToInt32(txtQuestId.Text));
-            quest.setQLevel(cboQLvl.Text.Substring(0,1));  //NEED TO GET FIRST LETTER
-            quest.setQText(txtQText.Text);
-            quest.setAns1(txtAddAns1.Text);
-            quest.setAns2(txtAddAns2.Text);
-            quest.setAns3(txtAddAns3.Text);
-            quest.setAns4(txtAddAns4.Text);
-            quest.setQAdd(string.Format("{0:dd-MMM-yy}", DateTime.Now));
-            quest.setStatus("a");
+            question.setQuestId(Convert.ToInt32(txtQuestId.Text));
+            question.setQLevel(cboQLvl.Text.Substring(0,1));  //NEED TO GET FIRST LETTER
+            question.setQText(txtQText.Text);
+            question.setAns1(txtAddAns1.Text);
+            question.setAns2(txtAddAns2.Text);
+            question.setAns3(txtAddAns3.Text);
+            question.setAns4(txtAddAns4.Text);
+            question.setQAdd(string.Format("{0:dd-MMM-yy}", DateTime.Now));
+            question.setStatus("a");
 
             // INSERT QUESTION IN TO DATABASE
-            quest.insertQuestion();
+            question.insertQuestion();
 
             // CONFIRMATION MESSAGE
             MessageBox.Show("Question Created", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
            
             // Clear UI
             // Extract
-            txtQuestId.Text = quest.getNextQuestId().ToString("0000");
+            txtQuestId.Text = question.getNextQuestId().ToString("0000");
             cboQLvl.SelectedIndex = -1;
             txtQText.Text = "";
             optAddQ1.Checked = false;
@@ -141,7 +141,7 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(fName, lecId);
+            var frmNext = new frmMenu(forname, lecturerId);
             Close();
             frmNext.Show();
         }

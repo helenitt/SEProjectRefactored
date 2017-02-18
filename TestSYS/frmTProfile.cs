@@ -7,7 +7,7 @@ namespace TestSYS
 {
     public partial class frmTProfile : Form
     {
-        string fName;
+        string forename;
         int id;
 
         public frmTProfile()
@@ -17,7 +17,7 @@ namespace TestSYS
         public frmTProfile(string fName, int id)
         {
             InitializeComponent();
-            this.fName = fName;
+            this.forename = fName;
             this.id = id;
         }
 
@@ -49,7 +49,7 @@ namespace TestSYS
 
          private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(fName, id);
+            var frmNext = new frmMenu(forename, id);
             Close();
             frmNext.Show();
         }
@@ -57,7 +57,7 @@ namespace TestSYS
         //STUDENT TEST PROFILE
         private void btnFinishedProfile_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(fName, id);
+            var frmNext = new frmMenu(forename, id);
             Close();
             frmNext.Show();
         }
@@ -194,7 +194,7 @@ namespace TestSYS
 
          private void btnMainMenu_Click(object sender, EventArgs e)
          {
-             var frmNext = new frmMenu(fName, id);
+             var frmNext = new frmMenu(forename, id);
              Close();
              frmNext.Show();
          }

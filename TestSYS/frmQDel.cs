@@ -6,10 +6,10 @@ namespace TestSYS
 
     public partial class frmQDel : Form
     {
-        Question quest = new Question();
-        string fName;
-        int questId;
-        int lecId;
+        Question question = new Question();
+        string forename;
+        int questionId;
+        int lecturerId;
 
         public frmQDel()
         {
@@ -19,13 +19,13 @@ namespace TestSYS
         public frmQDel(string name, int id)
         {
             InitializeComponent();
-            fName = name;
-            lecId = id;
+            forename = name;
+            lecturerId = id;
         }
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(fName, lecId);
+            var frmNext = new frmMenu(forename, lecturerId);
             Close();
             frmNext.Show();
         }        
@@ -49,12 +49,12 @@ namespace TestSYS
                 return;
             }
 
-            questId = Convert.ToInt32(txtDelQID.Text);
+            questionId = Convert.ToInt32(txtDelQID.Text);
 
             //CHECK TO SEE ID IS WITHIN BOUNDS
-            int count = quest.getQuestCount();
+            int count = question.getQuestCount();
 
-            if (questId < 1 || questId > count)
+            if (questionId < 1 || questionId > count)
             {
                 txtDelQID.Text = "";
 
@@ -64,14 +64,14 @@ namespace TestSYS
                 return;
             }
 
-            quest.getQuestionDetails(questId);
+            question.getQuestionDetails(questionId);
 
-            txtQTxt.Text = quest.getQText();
+            txtQTxt.Text = question.getQText();
         }
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(fName, lecId);
+            var frmNext = new frmMenu(forename, lecturerId);
             Close();
             frmNext.Show();
         }
@@ -100,7 +100,7 @@ namespace TestSYS
 
             MessageBox.Show("Are you sure you want to delete this question\n\n", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            quest.deleteQuestion(questId);
+            question.deleteQuestion(questionId);
 
             // CONFIRMATION MESSAGE
             MessageBox.Show("Question Deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);

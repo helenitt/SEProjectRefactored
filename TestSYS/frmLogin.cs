@@ -5,9 +5,9 @@ namespace TestSYS
 {
     public partial class frmLogin : Form
     {
-        frmWelcome parent;
-        Student logStud;
-        Lecturer logLec;
+        frmWelcome parent;  
+        Student loginStudent;
+        Lecturer loginLecturer;
 
         public frmLogin()
         {
@@ -55,14 +55,14 @@ namespace TestSYS
             // CHECK IF STUDENT OR LECTURER            
             if (Convert.ToInt32(txtID.Text) < 9000)
             {
-                logStud = new Student();
+                loginStudent = new Student();
 
-                if (logStud.validStudLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
+                if (loginStudent.validStudLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
                 {
                     // get and set details
-                    logStud.getStudDetails(Convert.ToInt16(txtID.Text));
+                    loginStudent.getStudDetails(Convert.ToInt16(txtID.Text));
                     
-                    var frmNext = new frmMenu(logStud.getFName(), logStud.getStudId());
+                    var frmNext = new frmMenu(loginStudent.getFName(), loginStudent.getStudId());
 
                     Close();
                     frmNext.Show();
@@ -76,14 +76,14 @@ namespace TestSYS
             }
             else
             {
-                logLec = new Lecturer();
+                loginLecturer = new Lecturer();
 
-                if (logLec.validLecLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
+                if (loginLecturer.validLecLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
                 {
                     // get and set details
-                    logLec.getLecDetails(Convert.ToInt16(txtID.Text));                 
+                    loginLecturer.getLecDetails(Convert.ToInt16(txtID.Text));                 
                     
-                    var frmNext = new frmMenu(logLec.getFName(), logLec.getLecId());
+                    var frmNext = new frmMenu(loginLecturer.getFName(), loginLecturer.getLecId());
                     
                     Close();
                     frmNext.Show();
