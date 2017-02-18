@@ -17,17 +17,16 @@ namespace TestSYS
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            frmStudAdd frmNext = new frmStudAdd(this);
+            var frmNext = new frmStudAdd(this);
             Hide();
             frmNext.Show();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            frmLogin frmNext = new frmLogin(this);
+            var frmNext = new frmLogin(this);
             Hide();
             frmNext.Show();
         }
-
     }
 }

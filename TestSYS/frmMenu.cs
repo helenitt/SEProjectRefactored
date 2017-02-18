@@ -55,15 +55,9 @@ namespace TestSYS
 
         private void btnTakeTest_Click(object sender, EventArgs e)
         {
-            frmTTake frmNext = new frmTTake(fName, id);
-
+            var frmNext = new frmTTake(fName, id);
             Close();
             frmNext.Show();
-        }
-
-        private void btnQuit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
 
         private void btnStudProf_Click(object sender, EventArgs e)
@@ -86,7 +80,6 @@ namespace TestSYS
             Close();
             frmNext.Show();
         }
-
 
         private void btnAddQuest_Click(object sender, EventArgs e)
         {
@@ -128,6 +121,11 @@ namespace TestSYS
             var frmNext = new frmStudDel(fName, id);
             Close();
             frmNext.Show();
+        }
+
+        private void btnQuit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

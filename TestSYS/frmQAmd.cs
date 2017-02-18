@@ -29,8 +29,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, lecId);
-
+            var frmNext = new frmMenu(fName, lecId);
             Close();
             frmNext.Show();
         }
@@ -88,8 +87,7 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, lecId);
-
+            var frmNext = new frmMenu(fName, lecId);
             Close();
             frmNext.Show();
         }
@@ -154,7 +152,6 @@ namespace TestSYS
             txtAmdAns2.Text = "";
             txtAmdAns3.Text = "";
             txtAmdAns4.Text = "";
-
         }
 
         public void loadLevels()
@@ -185,6 +182,5 @@ namespace TestSYS
             //Close DB connection
             myConn.Close();
         }
-
     }
 }

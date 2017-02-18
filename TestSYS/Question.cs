@@ -185,7 +185,7 @@ namespace TestSYS
             var myConn = new SQLiteConnection(Db.ConnectionString);
 
             //Define SDQL query which inserts the question in to the database
-            string strSQL = "INSERT INTO Questions (QuestId,LevelCode,Text,Ans1,Ans2,Ans3,Ans4,CorrectAns,QAdd,Status) VALUES (" + questId +
+            string strSQL = "INSERT INTO Questions (QuestId, LevelCode, Text, Ans1, Ans2, Ans3, Ans4, CorrectAns, QAdd, Status) VALUES (" + questId +
                             ", '" + qLevel + "', '" + qText + "', '" + ans1 + "', '" + ans2 + "', '" + ans3 + "', '" + ans4 +
                             "', " + correctAns + ", '" + string.Format("{0:dd-MMM-yy}", qAdd) + "', '" + status + "')";
 
@@ -285,8 +285,8 @@ namespace TestSYS
             myConn.Close();
         }
 
-        //METHOD FOR AMEND QUESTION
-        // RETURNS tOTAL NUMBER OF QUESTIONS
+        // METHOD FOR AMEND QUESTION
+        // RETURNS TOTAL NUMBER OF QUESTIONS
         public int getQuestCount()
         {
             int countQuest;
@@ -304,17 +304,17 @@ namespace TestSYS
             myConn.Open();
 
             //Exectute SQL command
-            var dr = cmd.ExecuteReader();
+            var dataReader = cmd.ExecuteReader();
 
             //Read the record in dr
-            dr.Read();
+            dataReader.Read();
 
 
             //Check if MAX QuestId Null
-            if (dr.IsDBNull(0))
+            if (dataReader.IsDBNull(0))
                 countQuest = 0;
             else
-                countQuest = Convert.ToInt32(dr.GetValue(0));
+                countQuest = Convert.ToInt32(dataReader.GetValue(0));
 
             //Close DB connection
             myConn.Close();
@@ -361,7 +361,7 @@ namespace TestSYS
         //GET ALL QUESTION IDS OF QUESTIONS FOR SELECTED LEVEL
         public int[] getLevelQuestIds(string level)
         {
-            Question quest = new Question();
+            var quest = new Question();
 
             //Create Database connection string
             var myConn = new SQLiteConnection(Db.ConnectionString);
@@ -377,7 +377,7 @@ namespace TestSYS
             myConn.Open();
 
             //Exectute SQL command
-            var dr = cmd.ExecuteReader();
+            var dataReader = cmd.ExecuteReader();
 
             //Find out how many questions in required level then 
             //create array to hold questions ids of the selected level
@@ -386,9 +386,9 @@ namespace TestSYS
 
             int i = 0;
 
-            while (dr.Read())
+            while (dataReader.Read())
             {
-                questIds[i] = dr.GetInt32(0);
+                questIds[i] = dataReader.GetInt32(0);
                 i++;
             }
 
@@ -415,20 +415,20 @@ namespace TestSYS
             myConn.Open();
 
             //Exectute SQL command
-            var dr = cmd.ExecuteReader();
+            var dataReader = cmd.ExecuteReader();
 
             //Read the record in dr
-            dr.Read();
+            dataReader.Read();
 
             //Set variables
-            setQuestId(Convert.ToInt32(dr.GetValue(0)));
-            setQLevel(dr.GetString(1));
-            setQText(dr.GetString(2));
-            setAns1(dr.GetString(3));
-            setAns2(dr.GetString(4));
-            setAns3(dr.GetString(5));
-            setAns4(dr.GetString(6));
-            setCorrectAns(Convert.ToInt32(dr.GetValue(7)));
+            setQuestId(Convert.ToInt32(dataReader.GetValue(0)));
+            setQLevel(dataReader.GetString(1));
+            setQText(dataReader.GetString(2));
+            setAns1(dataReader.GetString(3));
+            setAns2(dataReader.GetString(4));
+            setAns3(dataReader.GetString(5));
+            setAns4(dataReader.GetString(6));
+            setCorrectAns(Convert.ToInt32(dataReader.GetValue(7)));
             
             //Close DB connection
             myConn.Close();

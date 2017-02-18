@@ -56,7 +56,7 @@ namespace TestSYS
         }
 
         // CRETE AN ARRAY TO HOLD 4 QUESTIONS FOR THE TEST 
-        //GENERATE RANDOM NUMBER BETWEEN 0 AND NUM OF QUESTIONS IN THAT LEVEL
+        // GENERATE RANDOM NUMBER BETWEEN 0 AND NUM OF QUESTIONS IN THAT LEVEL
         public int[] getTestQuestions(int[] ids)
         {
             int[] testQuestions = new int[4];

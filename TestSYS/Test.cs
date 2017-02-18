@@ -122,7 +122,7 @@ namespace TestSYS
             var myConn = new SQLiteConnection(Db.ConnectionString);
 
             //Define SDQL query which inserts the question in to the database
-            string strSQL = "INSERT INTO Tests (TestId,TestDate,Score,StudId,LevelCode) VALUES (" + testId + ", '" + string.Format("{0:dd-MMM-yy}", dateTaken) +
+            string strSQL = "INSERT INTO Tests (TestId, TestDate, Score, StudId, LevelCode) VALUES (" + testId + ", '" + string.Format("{0:dd-MMM-yy}", dateTaken) +
                             "', '" + testScore + "', '" + studId + "', '" + tLevel + "')";
 
             //Define Oracle Command
@@ -137,7 +137,5 @@ namespace TestSYS
             //Close DB connection
             myConn.Close();
         }
-
-
     }
 }

@@ -42,92 +42,28 @@ namespace TestSYS
             amdDate = ad;
             expDate = ed;
         }
+        
+        public int getStudId() { return studId; }
+        public string getEmail() { return email; }
+        public string getPassword() { return password; }
+        public string getSName() { return sName; }
+        public string getFName() { return fName; }
+        public string getDOB() { return dob; }
+        public string getStatus() { return status; }
+        public string getRegDate() { return regDate; }
+        public string getAmdDate() { return amdDate; }
+        public string getExpDate() { return expDate; }
 
-        // Accessors
-        public int getStudId()
-        {
-            return studId;
-        }
-         public string getEmail()
-        {
-            return email;
-        }
-        public string getPassword()
-        {
-            return password;
-        }
-       public string getSName()
-        {
-            return sName;
-        }
-        public string getFName()
-        {
-            return fName;
-        }
-        public string getDOB()
-        {
-            return dob;
-        }
-        public string getStatus()
-        {
-            return status;
-        }
-        public string getRegDate()
-        {
-            return regDate;
-        }
-        public string getAmdDate()
-        {
-            return amdDate;
-        }
-        public string getExpDate()
-        {
-            return expDate;
-        }
-
-
-        //mutators
-        public void setStudId(int id)
-        {
-            studId = id;
-        }
-        public void setEmail(string mail)
-        {
-            email = mail;
-        }
-        public void setPassword(string pword)
-        {
-            password = pword;
-        }
-         public void setSName(string name)
-        {
-            sName = name;
-        }
-        public void setFName(string name)
-        {
-            fName = name;
-        }
-
-        public void setDOB(string bd)
-        {
-            dob = bd;
-        }
-        public void setStatus(string stat)
-        {
-            status = stat;
-        }
-       public void setRegDate(string rDate)
-        {
-            regDate = rDate;
-        }
-       public void setAmdDate(string aDate)
-       {
-           amdDate = aDate;
-       }
-       public void setExpDate(string eDate)
-       {
-           expDate = eDate;
-       }
+        public void setStudId(int id) { studId = id; }
+        public void setEmail(string mail) { email = mail; }
+        public void setPassword(string pword) { password = pword; }
+        public void setSName(string name) { sName = name; }
+        public void setFName(string name) { fName = name; }
+        public void setDOB(string bd) { dob = bd; }
+        public void setStatus(string stat) { status = stat; }
+        public void setRegDate(string rDate) { regDate = rDate; }
+        public void setAmdDate(string aDate) { amdDate = aDate; }
+        public void setExpDate(string eDate) { expDate = eDate; }
 
         // GET NEXT STUDENT ID
         public int getNextStudId()
@@ -183,7 +119,7 @@ namespace TestSYS
             //Exectute SQL command
             var dataReader = cmd.ExecuteReader();
 
-            // Is this not the sme as 
+            // IS THIS NOT THE SAME AS
             //myConn.Close();
             //return dataReader.Read();
 
@@ -254,23 +190,13 @@ namespace TestSYS
         //GET STUDENT DETAILS
         public void getStudDetails(int studId)
         {
-
-            //Create Database connection string
             var myConn = new SQLiteConnection(Db.ConnectionString);
 
-            //Define SDQL query which retrieves MAX StudId in Students
             string strSQL = "SELECT *  FROM Students WHERE StudId = " + studId;
 
-            //Define Oracle Command
             var cmd = new SQLiteCommand(strSQL, myConn);
-
-            //Open DB Connection
             myConn.Open();
-
-            //Exectute SQL command
             SQLiteDataReader dataReader = cmd.ExecuteReader();
-
-            //Read the record in dr
             dataReader.Read();
 
             //Set variables
@@ -279,14 +205,13 @@ namespace TestSYS
             setPassword(dataReader.GetString(2));
             setSName(dataReader.GetString(3));
             setFName(dataReader.GetString(4));
-            setDOB(string.Format("{0:dd-MMM-yy}",(dataReader.GetDateTime(5))));
+            setDOB(dataReader.GetString(5));
 
             if (!dataReader.IsDBNull(8))
-                setAmdDate(string.Format("{0:dd-MMM-yy}",dataReader.GetDateTime(8)));
-
+                setAmdDate(dataReader.GetString(8));
 
             if (!dataReader.IsDBNull(9))
-                setExpDate(string.Format("{0:dd-MMM-yy}",dataReader.GetDateTime(9)));
+                setExpDate(dataReader.GetString(9));
 
             //Close DB connection
             myConn.Close();

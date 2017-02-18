@@ -13,8 +13,7 @@ namespace TestSYS
         string fName;
         int id;
         int sId;
-        
-  
+       
         public frmStudAmd()
         {
             InitializeComponent();
@@ -39,8 +38,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            frmMenu nextForm = new frmMenu(fName, id);
-
+            var nextForm = new frmMenu(fName, id);
             Close();
             nextForm.Show();
         }
@@ -191,8 +189,7 @@ namespace TestSYS
             {
                 if (!txtStudId.Text.Equals(""))
                 {
-                    sId = Convert.ToInt32(txtStudId.Text); 
-
+                    sId = Convert.ToInt32(txtStudId.Text);
                     fillLecGridId((txtStudId.Text));
                 }
                 else
@@ -231,8 +228,7 @@ namespace TestSYS
 
         private void btnMenuSearch_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, id);
-
+            var frmNext = new frmMenu(fName, id);
             Close();
             frmNext.Show();
         }
@@ -305,7 +301,7 @@ namespace TestSYS
 
             //Execute Query using Oracle Data Adapter
             var dataAdapter = new SQLiteDataAdapter(cmd);
-            DataSet dataSet = new DataSet();
+            var dataSet = new DataSet();
 
             dataAdapter.Fill(dataSet, "Students");
             grdStudList.DataSource = dataSet.Tables["Students"];

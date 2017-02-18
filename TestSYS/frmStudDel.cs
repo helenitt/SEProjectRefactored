@@ -22,7 +22,7 @@ namespace TestSYS
         {
             InitializeComponent();
             fName = name;
-            this.id = Id;
+            id = Id;
         }
 
         private void mnuQuit_Click(object sender, EventArgs e)
@@ -32,9 +32,8 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, id);
-
-            this.Close();
+            var frmNext = new frmMenu(fName, id);
+            Close();
             frmNext.Show();
         }
 
@@ -71,14 +70,11 @@ namespace TestSYS
                 txtStudId.Focus();
             }  
         }
-
-
+        
         // STUDENT GROUP DELETE ACCOUNT
-
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
             var frmNext = new frmMenu(fName, id);
-
             Close();
             frmNext.Show();
         }
@@ -97,8 +93,7 @@ namespace TestSYS
                 txtConfPsw.Focus();
                 return;
             }
-
-
+            
             // Check whether user is a student or a lecturer
             if(id < 9000) 
             {
@@ -190,7 +185,6 @@ namespace TestSYS
         private void btnMenuSearch_Click(object sender, EventArgs e)
         {
             var frmNext = new frmMenu(fName, id);
-
             Close();
             frmNext.Show();
         }
@@ -224,7 +218,6 @@ namespace TestSYS
         {
             //Create Database connection string
             var myConn = new SQLiteConnection(Db.ConnectionString);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX StudId in Students
             int id = Convert.ToInt32(idString);

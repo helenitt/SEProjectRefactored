@@ -31,7 +31,7 @@ namespace TestSYS
         {
             frmMenu frmNext = new frmMenu(fName, id);
 
-            this.Close();
+            Close();
             frmNext.Show();
         }
 
@@ -195,7 +195,7 @@ namespace TestSYS
             testQuest.setAnsGiven(answers);                                      
             testQuest.saveTestQuest();
 
-            frmMenu frmNext = new frmMenu(fName, id);
+            var frmNext = new frmMenu(fName, id);
 
             Close();
             frmNext.Show();   

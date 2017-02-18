@@ -50,7 +50,6 @@ namespace TestSYS
          private void mnuBack_Click(object sender, EventArgs e)
         {
             var frmNext = new frmMenu(fName, id);
-
             Close();
             frmNext.Show();
         }
@@ -59,7 +58,6 @@ namespace TestSYS
         private void btnFinishedProfile_Click(object sender, EventArgs e)
         {
             var frmNext = new frmMenu(fName, id);
-
             Close();
             frmNext.Show();
         }
@@ -71,7 +69,7 @@ namespace TestSYS
              var myConn = new SQLiteConnection(Db.ConnectionString);
 
              //Define SQL query which retrieves Students Test Results
-             string strSQL = "SELECT TestId,TestDate, Score, LevelCode FROM Tests WHERE StudId = " + id + " ORDER BY " + sortOrder;     
+             string strSQL = "SELECT TestId, TestDate, Score, LevelCode FROM Tests WHERE StudId = " + id + " ORDER BY " + sortOrder;     
 
              //Define Oracle Command
              var cmd = new SQLiteCommand(strSQL, myConn);
@@ -81,20 +79,16 @@ namespace TestSYS
 
              //Execute Query using Oracle Data Adapter
              var dataAdapter = new SQLiteDataAdapter(cmd);
-             DataSet dataSet = new DataSet();
+             var dataSet = new DataSet();
 
              dataAdapter.Fill(dataSet, "Tests");
              grdTests.DataSource = dataSet.Tables["Tests"];
 
              //Close DB
              myConn.Close();
-
-
          }
-
-
+        
         // LECTURER'S VIEW OF STUDENT TEST PROFILE
-
          private void txtStudId_TextChanged(object sender, EventArgs e)
          {
              //id = Convert.ToInt32(txtStudId.Text);
@@ -154,7 +148,7 @@ namespace TestSYS
 
              //Define SDQL query which retrieves MAX StudId in Students
              int id = Convert.ToInt32(idString);
-             string strSQL = "SELECT StudId,Sname,Fname,DOB,RegDate FROM Students WHERE StudId = " + id;
+             string strSQL = "SELECT StudId, Sname, Fname, DOB, RegDate FROM Students WHERE StudId = " + id;
 
              //Define Oracle Command
              var cmd = new SQLiteCommand(strSQL, myConn);
@@ -164,7 +158,7 @@ namespace TestSYS
 
              //Execute Query using Oracle Data Adapter
              var dataAdapter = new SQLiteDataAdapter(cmd);
-             DataSet dataSet = new DataSet();
+             var dataSet = new DataSet();
 
              dataAdapter.Fill(dataSet, "Students");
              grdStudList.DataSource = dataSet.Tables["Students"];
@@ -201,7 +195,6 @@ namespace TestSYS
          private void btnMainMenu_Click(object sender, EventArgs e)
          {
              var frmNext = new frmMenu(fName, id);
-
              Close();
              frmNext.Show();
          }

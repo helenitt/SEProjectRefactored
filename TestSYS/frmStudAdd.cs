@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TestSYS
@@ -36,7 +29,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
             parent.Visible = true;
         }
         
@@ -47,7 +40,7 @@ namespace TestSYS
 
         private void btnBack_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
             parent.Visible = true;
         }
 
@@ -98,9 +91,7 @@ namespace TestSYS
                 txtConfPsw.Focus();
                 return;
             }
-
            
-
             //Instantiate instance variables with values from form controls
             newStud.setStudId(Convert.ToInt16(txtStudId.Text));
             newStud.setSName(txtAddSNm.Text.ToUpper());
@@ -112,18 +103,16 @@ namespace TestSYS
 
             DateTime expDate = Convert.ToDateTime(newStud.getRegDate()).AddDays(91);
             newStud.setExpDate(String.Format("{0:dd-MMM-yy}", expDate));
-
-
+            
             //Insert into Database
             newStud.insertStudent();
 
             //Confirm message
             MessageBox.Show("Student Registered", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            frmMenu frmNext = new frmMenu(txtAddFNm.Text, Convert.ToInt32(txtStudId.Text));
-            this.Close();
+            var frmNext = new frmMenu(txtAddFNm.Text, Convert.ToInt32(txtStudId.Text));
+            Close();
             frmNext.Show();
         }
-
     }    
 }

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TestSYS
@@ -14,15 +7,16 @@ namespace TestSYS
     public partial class frmQDel : Form
     {
         Question quest = new Question();
-        String fName;
-        int questId, lecId;
+        string fName;
+        int questId;
+        int lecId;
 
         public frmQDel()
         {
             InitializeComponent();
         }
 
-        public frmQDel(String name, int id)
+        public frmQDel(string name, int id)
         {
             InitializeComponent();
             fName = name;
@@ -31,9 +25,8 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, lecId);
-
-            this.Close();
+            var frmNext = new frmMenu(fName, lecId);
+            Close();
             frmNext.Show();
         }        
         
@@ -78,9 +71,8 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, lecId);
-
-            this.Close();
+            var frmNext = new frmMenu(fName, lecId);
+            Close();
             frmNext.Show();
         }
 
@@ -121,7 +113,5 @@ namespace TestSYS
 
             return;
         }
-
-
     }
 }

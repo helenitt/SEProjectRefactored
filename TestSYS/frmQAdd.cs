@@ -141,8 +141,7 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, lecId);
-
+            var frmNext = new frmMenu(fName, lecId);
             Close();
             frmNext.Show();
         }
@@ -162,12 +161,12 @@ namespace TestSYS
             myConn.Open();
 
             //Exectute SQL command
-            var dr = cmd.ExecuteReader();
+            var dataReader = cmd.ExecuteReader();
 
             //Move data from dr to cboQLvls
-            while (dr.Read())
+            while (dataReader.Read())
             {
-                cboQLvl.Items.Add(dr.GetString(0) + " " + dr.GetString(1));
+                cboQLvl.Items.Add(dataReader.GetString(0) + " " + dataReader.GetString(1));
             }
 
             //Close DB connection
