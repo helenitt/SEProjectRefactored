@@ -41,7 +41,6 @@ namespace TestSYS
         public void setStudId(int sId) { studentId = sId; }
         public void setTLevel(string tLvl) { testLevel = tLvl; }
 
-        //GET NEXT TEST ID
         public int getNextTestId()
         {
             int intNextTId;
@@ -70,8 +69,7 @@ namespace TestSYS
             else
                 intNextTId = Convert.ToInt32(dataReader.GetValue(0)) + 1;
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
 
             //Return QuestId
             return intNextTId;
@@ -95,8 +93,7 @@ namespace TestSYS
             //Exectute SQL command
             cmd.ExecuteNonQuery();
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
         }
     }
 }

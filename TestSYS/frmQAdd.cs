@@ -169,8 +169,7 @@ namespace TestSYS
                 cboQLvl.Items.Add(dataReader.GetString(0) + " " + dataReader.GetString(1));
             }
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
         }
     }
 }

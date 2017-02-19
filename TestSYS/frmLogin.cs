@@ -57,7 +57,7 @@ namespace TestSYS
             {
                 loginStudent = new Student();
 
-                if (loginStudent.validStudLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
+                if (loginStudent.validStudentLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
                 {
                     // get and set details
                     loginStudent.getStudDetails(Convert.ToInt16(txtID.Text));

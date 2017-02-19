@@ -253,8 +253,7 @@ namespace TestSYS
             dataAdpter.Fill(dataSet, "Students");
             grdStudList.DataSource = dataSet.Tables["Students"];
 
-            //Close DB
-            myConn.Close();
+            DbConnect.CloseDb();
         }
 
         public void fillLecGridId(string idString)
@@ -279,8 +278,7 @@ namespace TestSYS
             dataAdapter.Fill(dataSet, "Students");
             grdStudList.DataSource = dataSet.Tables["Students"];
 
-            //Close DB
-            myConn.Close();
+            DbConnect.CloseDb();
         }
 
         public void fillLecGridName(string name)
@@ -304,8 +302,7 @@ namespace TestSYS
             dataAdapter.Fill(dataSet, "Students");
             grdStudList.DataSource = dataSet.Tables["Students"];
 
-            //Close DB
-            myConn.Close();
+            DbConnect.CloseDb();
         }
     }
 }

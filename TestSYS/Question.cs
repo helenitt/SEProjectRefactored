@@ -46,8 +46,7 @@ namespace TestSYS
             questAmend = qAmd;
             status = stat;
         }
-
-        // Accessors
+        
         public int getQuestId() { return questionId; }
         public string getQLevel() { return questionLevel; }
         public string getQText() { return questionText; }
@@ -60,7 +59,6 @@ namespace TestSYS
         public string getQAmd() { return questAmend; }
         public string getStatus() { return status; }
 
-        // Mutators
         public void setQuestId(int id) { questionId = id; }
         public void setQLevel(string lvl) { questionLevel = lvl; }
         public void setQText(string qTxt) { questionText = qTxt; }
@@ -72,71 +70,33 @@ namespace TestSYS
         public void setQAdd(string qAdd) {questionAdd = qAdd; }
         public void setQAmd(string qAmd) { questAmend = qAmd; }
         public void setStatus(string stat) { status = stat; }
-
-        // GET NEXT QUESTION ID
+        
         public int getNextQuestId()
         {
-            int intNextQId;
-
-            //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
-
-            //Define SDQL query which retrieves MAX QuestId in Questions
+            int NextQuestionId;
             string strSQL = "SELECT MAX(QuestId) FROM Questions";
 
-            //Define Oracle Command
-            var cmd = new SQLiteCommand(strSQL, myConn);
+            var dataReader = DbConnect.ConnectDbReader(strSQL);
 
-            //Open DB Connection
-            myConn.Open();
-
-            //Exectute SQL command
-            var dataReader = cmd.ExecuteReader();
-
-            //Read the record in dataReader
-            dataReader.Read();
-
-            //Check if MAX QuestId Null
             if (dataReader.IsDBNull(0))
-                intNextQId = 1;
+                NextQuestionId = 1;
             else
-                intNextQId = Convert.ToInt32(dataReader.GetValue(0)) + 1;
+                NextQuestionId = Convert.ToInt32(dataReader.GetValue(0)) + 1;
 
-            //Close DB connection
-            myConn.Close();
-
-            //Return QuestId
-            return intNextQId;
+            DbConnect.CloseDb();
+            return NextQuestionId;
         }
-
-
-        // INSERT QUESTION IN TO DATABASE
+        
         public void insertQuestion()
         {
-            //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
-
-            //Define SDQL query which inserts the question in to the database
             string strSQL = "INSERT INTO Questions (QuestId, LevelCode, Text, Ans1, Ans2, Ans3, Ans4, CorrectAns, QAdd, Status) VALUES (" + questionId +
                             ", '" + questionLevel + "', '" + questionText + "', '" + answer1 + "', '" + answer2 + "', '" + answer3 + "', '" + answer4 +
                             "', " + correctAns + ", '" + string.Format("{0:dd-MMM-yy}", questionAdd) + "', '" + status + "')";
 
-
-            //Define Oracle Command
-            var cmd = new SQLiteCommand(strSQL, myConn);
-
-            //Open DB Connection
-            myConn.Open();
-
-            //Exectute SQL command
-            cmd.ExecuteNonQuery();
-
-            //Close DB connection
-            myConn.Close();
+            DbConnect.ConnectDbNonQuery(strSQL);
+            DbConnect.CloseDb();
         }
 
-
-        // GET QUESTION DETAILS
         public void getQuestionDetails(int qId)
         {
             //Create Database connection string
@@ -166,9 +126,9 @@ namespace TestSYS
             setAns2(dr.GetString(4));
             setAns3(dr.GetString(5));
             setAns4(dr.GetString(6));
-            setCorrectAns(Convert.ToInt32(dr.GetValue(7)));  
-            
-            myConn.Close();
+            setCorrectAns(Convert.ToInt32(dr.GetValue(7)));
+
+            DbConnect.CloseDb();
         }
 
         public void updateQuestion()
@@ -191,8 +151,7 @@ namespace TestSYS
             //Exectute SQL command
             cmd.ExecuteNonQuery();
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
         }
 
         public void deleteQuestion(int questId)
@@ -213,8 +172,7 @@ namespace TestSYS
             //Exectute SQL command
             cmd.ExecuteNonQuery();
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
         }
 
         // METHOD FOR AMEND QUESTION
@@ -248,8 +206,7 @@ namespace TestSYS
             else
                 countQuest = Convert.ToInt32(dataReader.GetValue(0));
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
 
             return countQuest;
         }
@@ -284,8 +241,7 @@ namespace TestSYS
             else
                 countQuest = Convert.ToInt32(dr.GetValue(0));
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
 
             return countQuest;
         }
@@ -324,8 +280,7 @@ namespace TestSYS
                 i++;
             }
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
 
             return questIds;
         }
@@ -361,9 +316,8 @@ namespace TestSYS
             setAns3(dataReader.GetString(5));
             setAns4(dataReader.GetString(6));
             setCorrectAns(Convert.ToInt32(dataReader.GetValue(7)));
-            
-            //Close DB connection
-            myConn.Close();
+
+            DbConnect.CloseDb();
         }
     }
 }

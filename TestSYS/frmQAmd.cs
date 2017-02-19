@@ -180,8 +180,7 @@ namespace TestSYS
                 cboQLvl.Items.Add(dr.GetString(0) + " " + dr.GetString(1));
             }
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
         }
     }
 }

@@ -205,7 +205,6 @@ namespace TestSYS
         {
             //Create Database connection string
             var myConn = new SQLiteConnection(Db.ConnectionString);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
             string strSQL = "SELECT * FROM Levels";
@@ -225,9 +224,7 @@ namespace TestSYS
                 cboTTLvl.Items.Add(dataReader.GetString(0) + " " + dataReader.GetString(1));
             }
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
         }
-
     }
 }

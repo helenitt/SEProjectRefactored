@@ -87,8 +87,7 @@ namespace TestSYS
                 //Exectute SQL command
                 cmd.ExecuteNonQuery();
 
-                //Close DB connection
-                myConn.Close();
+                DbConnect.CloseDb();
             }          
         }
     }

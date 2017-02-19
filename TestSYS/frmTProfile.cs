@@ -84,9 +84,8 @@ namespace TestSYS
              dataAdapter.Fill(dataSet, "Tests");
              grdTests.DataSource = dataSet.Tables["Tests"];
 
-             //Close DB
-             myConn.Close();
-         }
+            DbConnect.CloseDb();
+        }
         
         // LECTURER'S VIEW OF STUDENT TEST PROFILE
          private void txtStudId_TextChanged(object sender, EventArgs e)
@@ -137,9 +136,8 @@ namespace TestSYS
              dataAdapter.Fill(dataSet, "Students");
              grdStudList.DataSource = dataSet.Tables["Students"];
 
-             //Close DB
-             myConn.Close();
-         }
+            DbConnect.CloseDb();
+        }
 
          public void fillLecGridId(string idString)
          {
@@ -163,9 +161,8 @@ namespace TestSYS
              dataAdapter.Fill(dataSet, "Students");
              grdStudList.DataSource = dataSet.Tables["Students"];
 
-             //Close DB
-             myConn.Close();
-         }
+            DbConnect.CloseDb();
+        }
 
          public void fillLecGridName(string name)
          {
@@ -188,9 +185,8 @@ namespace TestSYS
              dataAdapter.Fill(dataSet, "Students");
              grdStudList.DataSource = dataSet.Tables["Students"];
 
-             //Close DB
-             myConn.Close();
-         }
+            DbConnect.CloseDb();
+        }
 
          private void btnMainMenu_Click(object sender, EventArgs e)
          {

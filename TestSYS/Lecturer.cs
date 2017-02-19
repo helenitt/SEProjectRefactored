@@ -71,7 +71,6 @@ namespace TestSYS
         //GET LECTURER DETAILS
         public void getLecDetails(int id)
         {
-
             //Create Database connection string
             var myConn = new SQLiteConnection(Db.ConnectionString);
 

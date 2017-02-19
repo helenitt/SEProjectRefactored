@@ -98,7 +98,7 @@ namespace TestSYS
             if(id < 9000) 
             {
                 // Check Passwords are Validate  
-                if (!deleteStudent.validStudLogin((Convert.ToInt16(id)), txtDelPsw.Text))
+                if (!deleteStudent.validStudentLogin((Convert.ToInt16(id)), txtDelPsw.Text))
                 {
                     MessageBox.Show("Incorrect Password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtConfPsw.Focus();
@@ -135,7 +135,7 @@ namespace TestSYS
 
                 MessageBox.Show("Account Sucessfully Deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                frmMenu frmNext = new frmMenu(forename, id);
+                var frmNext = new frmMenu(forename, id);
 
                 Close();
                 frmNext.Show();
