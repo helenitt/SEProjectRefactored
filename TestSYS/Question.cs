@@ -100,7 +100,7 @@ namespace TestSYS
         public void getQuestionDetails(int qId)
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX StudId in Students
@@ -134,7 +134,7 @@ namespace TestSYS
         public void updateQuestion()
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
@@ -157,7 +157,7 @@ namespace TestSYS
         public void deleteQuestion(int questId)
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which updates the students details
@@ -181,7 +181,7 @@ namespace TestSYS
         {
             int countQuest;
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SQL query which retrieves number of questions in level
@@ -217,7 +217,7 @@ namespace TestSYS
         {
             int countQuest;
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SQL query which retrieves number of questions in level
@@ -252,7 +252,7 @@ namespace TestSYS
             var quest = new Question();
 
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
@@ -289,7 +289,7 @@ namespace TestSYS
         public void displayQuestion(int[] ids, int i)
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX StudId in Students

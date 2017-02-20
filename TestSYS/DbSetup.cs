@@ -3,7 +3,7 @@ using System.IO;
 
 namespace TestSYS
 {
-    public static class Db
+    public static class DbSetup
     {
         private static readonly string dbFile = "TestSYS.sqlite";
         public static string ConnectionString { get; private set; } = string.Format("Data Source={0};Version=3;", dbFile);

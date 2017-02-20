@@ -148,7 +148,7 @@ namespace TestSYS
         public void loadLevels()
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions

@@ -204,7 +204,7 @@ namespace TestSYS
         private void loadLevels()
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
             string strSQL = "SELECT * FROM Levels";

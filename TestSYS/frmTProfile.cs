@@ -66,7 +66,7 @@ namespace TestSYS
          public void fillStudGrid(string sortOrder, int id)
          {
              //Create Database connection string
-             var myConn = new SQLiteConnection(Db.ConnectionString);
+             var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
              //Define SQL query which retrieves Students Test Results
              string strSQL = "SELECT TestId, TestDate, Score, LevelCode FROM Tests WHERE StudId = " + id + " ORDER BY " + sortOrder;     
@@ -118,7 +118,7 @@ namespace TestSYS
          public void fillLecGrid(string sortOrder)
          {
              //Create Database connection string
-             var myConn = new SQLiteConnection(Db.ConnectionString);
+             var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
              //Define SDQL query which retrieves Students details
              string strSQL = "SELECT StudId, Sname, Fname, DOB, RegDate FROM Students ORDER BY " + sortOrder;
@@ -142,7 +142,7 @@ namespace TestSYS
          public void fillLecGridId(string idString)
          {
              //Create Database connection string
-             var myConn = new SQLiteConnection(Db.ConnectionString);
+             var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
              //Define SDQL query which retrieves MAX StudId in Students
              int id = Convert.ToInt32(idString);
@@ -167,7 +167,7 @@ namespace TestSYS
          public void fillLecGridName(string name)
          {
              //Create Database connection string
-             var myConn = new SQLiteConnection(Db.ConnectionString);
+             var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
              //Define SDQL query which retrieves MAX StudId in Students                              
              string strSQL = "SELECT StudId, Sname, Fname, DOB, RegDate FROM Students WHERE Sname LIKE '" + name + "%'";

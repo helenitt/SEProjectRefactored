@@ -16,7 +16,7 @@ namespace TestSYS
 
         public static SQLiteDataReader ConnectDbReader(string strSQL)
         {
-            myConn = new SQLiteConnection(Db.ConnectionString);
+            myConn = new SQLiteConnection(DbSetup.ConnectionString);
             var cmd = new SQLiteCommand(strSQL, myConn);
             myConn.Open();
             SQLiteDataReader dataReader = cmd.ExecuteReader();
@@ -26,7 +26,7 @@ namespace TestSYS
 
         public static void ConnectDbNonQuery(string strSQL)
         {
-            myConn = new SQLiteConnection(Db.ConnectionString);
+            myConn = new SQLiteConnection(DbSetup.ConnectionString);
             var cmd = new SQLiteCommand(strSQL, myConn);
             myConn.Open();
             cmd.ExecuteNonQuery();

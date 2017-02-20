@@ -5,6 +5,7 @@ namespace TestSYS
 {
     public partial class frmMenu : Form
     {
+        Shared.Config config = new Shared.Config();
         Student student;
         Lecturer lecturer;
         string forename;
@@ -15,11 +16,11 @@ namespace TestSYS
             InitializeComponent();
         }
 
-        public frmMenu(string foreName, int id)
+        public frmMenu(string forename, int id)
         {
-            // Get rid of magic number cnfig??? maxStudentUsers = 9000??? lec id 9001 -> 9999???
             InitializeComponent();
-            if (id < 9000)
+
+            if (id < config.MaxStudentId)
             {
                 student = new Student();
             }
@@ -27,7 +28,7 @@ namespace TestSYS
             {
                 lecturer = new Lecturer();
             }
-            forename = foreName;
+            this.forename = forename;
             this.id = id;
         }
 
@@ -36,7 +37,7 @@ namespace TestSYS
             txtName.Text = forename;
             
             //Check if student or lecturer
-            if (id < 9000)
+            if (id < config.MaxStudentId)
             {
                 grpStudent.Visible = true;
                 grpLecturer.Visible = false;

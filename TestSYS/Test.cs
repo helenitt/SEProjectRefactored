@@ -46,7 +46,7 @@ namespace TestSYS
             int intNextTId;
 
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
             string strSQL = "SELECT MAX(TestId) FROM Tests";
@@ -78,7 +78,7 @@ namespace TestSYS
         public void saveTest()
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which inserts the question in to the database
             string strSQL = "INSERT INTO Tests (TestId, TestDate, Score, StudId, LevelCode) VALUES (" + testId + ", '" + string.Format("{0:dd-MMM-yy}", dateTaken) +

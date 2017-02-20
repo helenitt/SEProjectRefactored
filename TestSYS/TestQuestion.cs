@@ -71,7 +71,7 @@ namespace TestSYS
         public void saveTestQuest()
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             for(int i=0; i < 4; i++) 
             {

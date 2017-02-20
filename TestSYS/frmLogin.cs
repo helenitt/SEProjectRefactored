@@ -52,8 +52,9 @@ namespace TestSYS
             }
 
             // Get rid of magic number config??
-            // CHECK IF STUDENT OR LECTURER            
-            if (Convert.ToInt32(txtID.Text) < 9000)
+            // CHECK IF STUDENT OR LECTURER
+            Shared.Config config = new Shared.Config();
+            if (Convert.ToInt32(txtID.Text) < config.MaxStudentId)
             {
                 loginStudent = new Student();
 

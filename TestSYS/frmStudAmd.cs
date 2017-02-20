@@ -234,7 +234,7 @@ namespace TestSYS
         public void fillLecGrid(String sortOrder)
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves Students details
@@ -259,7 +259,7 @@ namespace TestSYS
         public void fillLecGridId(string idString)
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX StudId in Students
             int id = Convert.ToInt32(idString);
@@ -284,7 +284,7 @@ namespace TestSYS
         public void fillLecGridName(string name)
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX StudId in Students                              
             string strSQL = "SELECT StudId, Sname, Fname, DOB, RegDate FROM Students WHERE Sname LIKE '" + name + "%'";

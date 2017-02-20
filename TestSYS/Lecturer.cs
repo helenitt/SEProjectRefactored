@@ -41,7 +41,7 @@ namespace TestSYS
         public bool validLecLogin(int id, string psw)
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX StudId in Students
             string strSQL = "SELECT *  FROM Lecturers WHERE LecId = " + id + " AND Passwd = '" + psw + "'";
@@ -72,7 +72,7 @@ namespace TestSYS
         public void getLecDetails(int id)
         {
             //Create Database connection string
-            var myConn = new SQLiteConnection(Db.ConnectionString);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX StudId in Students
             string strSQL = "SELECT LecId, FName  FROM Lecturers WHERE LecId = " + id;
