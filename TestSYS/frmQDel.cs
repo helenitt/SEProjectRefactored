@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
+using TestSYS.LightInject;
 
 namespace TestSYS
 {
 
     public partial class frmQDel : Form
     {
+        private IServiceContainer _container;
+
         Question question = new Question();
         string forename;
         int questionId;
@@ -13,6 +16,12 @@ namespace TestSYS
 
         public frmQDel()
         {
+            InitializeComponent();
+        }
+
+        public frmQDel(IServiceContainer container)
+        {
+            _container = container;
             InitializeComponent();
         }
 
@@ -25,7 +34,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, lecturerId);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }        
@@ -71,7 +80,7 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, lecturerId);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using TestSYS.LightInject;
 
 namespace TestSYS
 {
     public partial class frmTTake : Form
     {
+        private IServiceContainer _container;
+
         Test test = new Test();
         TestQuestion testQuestion = new TestQuestion();
         Question question = new Question();
@@ -22,6 +25,12 @@ namespace TestSYS
             InitializeComponent();
         }
 
+        public frmTTake(IServiceContainer container)
+        {
+            _container = container;
+            InitializeComponent();
+        }
+
         public frmTTake(string forename, int id)
         {
             InitializeComponent();
@@ -31,7 +40,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
@@ -196,7 +205,7 @@ namespace TestSYS
             testQuestion.setAnsGiven(answers);                                      
             testQuestion.saveTestQuest();
 
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();   
         }

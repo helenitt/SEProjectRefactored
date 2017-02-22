@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using TestSYS.LightInject;
 
 namespace TestSYS
 {
     public partial class frmQAdd : Form
     {
+        private IServiceContainer _container;
+
         Question question = new Question();
         string forname;
         int lecturerId;
@@ -15,6 +18,13 @@ namespace TestSYS
             InitializeComponent();
         }
 
+        public frmQAdd(IServiceContainer container)
+        {
+            _container = container;
+            InitializeComponent();
+        }
+
+        // Instead of below
         public frmQAdd(string name, int id)
         {
             InitializeComponent();
@@ -32,7 +42,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forname, lecturerId);
+            var frmNext = _container.GetInstance<frmMenu>();
 
             Close();
             frmNext.Show();
@@ -141,10 +151,11 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forname, lecturerId);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
+
         public void loadLevels()
         {
             //Create Database connection string

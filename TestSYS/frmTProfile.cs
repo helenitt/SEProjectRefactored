@@ -2,11 +2,14 @@
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using TestSYS.LightInject;
 
 namespace TestSYS
 {
     public partial class frmTProfile : Form
     {
+        private IServiceContainer _container;
+
         string forename;
         int id;
 
@@ -14,6 +17,13 @@ namespace TestSYS
         {
             InitializeComponent();
         }
+
+        public frmTProfile(IServiceContainer container)
+        {
+            _container = container;
+            InitializeComponent();
+        }
+
         public frmTProfile(string fName, int id)
         {
             InitializeComponent();
@@ -49,7 +59,7 @@ namespace TestSYS
 
          private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
@@ -57,7 +67,7 @@ namespace TestSYS
         //STUDENT TEST PROFILE
         private void btnFinishedProfile_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }

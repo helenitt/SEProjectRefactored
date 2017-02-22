@@ -1,15 +1,24 @@
 ﻿using System;
 using System.Windows.Forms;
+using TestSYS.LightInject;
 
 namespace TestSYS
 {
     public partial class frmStudAdd : Form
     {
+        private IServiceContainer _container;
+
         frmWelcome parent;
         Student newStudent = new Student();
 
         public frmStudAdd()
         {
+            InitializeComponent();
+        }
+
+        public frmStudAdd(IServiceContainer container)
+        {
+            _container = container;
             InitializeComponent();
         }
 
@@ -110,7 +119,7 @@ namespace TestSYS
             //Confirm message
             MessageBox.Show("Student Registered", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            var frmNext = new frmMenu(txtAddFNm.Text, Convert.ToInt32(txtStudId.Text));
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }

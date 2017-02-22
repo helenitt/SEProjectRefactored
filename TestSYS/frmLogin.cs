@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
+using TestSYS.LightInject;
 
 namespace TestSYS
 {
     public partial class frmLogin : Form
     {
+        private IServiceContainer _container;
+
         frmWelcome parent;  
         Student loginStudent;
         Lecturer loginLecturer;
@@ -14,6 +17,13 @@ namespace TestSYS
             InitializeComponent();
         }
 
+        public frmLogin(IServiceContainer container)
+        {
+            _container = container;
+            InitializeComponent();
+        }
+
+        // To replace the one below I think
         public frmLogin(frmWelcome Parent)
         {
             InitializeComponent();
@@ -62,9 +72,9 @@ namespace TestSYS
                 {
                     // get and set details
                     loginStudent.getStudDetails(Convert.ToInt16(txtID.Text));
-                    
-                    var frmNext = new frmMenu(loginStudent.getFName(), loginStudent.getStudId());
 
+                    //var frmNext = new frmMenu(loginStudent.getFName(), loginStudent.getStudId());
+                    var frmNext = _container.GetInstance<frmMenu>();
                     Close();
                     frmNext.Show();
                 }
@@ -82,10 +92,10 @@ namespace TestSYS
                 if (loginLecturer.validLecLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
                 {
                     // get and set details
-                    loginLecturer.getLecDetails(Convert.ToInt16(txtID.Text));                 
-                    
-                    var frmNext = new frmMenu(loginLecturer.getFName(), loginLecturer.getLecId());
-                    
+                    loginLecturer.getLecDetails(Convert.ToInt16(txtID.Text));
+
+                    //var frmNext = new frmMenu(loginLecturer.getFName(), loginLecturer.getLecId());
+                    var frmNext = _container.GetInstance<frmMenu>();
                     Close();
                     frmNext.Show();
                 }

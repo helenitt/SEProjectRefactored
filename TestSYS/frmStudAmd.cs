@@ -2,11 +2,14 @@
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using TestSYS.LightInject;
 
 namespace TestSYS
 {
     public partial class frmStudAmd : Form
     {
+        private IServiceContainer _container;
+
         Student amendStudent = new Student();
         Lecturer lecturer = new Lecturer();
 
@@ -18,6 +21,13 @@ namespace TestSYS
         {
             InitializeComponent();
         }
+
+        public frmStudAmd(IServiceContainer container)
+        {
+            _container = container;
+            InitializeComponent();
+        }
+
         public frmStudAmd(int id)
         {
             InitializeComponent();
@@ -38,7 +48,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var nextForm = new frmMenu(forname, id);
+            var nextForm = _container.GetInstance<frmMenu>();
             Close();
             nextForm.Show();
         }
@@ -162,11 +172,11 @@ namespace TestSYS
 
             if (id < 9000)
             {
-                frmNext = new frmMenu(txtAmdFname.Text.ToUpper(), id);
+                frmNext = _container.GetInstance<frmMenu>();
             }
             else
             {
-                frmNext = new frmMenu(forname, id);
+                frmNext = _container.GetInstance<frmMenu>();
             }
             
             Close();
@@ -175,7 +185,7 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forname, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
@@ -226,12 +236,12 @@ namespace TestSYS
 
         private void btnMenuSearch_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forname, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
 
-        public void fillLecGrid(String sortOrder)
+        public void fillLecGrid(string sortOrder)
         {
             //Create Database connection string
             var myConn = new SQLiteConnection(DbSetup.ConnectionString);

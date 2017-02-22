@@ -2,11 +2,14 @@
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using TestSYS.LightInject;
 
 namespace TestSYS
 {
     public partial class frmStudDel : Form
     {
+        private IServiceContainer _container;
+
         Student deleteStudent;
         Lecturer lecturer;
         string forename;
@@ -15,6 +18,12 @@ namespace TestSYS
 
         public frmStudDel()
         {
+            InitializeComponent();
+        }
+
+        public frmStudDel(IServiceContainer container)
+        {
+            _container = container;
             InitializeComponent();
         }
 
@@ -32,7 +41,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
@@ -74,7 +83,7 @@ namespace TestSYS
         // STUDENT GROUP DELETE ACCOUNT
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
@@ -135,8 +144,7 @@ namespace TestSYS
 
                 MessageBox.Show("Account Sucessfully Deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                var frmNext = new frmMenu(forename, id);
-
+                var frmNext = _container.GetInstance<frmMenu>();
                 Close();
                 frmNext.Show();
             }           
@@ -184,7 +192,7 @@ namespace TestSYS
 
         private void btnMenuSearch_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
