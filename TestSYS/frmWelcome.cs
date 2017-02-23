@@ -28,7 +28,7 @@ namespace TestSYS
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            var frmNext = _container.GetInstance<frmStudAdd>();
+            var frmNext = _container.GetInstance<frmLogin>();
             Hide();
             frmNext.Show();
         }

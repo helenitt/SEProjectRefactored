@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Windows.Forms;
 using TestSYS.LightInject;
 
@@ -17,18 +18,19 @@ namespace TestSYS
             InitializeComponent();
         }
 
-        public frmLogin(IServiceContainer container)
+        public frmLogin(IServiceContainer container, frmWelcome Parent)
         {
             _container = container;
             InitializeComponent();
-        }
-
-        // To replace the one below I think
-        public frmLogin(frmWelcome Parent)
-        {
-            InitializeComponent();
             parent = Parent;
         }
+
+        //// To replace the one below I think
+        //public frmLogin(frmWelcome Parent)
+        //{
+        //    InitializeComponent();
+        //    parent = Parent;
+        //}
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
@@ -63,8 +65,8 @@ namespace TestSYS
 
             // Get rid of magic number config??
             // CHECK IF STUDENT OR LECTURER
-            Shared.Config config = new Shared.Config();
-            if (Convert.ToInt32(txtID.Text) < config.MaxStudentId)
+            //var maxStudents = new Config.MaxStudentId();
+            if (Convert.ToInt32(txtID.Text) < 9000)
             {
                 loginStudent = new Student();
 

@@ -3,9 +3,9 @@ using System.Configuration;
 
 namespace Shared
 {
-    public static class AppSettingsConfigurationProvider 
+    public static class AppSettingsConfigurationReader 
     {
-       public static Config GetData()
+       public static Config GetMaxStudents()
         {
             var config = new Config();
 
