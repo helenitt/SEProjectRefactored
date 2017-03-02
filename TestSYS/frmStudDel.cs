@@ -3,11 +3,13 @@ using System.Data;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using TestSYS.LightInject;
+using Shared;
 
 namespace TestSYS
 {
     public partial class frmStudDel : Form
     {
+        Config config = new Config();
         private IServiceContainer _container;
 
         Student deleteStudent;
@@ -48,10 +50,9 @@ namespace TestSYS
 
         private void frmStudDel_Load(object sender, EventArgs e)
         {
-            
-            // todo: Get rid of magic number
-            // Check if student or lecturer
-            if (id < 9000)
+
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 deleteStudent = new Student(); 
                 
@@ -102,9 +103,9 @@ namespace TestSYS
                 txtConfPsw.Focus();
                 return;
             }
-            
-            // Check whether user is a student or a lecturer
-            if(id < 9000) 
+
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 // Check Passwords are Validate  
                 if (!deleteStudent.validStudentLogin((Convert.ToInt16(id)), txtDelPsw.Text))

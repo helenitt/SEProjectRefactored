@@ -3,11 +3,13 @@ using System.Data;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using TestSYS.LightInject;
+using Shared;
 
 namespace TestSYS
 {
     public partial class frmTProfile : Form
     {
+        Config config = new Config();
         private IServiceContainer _container;
 
         string forename;
@@ -34,9 +36,8 @@ namespace TestSYS
         // FEED IN studId AND CHANGE TABLE AND BUTTONS
        private void frmTProfile_Load(object sender, EventArgs e)
         {
-            // Get rid of magic number
-            //Check if student or lecturer
-            if (id < 9000)
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 grpStudent.Visible = true;
                 grpLecturer.Visible = false;

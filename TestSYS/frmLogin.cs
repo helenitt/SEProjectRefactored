@@ -62,11 +62,10 @@ namespace TestSYS
                 txtPassWord.Focus();
                 return;
             }
-
-            // Get rid of magic number config??
+            
             // CHECK IF STUDENT OR LECTURER
-            //var maxStudents = new Config.MaxStudentId();
-            if (Convert.ToInt32(txtID.Text) < 9000)
+            var config = new Config();
+            if (Convert.ToInt32(txtID.Text) < Convert.ToInt32(config.MaxStudentId))
             {
                 loginStudent = new Student();
 

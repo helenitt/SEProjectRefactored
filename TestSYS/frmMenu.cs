@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Windows.Forms;
 using TestSYS.LightInject;
 
@@ -6,8 +7,8 @@ namespace TestSYS
 {
     public partial class frmMenu : Form
     {
-        Shared.Config config = new Shared.Config();
-
+        Config config = new Config();
+        
         private IServiceContainer _container;
 
         Student student;
@@ -31,7 +32,8 @@ namespace TestSYS
         {
             InitializeComponent();
 
-            if (id < config.MaxStudentId)
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 student = new Student();
             }
@@ -46,9 +48,10 @@ namespace TestSYS
         private void frmStudMenu_Load(object sender, EventArgs e)
         {
             txtName.Text = forename;
-            
+
             //Check if student or lecturer
-            if (id < config.MaxStudentId)
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 grpStudent.Visible = true;
                 grpLecturer.Visible = false;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SQLite;
@@ -8,6 +9,7 @@ namespace TestSYS
 {
     public partial class frmStudAmd : Form
     {
+        Config config = new Config();
         private IServiceContainer _container;
 
         Student amendStudent = new Student();
@@ -56,10 +58,9 @@ namespace TestSYS
         private void frmStudAmd_Load(object sender, EventArgs e)
         {
             dtpAmdDob.MaxDate = DateTime.Today.AddYears(-17);
-       
-            //Get rid of magic number
-            //Check if student or lecturer
-            if (id < 9000)
+
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 grpStudAmd.Visible = true;
                 grpLecAmd.Visible = false;
@@ -146,8 +147,8 @@ namespace TestSYS
             amendStudent.setDOB(dob);
             amendStudent.setAmdDate(amdDate);
 
-            // Get rid of magic number
-            if (id < 9000)
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 amendStudent.setPassword(txtAmdPsw.Text);
             }
@@ -170,7 +171,8 @@ namespace TestSYS
             MessageBox.Show("Student Details Amended", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
             frmMenu frmNext;
 
-            if (id < 9000)
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 frmNext = _container.GetInstance<frmMenu>();
             }
