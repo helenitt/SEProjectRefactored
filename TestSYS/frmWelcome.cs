@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
+using LightInject;
 
 namespace TestSYS
 {
     public partial class frmWelcome : Form
     {
-        public frmWelcome()
+        private IServiceContainer _container;
+
+        public frmWelcome(IServiceContainer container)
         {
+            _container = container;
             InitializeComponent();
         }
 
@@ -17,14 +21,14 @@ namespace TestSYS
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmStudAdd(this);
+            var frmNext = _container.GetInstance<frmStudAdd>();
             Hide();
             frmNext.Show();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmLogin(this);
+            var frmNext = _container.GetInstance<frmLogin>();
             Hide();
             frmNext.Show();
         }

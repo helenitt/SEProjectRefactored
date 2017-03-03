@@ -6,11 +6,10 @@ namespace TestSYS
     public static class DbSetup
     {
         private static readonly string dbFile = "TestSYS.sqlite";
-        public static string ConnectionString { get; private set; } 
+        public static string ConnectionString { get; private set; } = string.Format("Data Source={0};Version=3;", dbFile);
 
         public static void SetUpDb()
         {
-            ConnectionString = string.Format("Data Source={0};Version=3;", dbFile);
             CreateDbFile();
 
             using (var connection = new SQLiteConnection(ConnectionString))

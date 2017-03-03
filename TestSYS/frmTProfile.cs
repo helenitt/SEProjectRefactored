@@ -2,12 +2,16 @@
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using LightInject;
 using Shared;
 
 namespace TestSYS
 {
     public partial class frmTProfile : Form
     {
+        Config config = new Config();
+        private IServiceContainer _container;
+
         string forename;
         int id;
 
@@ -15,19 +19,25 @@ namespace TestSYS
         {
             InitializeComponent();
         }
+
+        public frmTProfile(IServiceContainer container)
+        {
+            _container = container;
+            InitializeComponent();
+        }
+
         public frmTProfile(string fName, int id)
         {
             InitializeComponent();
-            this.forename = fName;
+            forename = fName;
             this.id = id;
         }
 
         // FEED IN studId AND CHANGE TABLE AND BUTTONS
        private void frmTProfile_Load(object sender, EventArgs e)
         {
-            //Check if student or lecturer
-           Config config = new Config();
-            if (id < Convert.ToInt32(config.MaxStudentId))
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 grpStudent.Visible = true;
                 grpLecturer.Visible = false;
@@ -50,7 +60,7 @@ namespace TestSYS
 
          private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
@@ -58,7 +68,7 @@ namespace TestSYS
         //STUDENT TEST PROFILE
         private void btnFinishedProfile_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }

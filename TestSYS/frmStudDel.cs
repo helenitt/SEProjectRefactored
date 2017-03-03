@@ -2,21 +2,30 @@
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using LightInject;
 using Shared;
 
 namespace TestSYS
 {
     public partial class frmStudDel : Form
     {
+        Config config = new Config();
+        private IServiceContainer _container;
+
         Student deleteStudent;
         Lecturer lecturer;
-        readonly Config _config = new Config();
         string forename;
         int id;
         int studentId;
 
         public frmStudDel()
         {
+            InitializeComponent();
+        }
+
+        public frmStudDel(IServiceContainer container)
+        {
+            _container = container;
             InitializeComponent();
         }
 
@@ -34,16 +43,16 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
 
         private void frmStudDel_Load(object sender, EventArgs e)
         {
-            
-            // Check if student or lecturer
-            if (id < Convert.ToInt32(_config.MaxStudentId))
+
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 deleteStudent = new Student(); 
                 
@@ -75,7 +84,7 @@ namespace TestSYS
         // STUDENT GROUP DELETE ACCOUNT
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
@@ -94,9 +103,9 @@ namespace TestSYS
                 txtConfPsw.Focus();
                 return;
             }
-            
-            // Check whether user is a student or a lecturer
-            if(id < Convert.ToInt32(_config.MaxStudentId)) 
+
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 // Check Passwords are Validate  
                 if (!deleteStudent.validStudentLogin((Convert.ToInt16(id)), txtDelPsw.Text))
@@ -136,8 +145,7 @@ namespace TestSYS
 
                 MessageBox.Show("Account Sucessfully Deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                var frmNext = new frmMenu(forename, id);
-
+                var frmNext = _container.GetInstance<frmMenu>();
                 Close();
                 frmNext.Show();
             }           
@@ -185,7 +193,7 @@ namespace TestSYS
 
         private void btnMenuSearch_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }

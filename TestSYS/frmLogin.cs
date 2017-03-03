@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Windows.Forms;
-using Shared;
+using LightInject;
 
 namespace TestSYS
 {
     public partial class frmLogin : Form
     {
+        private IServiceContainer _container;
+
         frmWelcome parent;  
         Student loginStudent;
         Lecturer loginLecturer;
@@ -15,11 +18,19 @@ namespace TestSYS
             InitializeComponent();
         }
 
-        public frmLogin(frmWelcome Parent)
+        public frmLogin(IServiceContainer container, frmWelcome Parent)
         {
+            _container = container;
             InitializeComponent();
             parent = Parent;
         }
+
+        //// To replace the one below I think
+        //public frmLogin(frmWelcome Parent)
+        //{
+        //    InitializeComponent();
+        //    parent = Parent;
+        //}
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
@@ -51,10 +62,10 @@ namespace TestSYS
                 txtPassWord.Focus();
                 return;
             }
-
+            
             // CHECK IF STUDENT OR LECTURER
             var config = new Config();
-            if (Convert.ToInt32(txtID.Text) < Convert.ToInt32(config.MaxStudentId)) 
+            if (Convert.ToInt32(txtID.Text) < Convert.ToInt32(config.MaxStudentId))
             {
                 loginStudent = new Student();
 
@@ -62,9 +73,9 @@ namespace TestSYS
                 {
                     // get and set details
                     loginStudent.getStudDetails(Convert.ToInt16(txtID.Text));
-                    
-                    var frmNext = new frmMenu(loginStudent.getFName(), loginStudent.getStudId());
 
+                    //var frmNext = new frmMenu(loginStudent.getFName(), loginStudent.getStudId());
+                    var frmNext = _container.GetInstance<frmMenu>();
                     Close();
                     frmNext.Show();
                 }
@@ -82,10 +93,10 @@ namespace TestSYS
                 if (loginLecturer.validLecLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
                 {
                     // get and set details
-                    loginLecturer.getLecDetails(Convert.ToInt16(txtID.Text));                 
-                    
-                    var frmNext = new frmMenu(loginLecturer.getFName(), loginLecturer.getLecId());
-                    
+                    loginLecturer.getLecDetails(Convert.ToInt16(txtID.Text));
+
+                    //var frmNext = new frmMenu(loginLecturer.getFName(), loginLecturer.getLecId());
+                    var frmNext = _container.GetInstance<frmMenu>();
                     Close();
                     frmNext.Show();
                 }

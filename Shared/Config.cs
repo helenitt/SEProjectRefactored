@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace Shared
 {
     public class Config : IConfig
     {
-        public string MaxStudentId { get; set; }
+        public int MaxStudentId { get; set; }
     }
 }

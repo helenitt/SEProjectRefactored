@@ -1,16 +1,20 @@
-﻿using System;
+﻿using Shared;
+using System;
 using System.Data;
 using System.Windows.Forms;
 using System.Data.SQLite;
-using Shared;
+using LightInject;
 
 namespace TestSYS
 {
     public partial class frmStudAmd : Form
     {
+        Config config = new Config();
+        private IServiceContainer _container;
+
         Student amendStudent = new Student();
         Lecturer lecturer = new Lecturer();
-        readonly Config _config = new Config();
+
         string forname;
         int id;
         int studentId;
@@ -19,6 +23,13 @@ namespace TestSYS
         {
             InitializeComponent();
         }
+
+        public frmStudAmd(IServiceContainer container)
+        {
+            _container = container;
+            InitializeComponent();
+        }
+
         public frmStudAmd(int id)
         {
             InitializeComponent();
@@ -39,7 +50,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var nextForm = new frmMenu(forname, id);
+            var nextForm = _container.GetInstance<frmMenu>();
             Close();
             nextForm.Show();
         }
@@ -47,9 +58,9 @@ namespace TestSYS
         private void frmStudAmd_Load(object sender, EventArgs e)
         {
             dtpAmdDob.MaxDate = DateTime.Today.AddYears(-17);
-       
-            //Check if student or lecturer
-            if (id < Convert.ToInt32(_config.MaxStudentId))
+
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 grpStudAmd.Visible = true;
                 grpLecAmd.Visible = false;
@@ -136,7 +147,8 @@ namespace TestSYS
             amendStudent.setDOB(dob);
             amendStudent.setAmdDate(amdDate);
 
-            if (id < Convert.ToInt32(_config.MaxStudentId))
+            var maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
                 amendStudent.setPassword(txtAmdPsw.Text);
             }
@@ -159,13 +171,14 @@ namespace TestSYS
             MessageBox.Show("Student Details Amended", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
             frmMenu frmNext;
 
-            if (id < Convert.ToInt32(_config.MaxStudentId))
+            maxStudentId = Convert.ToInt32(config.MaxStudentId);
+            if (id < maxStudentId)
             {
-                frmNext = new frmMenu(txtAmdFname.Text.ToUpper(), id);
+                frmNext = _container.GetInstance<frmMenu>();
             }
             else
             {
-                frmNext = new frmMenu(forname, id);
+                frmNext = _container.GetInstance<frmMenu>();
             }
             
             Close();
@@ -174,7 +187,7 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forname, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
@@ -225,12 +238,12 @@ namespace TestSYS
 
         private void btnMenuSearch_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forname, id);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
 
-        public void fillLecGrid(String sortOrder)
+        public void fillLecGrid(string sortOrder)
         {
             //Create Database connection string
             var myConn = new SQLiteConnection(DbSetup.ConnectionString);

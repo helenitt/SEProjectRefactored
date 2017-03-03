@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using LightInject;
 
 namespace TestSYS
 {
     public partial class frmQAmd : Form
     {
+        private IServiceContainer _container;
+
         Question question = new Question();
         string forename;
         int questionId;
@@ -16,6 +19,13 @@ namespace TestSYS
             InitializeComponent();
         }
 
+        public frmQAmd(IServiceContainer container)
+        {
+            _container = container;
+            InitializeComponent();
+        }
+
+        // Instead of
         public frmQAmd(string name, int id)
         {
             InitializeComponent();
@@ -30,7 +40,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, lecturerId);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }
@@ -88,7 +98,7 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            var frmNext = new frmMenu(forename, lecturerId);
+            var frmNext = _container.GetInstance<frmMenu>();
             Close();
             frmNext.Show();
         }

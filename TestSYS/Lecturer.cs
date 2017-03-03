@@ -29,7 +29,6 @@ namespace TestSYS
         public string getPasswd() { return passwd; }
         public string getSName() { return surname; }
         public string getFName() { return forename; }
-     
         public void setLecId(int id) { lecturerId = id; }
         public void setPasswd(string pword) { passwd = pword; }
         public void setSName(string name) { surname = name; }
@@ -88,7 +87,6 @@ namespace TestSYS
             dataReader.Read();
 
             //Set variables
-
             setLecId(Convert.ToInt32(dataReader.GetValue(0)));
             setFName(dataReader.GetString(1));
 

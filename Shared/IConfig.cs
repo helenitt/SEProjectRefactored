@@ -2,6 +2,6 @@
 {
     public interface IConfig
     {
-        string MaxStudentId { get; }
+        int MaxStudentId { get; }
     }
 }
