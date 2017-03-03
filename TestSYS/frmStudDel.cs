@@ -1,34 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OracleClient;
+using System.Data.SQLite;
+using Shared;
 
 namespace TestSYS
 {
     public partial class frmStudDel : Form
     {
-        Student delStud;
-        Lecturer lecDel;
-        String fName;
+        Student deleteStudent;
+        Lecturer lecturer;
+        readonly Config _config = new Config();
+        string forename;
         int id;
-        int sId;
+        int studentId;
 
         public frmStudDel()
         {
             InitializeComponent();
         }
 
-        public frmStudDel(String name, int Id)
+        public frmStudDel(string name, int id)
         {
             InitializeComponent();
-            fName = name;
-            this.id = Id;
+            forename = name;
+            this.id = id;
         }
 
         private void mnuQuit_Click(object sender, EventArgs e)
@@ -38,38 +34,36 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, id);
-
-            this.Close();
+            var frmNext = new frmMenu(forename, id);
+            Close();
             frmNext.Show();
         }
 
         private void frmStudDel_Load(object sender, EventArgs e)
         {
             
-            
-            //Check if student or lecturer
-            if (id < 9000)
+            // Check if student or lecturer
+            if (id < Convert.ToInt32(_config.MaxStudentId))
             {
-                delStud = new Student(); 
+                deleteStudent = new Student(); 
                 
                 grpStudDel.Visible = true;
                 grpLecDel.Visible = false;
 
                 txtDelPsw.Focus();
 
-                delStud.getStudDetails(id);
+                deleteStudent.getStudDetails(id);
 
-                //load student details into form controls
-                txtDelSname.Text = delStud.getSName().TrimEnd(); ;
-                txtDelFname.Text = delStud.getFName().TrimEnd();
-                txtDelEmail.Text = delStud.getEmail().TrimEnd();
-                dtpDelDob.Value = Convert.ToDateTime(delStud.getDOB());
+                // Load student details into form controls
+                txtDelSname.Text = deleteStudent.getSName().TrimEnd(); ;
+                txtDelFname.Text = deleteStudent.getFName().TrimEnd();
+                txtDelEmail.Text = deleteStudent.getEmail().TrimEnd();
+                dtpDelDob.Value = Convert.ToDateTime(deleteStudent.getDOB());
             }
             else
             {
-                lecDel = new Lecturer();
-                delStud = new Student(); 
+                lecturer = new Lecturer();
+                deleteStudent = new Student(); 
                 
                 grpLecDel.Visible = true;
                 grpStudDel.Visible = false;
@@ -77,15 +71,12 @@ namespace TestSYS
                 txtStudId.Focus();
             }  
         }
-
-
-        //STUDENT GROUP DELETE ACCOUNT
-
+        
+        // STUDENT GROUP DELETE ACCOUNT
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, id);
-
-            this.Close();
+            var frmNext = new frmMenu(forename, id);
+            Close();
             frmNext.Show();
         }
 
@@ -103,13 +94,12 @@ namespace TestSYS
                 txtConfPsw.Focus();
                 return;
             }
-
-
-            //Check whether user is a student or a lecturer
-            if(id < 9000) 
+            
+            // Check whether user is a student or a lecturer
+            if(id < Convert.ToInt32(_config.MaxStudentId)) 
             {
                 // Check Passwords are Validate  
-                if (!delStud.validStudLogin((Convert.ToInt16(id)), txtDelPsw.Text))
+                if (!deleteStudent.validStudentLogin((Convert.ToInt16(id)), txtDelPsw.Text))
                 {
                     MessageBox.Show("Incorrect Password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtConfPsw.Focus();
@@ -120,10 +110,8 @@ namespace TestSYS
 
                 try
                 {
-                    delStud.deleteStudent(id);
-
+                    deleteStudent.deleteStudent(id);
                     MessageBox.Show("Account Sucessfully Deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                     Application.Exit();
                 }
                 catch
@@ -135,7 +123,7 @@ namespace TestSYS
             else
             {
                 // Check Passwords are Validate  
-                if (!lecDel.validLecLogin((Convert.ToInt16(id)), txtDelPsw.Text))
+                if (!lecturer.validLecLogin((Convert.ToInt16(id)), txtDelPsw.Text))
                 {
                     MessageBox.Show("Incorrect Password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtConfPsw.Focus();
@@ -144,26 +132,24 @@ namespace TestSYS
 
                 MessageBox.Show("Are you sure you want to delete this account?\n\nTHIS ACTION CAN NOT BE UNDONE", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 
-                delStud.deleteStudent(sId);
+                deleteStudent.deleteStudent(studentId);
 
                 MessageBox.Show("Account Sucessfully Deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                frmMenu frmNext = new frmMenu(fName, id);
+                var frmNext = new frmMenu(forename, id);
 
-                this.Close();
+                Close();
                 frmNext.Show();
             }           
         }
 
         // LECTURER'S GROUP OF STUDENT AMEND
-
-
         private void txtStudId_TextChanged(object sender, EventArgs e)
         {
             if (txtStudId.Text.Equals(""))
                 return;
 
-            sId = Convert.ToInt32(txtStudId.Text);
+            studentId = Convert.ToInt32(txtStudId.Text);
 
             if (!txtStudId.Text.Equals(""))
             {
@@ -181,110 +167,103 @@ namespace TestSYS
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            String strId = grdStudList.Rows[grdStudList.CurrentCell.RowIndex].Cells[0].Value.ToString();
-            sId = Convert.ToInt32(strId);
+            string strId = grdStudList.Rows[grdStudList.CurrentCell.RowIndex].Cells[0].Value.ToString();
+            studentId = Convert.ToInt32(strId);
 
             grpLecDel.Visible = false;
             grpStudDel.Visible = true;
 
-            delStud.getStudDetails(sId);
+            deleteStudent.getStudDetails(studentId);
 
             // Load student details into form controls
-            txtDelSname.Text = delStud.getSName().TrimEnd();
-            txtDelFname.Text = delStud.getFName().TrimEnd();
-            txtDelEmail.Text = delStud.getEmail().TrimEnd();
-            dtpDelDob.Value = Convert.ToDateTime(delStud.getDOB());
+            txtDelSname.Text = deleteStudent.getSName().TrimEnd();
+            txtDelFname.Text = deleteStudent.getFName().TrimEnd();
+            txtDelEmail.Text = deleteStudent.getEmail().TrimEnd();
+            dtpDelDob.Value = Convert.ToDateTime(deleteStudent.getDOB());
         }
 
 
         private void btnMenuSearch_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, id);
-
-            this.Close();
+            var frmNext = new frmMenu(forename, id);
+            Close();
             frmNext.Show();
         }
 
-        public void fillLecGrid(String sortOrder)
+        public void fillLecGrid(string sortOrder)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves Students details
-            String strSQL = "SELECT StudId,Sname,Fname,DOB,RegDate FROM Students ORDER BY " + sortOrder;
+            string strSQL = "SELECT StudId, Sname, Fname, DOB, RegDate FROM Students ORDER BY " + sortOrder;
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Execute Query using Oracle Data Adapter
-            OracleDataAdapter da = new OracleDataAdapter(cmd);
-            DataSet ds = new DataSet();
+            var dataAdapter = new SQLiteDataAdapter(cmd);
+            var dataSet = new DataSet();
 
-            da.Fill(ds, "Students");
-            grdStudList.DataSource = ds.Tables["Students"];
+            dataAdapter.Fill(dataSet, "Students");
+            grdStudList.DataSource = dataSet.Tables["Students"];
 
             //Close DB
             myConn.Close();
-
         }
 
-        public void fillLecGridId(String idString)
+        public void fillLecGridId(string idString)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX StudId in Students
             int id = Convert.ToInt32(idString);
-            String strSQL = "SELECT StudId,Sname,Fname,DOB,RegDate FROM Students WHERE StudId = " + id;
+            string strSQL = "SELECT StudId, Sname, Fname, DOB, RegDate FROM Students WHERE StudId = " + id;
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Execute Query using Oracle Data Adapter
-            OracleDataAdapter da = new OracleDataAdapter(cmd);
-            DataSet ds = new DataSet();
+            var dataAdapter = new SQLiteDataAdapter(cmd);
+            var dataSet = new DataSet();
 
-            da.Fill(ds, "Students");
-            grdStudList.DataSource = ds.Tables["Students"];
+            dataAdapter.Fill(dataSet, "Students");
+            grdStudList.DataSource = dataSet.Tables["Students"];
 
             //Close DB
             myConn.Close();
-
         }
 
-        public void fillLecGridName(String name)
+        public void fillLecGridName(string name)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX StudId in Students                              
-            String strSQL = "SELECT StudId,Sname,Fname,DOB,RegDate FROM Students WHERE Sname LIKE '" + name + "%'";
+            string strSQL = "SELECT StudId, Sname, Fname, DOB, RegDate FROM Students WHERE Sname LIKE '" + name + "%'";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Execute Query using Oracle Data Adapter
-            OracleDataAdapter da = new OracleDataAdapter(cmd);
-            DataSet ds = new DataSet();
+            var dataAdapter = new SQLiteDataAdapter(cmd);
+            var dataSets = new DataSet();
 
-            da.Fill(ds, "Students");
-            grdStudList.DataSource = ds.Tables["Students"];
+            dataAdapter.Fill(dataSets, "Students");
+            grdStudList.DataSource = dataSets.Tables["Students"];
 
             //Close DB
             myConn.Close();
-
         }
     }
 }

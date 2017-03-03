@@ -1,84 +1,60 @@
 ﻿using System;
-using System.Data.OracleClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
     class Lecturer
     {
-        private int lecId;
+        private int lecturerId;
         private string passwd;        
-        private string sName;
-        private string fName;
+        private string surname;
+        private string forename;
         
         public Lecturer() {
+            lecturerId = 0;
+            passwd = "";            
+            surname = "";
+            forename = "";
         }
      
-        public Lecturer(int id, string pword, string sn, string fn)
+        public Lecturer(int id, string pword, string sname, string fname)
         {
-            lecId = id;
+            lecturerId = id;
             passwd = pword;
-            sName = sn;           
-            fName = fn;
+            surname = sname;           
+            forename = fname;
         }
 
-        // Accessors
-        public int getLecId()
-        {
-            return lecId;
-        }
-        public string getPasswd()
-        {
-            return passwd;
-        }
-        public string getSName()
-        {
-            return sName;
-        }
-        public string getFName()
-        {
-            return fName;
-        }
-
-
-        //mutators
-        public void setLecId(int id)
-        {
-            lecId = id;
-        }
-        public void setPasswd(string pword)
-        {
-            passwd = pword;
-        }
-         public void setSName(string name)
-        {
-            sName = name;
-        }
-        public void setFName(string name)
-        {
-            fName = name;
-        }
+        public int getLecId() { return lecturerId; }
+        public string getPasswd() { return passwd; }
+        public string getSName() { return surname; }
+        public string getFName() { return forename; }
+     
+        public void setLecId(int id) { lecturerId = id; }
+        public void setPasswd(string pword) { passwd = pword; }
+        public void setSName(string name) { surname = name; }
+        public void setFName(string name) { forename = name; }
 
         // CHECK LECTURER LOGIN IS VALID
-        public Boolean validLecLogin(int id, String psw)
+        public bool validLecLogin(int id, string psw)
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX StudId in Students
-            String strSQL = "SELECT *  FROM Lecturers WHERE LecId = " + id + " AND Passwd = '" + psw + "'";
+            string strSQL = "SELECT *  FROM Lecturers WHERE LecId = " + id + " AND Passwd = '" + psw + "'";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            SQLiteDataReader dataReader = cmd.ExecuteReader();
 
-            //Check if there is anything to read in dr
-            if (dr.Read())
+            //Check if there is anything to read in dataReader
+            if (dataReader.Read())
             {
                 myConn.Close();
                 return true;
@@ -93,29 +69,28 @@ namespace TestSYS
         //GET LECTURER DETAILS
         public void getLecDetails(int id)
         {
-
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX StudId in Students
-            String strSQL = "SELECT LecId, FName  FROM Lecturers WHERE LecId = " + id;
+            string strSQL = "SELECT LecId, FName  FROM Lecturers WHERE LecId = " + id;
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            SQLiteDataReader dataReader = cmd.ExecuteReader();
 
-            //Read the record in dr
-            dr.Read();
+            //Read the record in dataReader
+            dataReader.Read();
 
             //Set variables
-            setLecId(Convert.ToInt32(dr.GetValue(0)));
-            setFName(dr.GetString(1));
+
+            setLecId(Convert.ToInt32(dataReader.GetValue(0)));
+            setFName(dataReader.GetString(1));
 
             //Close DB connection
             myConn.Close();

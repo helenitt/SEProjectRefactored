@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.OracleClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
@@ -8,11 +8,16 @@ namespace TestSYS
         private int testId;
         private string dateTaken;
         private int testScore;
-        private int studId;
-        private string tLevel;
+        private int studentId;
+        private string testLevel;
 
         public Test()
         {
+            testId = 0;
+            dateTaken = "";
+            testScore = 0;
+            studentId = 0;
+            testLevel = "";
         }
 
         public Test(int tId, string dTaken, int tScore, int sId, string tLvl)
@@ -20,93 +25,51 @@ namespace TestSYS
             testId = tId;
             dateTaken = dTaken;
             testScore = tScore;
-            studId = sId;
-            tLevel = tLvl;
+            studentId = sId;
+            testLevel = tLvl;
         }
 
-        public int getTestId()
-        {
-            return testId;
-        }
+        public int getTestId() { return testId; }
+        public string getDateTaken() { return dateTaken; }
+        public int getTestScore() { return testScore; }
+        public int getStudId() { return studentId; }
+        public string getTLevel() { return testLevel; }
 
-        public string getDateTaken()
-        {
-            return dateTaken;
-        }
+        public void setTestId(int tId) { testId = tId; }
+        public void setDateTaken(string dTaken) { dateTaken = dTaken; }
+        public void setTestScore(int tScore) { testScore = tScore; }
+        public void setStudId(int sId) { studentId = sId; }
+        public void setTLevel(string tLvl) { testLevel = tLvl; }
 
-        public int getTestScore()
-        {
-            return testScore;
-        }
-
-        public int getStudId()
-        {
-            return studId;
-        }
-
-        public string getTLevel()
-        {
-            return tLevel;
-        }
-
-        public void setTestId(int tId)
-        {
-            testId = tId;
-        }
-
-        public void setDateTaken(String dTaken)
-        {
-            dateTaken = dTaken;
-        }
-
-        public void setTestScore(int tScore)
-        {
-            testScore = tScore;
-        }
-
-        public void setStudId(int sId)
-        {
-            studId = sId;
-        }
-
-        public void setTLevel(String tLvl)
-        {
-            tLevel = tLvl;
-        }
-
-
-        //GET NEXT TEST ID
         public int getNextTestId()
         {
             int intNextTId;
 
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
-            String strSQL = "SELECT MAX(TestId) FROM Tests";
+            string strSQL = "SELECT MAX(TestId) FROM Tests";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            SQLiteDataReader dataReader = cmd.ExecuteReader();
 
             //Read the record in dr
-            dr.Read();
+            dataReader.Read();
 
             //Check if MAX QuestId Null
-            if (dr.IsDBNull(0))
+            if (dataReader.IsDBNull(0))
                 intNextTId = 1;
             else
-                intNextTId = Convert.ToInt32(dr.GetValue(0)) + 1;
+                intNextTId = Convert.ToInt32(dataReader.GetValue(0)) + 1;
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
 
             //Return QuestId
             return intNextTId;
@@ -115,15 +78,14 @@ namespace TestSYS
         public void saveTest()
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
 
             //Define SDQL query which inserts the question in to the database
-            String strSQL = "INSERT INTO Tests (TestId,TestDate,Score,StudId,LevelCode) VALUES (" + this.testId + ", '" + String.Format("{0:dd-MMM-yy}", this.dateTaken) +
-                            "', '" + this.testScore + "', '" + this.studId + "', '" + this.tLevel + "')";
+            string strSQL = "INSERT INTO Tests (TestId, TestDate, Score, StudId, LevelCode) VALUES (" + testId + ", '" + string.Format("{0:dd-MMM-yy}", dateTaken) +
+                            "', '" + testScore + "', '" + studentId + "', '" + testLevel + "')";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
@@ -131,10 +93,7 @@ namespace TestSYS
             //Exectute SQL command
             cmd.ExecuteNonQuery();
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
         }
-
-
     }
 }

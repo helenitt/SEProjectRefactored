@@ -1,309 +1,158 @@
 ﻿using System;
-using System.Data.OracleClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
     class Student
     {
-        private int studId;
+        private int studentId;
         private string email;
-        private string password;        
-        private string sName;
-        private string fName;
+        private string passwd;        
+        private string surname;
+        private string forename;
         private string dob;
         private string status;
         private string regDate;
-        private string amdDate;
-        private string expDate;
+        private string amendDate;
+        private string expiryDate;
         
         public Student() {
+            studentId = 0;
+            email = "";
+            passwd = "";            
+            surname = "";
+            forename = "";
+            dob = "";
+            status = "r";
+            regDate = "";
+            amendDate = "";
+            expiryDate = "";
         }
      
-        public Student(int id, String mail, String pword, String sn, String fn, String dd, String rd, String ad, String ed)
+        public Student(int id, string mail, string pword, string surname, string forename, string bDate, string rDate, string aDate, string eDate)
         {
-            studId = id;
+            studentId = id;
             email = mail;
-            password = pword;
-            sName = sn;           
-            fName = fn;
-            dob = dd;
+            passwd = pword;
+            this.surname = surname;           
+            this.forename = forename;
+            dob = bDate;
             status = "r";
-            regDate = rd;
-            amdDate = ad;
-            expDate = ed;
-        }
-
-        // Accessors
-        public int getStudId()
-        {
-            return studId;
-        }
-         public string getEmail()
-        {
-            return email;
-        }
-        public string getPassword()
-        {
-            return password;
-        }
-       public string getSName()
-        {
-            return sName;
-        }
-        public string getFName()
-        {
-            return fName;
-        }
-        public string getDOB()
-        {
-            return dob;
-        }
-        public string getStatus()
-        {
-            return status;
-        }
-        public string getRegDate()
-        {
-            return regDate;
-        }
-        public string getAmdDate()
-        {
-            return amdDate;
-        }
-        public string getExpDate()
-        {
-            return expDate;
-        }
-
-
-        //mutators
-        public void setStudId(int id)
-        {
-            studId = id;
-        }
-        public void setEmail(string mail)
-        {
-            email = mail;
-        }
-        public void setPassword(string pword)
-        {
-            password = pword;
-        }
-         public void setSName(string name)
-        {
-            sName = name;
-        }
-        public void setFName(string name)
-        {
-            fName = name;
-        }
-
-        public void setDOB(string bd)
-        {
-            dob = bd;
-        }
-        public void setStatus(string stat)
-        {
-            status = stat;
-        }
-       public void setRegDate(string rDate)
-        {
             regDate = rDate;
+            amendDate = aDate;
+            expiryDate = eDate;
         }
-       public void setAmdDate(string aDate)
-       {
-           amdDate = aDate;
-       }
-       public void setExpDate(string eDate)
-       {
-           expDate = eDate;
-       }
+        
+        public int getStudId() { return studentId; }
+        public string getEmail() { return email; }
+        public string getPassword() { return passwd; }
+        public string getSName() { return surname; }
+        public string getFName() { return forename; }
+        public string getDOB() { return dob; }
+        public string getStatus() { return status; }
+        public string getRegDate() { return regDate; }
+        public string getAmdDate() { return amendDate; }
+        public string getExpDate() { return expiryDate; }
 
-        // GET NEXT STUDENT ID
+        public void setStudId(int id) { studentId = id; }
+        public void setEmail(string mail) { email = mail; }
+        public void setPassword(string pword) { passwd = pword; }
+        public void setSName(string name) { surname = name; }
+        public void setFName(string name) { forename = name; }
+        public void setDOB(string bd) { dob = bd; }
+        public void setStatus(string stat) { status = stat; }
+        public void setRegDate(string rDate) { regDate = rDate; }
+        public void setAmdDate(string aDate) { amendDate = aDate; }
+        public void setExpDate(string eDate) { expiryDate = eDate; }
+
         public int getNextStudId()
         {
             int intNextSId;
+            string strSQL = "SELECT MAX(StudId) FROM Students";
 
-            //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
-
-            //Define SDQL query which retrieves MAX StudId in Students
-            String strSQL = "SELECT MAX(StudId) FROM Students";
-
-            //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
-
-            //Open DB Connection
-            myConn.Open();
-
-            //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
-
-            //Read the record in dr
-            dr.Read();
-
-            //Check if MAX StudId Null
-            if (dr.IsDBNull(0))
+            var dataReader = DbConnect.ConnectDbReader(strSQL);
+            
+            if (dataReader.IsDBNull(0))
                 intNextSId = 1;
             else
-                intNextSId = Convert.ToInt16(dr.GetValue(0)) + 1;
+                intNextSId = Convert.ToInt16(dataReader.GetValue(0)) + 1;
 
-            //Close DB connection
-            myConn.Close();
-
-            //Return StudId
+            DbConnect.CloseDb();
             return intNextSId;
         }
-
-        // CHECK STUDENT LOGIN IS VALID
-        public Boolean validStudLogin(int id, string psw)
+        
+        public bool validStudentLogin(int id, string psw)
         {
-            //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            string strSQL = "SELECT * FROM Students WHERE StudId = " + id + " AND Passwd = '" + psw + "' AND Status = 'r'";
 
-            //Define SDQL query which retrieves MAX StudId in Students
-            String strSQL = "SELECT *  FROM Students WHERE StudId = " + id + " AND Passwd = '" + psw + "' AND Status = 'r'";
+            var dataReader = DbConnect.ConnectDbReader(strSQL);
 
-            //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            // IS THIS NOT THE SAME AS
+            //DbConnect.CloseDb();
+            //return dataReader.Read();
 
-            //Open DB Connection
-            myConn.Open();
-
-            //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
-
-            //Check if there is anything to read in dr
-            if (dr.Read())
+            //Check if there is anything to read in dataReader
+            if (dataReader.Read())
             {
-                myConn.Close(); 
+                DbConnect.CloseDb();
                 return true;
             }
             else
             {
-                myConn.Close(); 
+                DbConnect.CloseDb();
                 return false;
             }            
         }
-
-
-        // INSERT STUDENT DETAILS
+        
         public void insertStudent()
         {
-            //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            string strSQL = "INSERT INTO Students (StudId, Email, Passwd, Sname, FName, DOB, Status, RegDate, ExpDate) VALUES (" + studentId + ", '" + email +
+                            "', " + passwd + ", '" + surname + "', '" + forename + "', '" + string.Format("{0:dd-MMM-yy}", dob) +
+                            "', '" + status + "', '" + string.Format("{0:dd-MMM-yy}", regDate) + "','" + expiryDate + "')";
 
-            //Define SDQL query which inserts the students details
-            String strSQL = "INSERT INTO Students (StudId,Email,Passwd,Sname,FName,DOB,Status,RegDate,ExpDate) VALUES (" + studId + ", '" + email +
-                            "', " + password + ", '" + sName + "', '" + fName + "', '" + String.Format("{0:dd-MMM-yy}", dob) +
-                            "', '" + status + "', '" + String.Format("{0:dd-MMM-yy}", regDate) + "','" + expDate + "')";  
-
-            //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
-
-            //Open DB Connection
-            myConn.Open();
-
-            //Exectute SQL command
-            cmd.ExecuteNonQuery();  
-
-            //Close DB connection
-            myConn.Close();
+            DbConnect.ConnectDbNonQuery(strSQL);
+            DbConnect.CloseDb();
         }
-
-
-        // UPDATE STUDENT
+        
         public void updateStudent()
         {
-            //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            string strSQL = "UPDATE Students SET Email = '" + email + "', Passwd =  " + passwd + ", Sname = '" + surname + "', Fname = '" + forename + 
+                            "', DOB = '" + string.Format("{0:dd-MMM-yy}", dob) + "', Status = '" + status + 
+                            "', AmdDate = '" + string.Format("{0:dd-MMM-yy}", amendDate) + "' WHERE StudId = " + studentId;
 
-            //Define SDQL query which updates the students details
-            String strSQL = "UPDATE Students SET Email = '" + email + "', Passwd =  " + password + ", Sname = '" + sName + "', Fname = '" + fName + 
-                            "', DOB = '" + String.Format("{0:dd-MMM-yy}", dob) + "', Status = '" + status + 
-                            "', AmdDate = '" + String.Format("{0:dd-MMM-yy}", amdDate) + "' WHERE StudId = " + studId;  
-
-            //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
-
-            //Open DB Connection
-            myConn.Open();
-
-            //Exectute SQL command
-            cmd.ExecuteNonQuery();
-
-            //Close DB connection
-            myConn.Close();
-
+            DbConnect.ConnectDbNonQuery(strSQL);
+            DbConnect.CloseDb();
         }
-
-        //GET STUDENT DETAILS
+        
         public void getStudDetails(int studId)
         {
+            string strSQL = "SELECT *  FROM Students WHERE StudId = " + studId;
 
-            //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
-
-            //Define SDQL query which retrieves MAX StudId in Students
-            String strSQL = "SELECT *  FROM Students WHERE StudId = " + studId;
-
-            //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
-
-            //Open DB Connection
-            myConn.Open();
-
-            //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
-
-            //Read the record in dr
-            dr.Read();
-
+            var dataReader = DbConnect.ConnectDbReader(strSQL);
+            
             //Set variables
-            setStudId(Convert.ToInt32(dr.GetValue(0)));  //Doesn't make sense to reset
-            setEmail(dr.GetString(1));
-            setPassword(dr.GetString(2));
-            setSName(dr.GetString(3));
-            setFName(dr.GetString(4));
-            setDOB(String.Format("{0:dd-MMM-yy}",(dr.GetDateTime(5))));
+            setStudId(Convert.ToInt32(dataReader.GetValue(0)));  //Doesn't make sense to reset
+            setEmail(dataReader.GetString(1));
+            setPassword(dataReader.GetString(2));
+            setSName(dataReader.GetString(3));
+            setFName(dataReader.GetString(4));
+            setDOB(dataReader.GetString(5));
 
-            if (!dr.IsDBNull(8))
-                setAmdDate(String.Format("{0:dd-MMM-yy}",dr.GetDateTime(8)));
+            if (!dataReader.IsDBNull(8))
+                setAmdDate(dataReader.GetString(8));
 
+            if (!dataReader.IsDBNull(9))
+                setExpDate(dataReader.GetString(9));
 
-            if (!dr.IsDBNull(9))
-                setExpDate(String.Format("{0:dd-MMM-yy}",dr.GetDateTime(9)));
-
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
         }
 
-        //DELETE STUDENT
         public void deleteStudent(int studId)
         {
-            //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
-            //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
+            string strSQL = "UPDATE Students SET Status = 'd', AmdDate = '" + string.Format("{0:dd-MMM-yy}", amendDate) + "' WHERE StudId = " + studId;
 
-            //Define SDQL query which inserts the students details
-            String strSQL = "UPDATE Students SET Status = 'd', AmdDate = '" + String.Format("{0:dd-MMM-yy}", amdDate) + "' WHERE StudId = " + studId;  
-
-            //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
-
-            //Open DB Connection
-            myConn.Open();
-
-            //Exectute SQL command
-            cmd.ExecuteNonQuery();
-
-            //Close DB connection
-            myConn.Close();
+            DbConnect.ConnectDbNonQuery(strSQL);
+            DbConnect.CloseDb();
         }
     }
 }

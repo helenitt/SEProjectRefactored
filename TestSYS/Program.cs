@@ -12,6 +12,7 @@ namespace TestSYS
 
         static void Main()
         {
+            //DbSetup.SetUpDb();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 

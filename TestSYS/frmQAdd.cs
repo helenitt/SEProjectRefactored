@@ -1,37 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OracleClient;
+using System.Data.SQLite;
 
 namespace TestSYS
 {
     public partial class frmQAdd : Form
     {
-        Question quest = new Question();
-        String fName;
-        int lecId;
+        Question question = new Question();
+        string forname;
+        int lecturerId;
         
         public frmQAdd()
         {
             InitializeComponent();
         }
 
-        public frmQAdd(String name, int id)
+        public frmQAdd(string name, int id)
         {
             InitializeComponent();
-            fName = name;
-            lecId = id;
+            forname = name;
+            lecturerId = id;
         }
         private void frmQAdd_Load(object sender, EventArgs e)
         {
             //get next question id to assign
-            txtQuestId.Text = quest.getNextQuestId().ToString("0000");
+            txtQuestId.Text = question.getNextQuestId().ToString("0000");
 
             loadLevels();
             optAddQ1.Checked = true;
@@ -39,9 +32,9 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, lecId);
+            var frmNext = new frmMenu(forname, lecturerId);
 
-            this.Close();
+            Close();
             frmNext.Show();
         }        
         
@@ -62,6 +55,8 @@ namespace TestSYS
                 return;
             }
 
+            // Use for loop and concatenate txtAddAns1 and i
+            // Use for each loop and look at cycling through controls
             if (txtAddAns1.Text.Equals(""))
             {
                 MessageBox.Show("First answer must be entered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -71,7 +66,7 @@ namespace TestSYS
 
             if (txtAddAns2.Text.Equals(""))
             {
-                MessageBox.Show("second answer must be entered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Second answer must be entered", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtAddAns2.Focus();
                 return;
             }
@@ -95,40 +90,41 @@ namespace TestSYS
 
             if (optAddQ1.Checked == true)
             {
-                quest.setCorrectAns(1);
+                question.setCorrectAns(1);
             }
             if (optAddQ2.Checked == true)
             {
-                quest.setCorrectAns(2);
+                question.setCorrectAns(2);
             }
             if (optAddQ3.Checked == true)
             {
-                quest.setCorrectAns(3);
+                question.setCorrectAns(3);
             }
             if (optAddQ4.Checked == true)
             {
-                quest.setCorrectAns(4);
+                question.setCorrectAns(4);
             }
 
             //Instantiate instance variables with values from form controls
-            quest.setQuestId(Convert.ToInt32(txtQuestId.Text));
-            quest.setQLevel(cboQLvl.Text.Substring(0,1));  //NEED TO GET FIRST LETTER
-            quest.setQText(txtQText.Text);
-            quest.setAns1(txtAddAns1.Text);
-            quest.setAns2(txtAddAns2.Text);
-            quest.setAns3(txtAddAns3.Text);
-            quest.setAns4(txtAddAns4.Text);
-            quest.setQAdd(String.Format("{0:dd-MMM-yy}", DateTime.Now));
-            quest.setStatus("a");
+            question.setQuestId(Convert.ToInt32(txtQuestId.Text));
+            question.setQLevel(cboQLvl.Text.Substring(0,1));  //NEED TO GET FIRST LETTER
+            question.setQText(txtQText.Text);
+            question.setAns1(txtAddAns1.Text);
+            question.setAns2(txtAddAns2.Text);
+            question.setAns3(txtAddAns3.Text);
+            question.setAns4(txtAddAns4.Text);
+            question.setQAdd(string.Format("{0:dd-MMM-yy}", DateTime.Now));
+            question.setStatus("a");
 
             // INSERT QUESTION IN TO DATABASE
-            quest.insertQuestion();
+            question.insertQuestion();
 
             // CONFIRMATION MESSAGE
             MessageBox.Show("Question Created", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
            
             // Clear UI
-            txtQuestId.Text = quest.getNextQuestId().ToString("0000");
+            // Extract
+            txtQuestId.Text = question.getNextQuestId().ToString("0000");
             cboQLvl.SelectedIndex = -1;
             txtQText.Text = "";
             optAddQ1.Checked = false;
@@ -145,39 +141,35 @@ namespace TestSYS
 
         private void btnMainMenu_Click(object sender, EventArgs e)
         {
-            frmMenu frmNext = new frmMenu(fName, lecId);
-
-            this.Close();
+            var frmNext = new frmMenu(forname, lecturerId);
+            Close();
             frmNext.Show();
         }
         public void loadLevels()
         {
             //Create Database connection string
-            OracleConnection myConn = new OracleConnection(DBConnectITT.oradb);
+            var myConn = new SQLiteConnection(DbSetup.ConnectionString);
             //OracleConnection myConn = new OracleConnection(DBConnectHome.oradb);
 
             //Define SDQL query which retrieves MAX QuestId in Questions
-            String strSQL = "SELECT * FROM Levels";
+            string strSQL = "SELECT * FROM Levels";
 
             //Define Oracle Command
-            OracleCommand cmd = new OracleCommand(strSQL, myConn);
+            var cmd = new SQLiteCommand(strSQL, myConn);
 
             //Open DB Connection
             myConn.Open();
 
             //Exectute SQL command
-            OracleDataReader dr = cmd.ExecuteReader();
+            var dataReader = cmd.ExecuteReader();
 
             //Move data from dr to cboQLvls
-            while (dr.Read())
+            while (dataReader.Read())
             {
-                cboQLvl.Items.Add(dr.GetString(0) + " " + dr.GetString(1));
+                cboQLvl.Items.Add(dataReader.GetString(0) + " " + dataReader.GetString(1));
             }
 
-            //Close DB connection
-            myConn.Close();
+            DbConnect.CloseDb();
         }
-
-
     }
 }

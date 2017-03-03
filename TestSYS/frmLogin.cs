@@ -1,26 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.OracleClient;
+using Shared;
 
 namespace TestSYS
 {
     public partial class frmLogin : Form
     {
-        frmWelcome parent;
-        Student logStud;
-        Lecturer logLec;
+        frmWelcome parent;  
+        Student loginStudent;
+        Lecturer loginLecturer;
 
         public frmLogin()
         {
             InitializeComponent();
-
         }
 
         public frmLogin(frmWelcome Parent)
@@ -36,7 +28,7 @@ namespace TestSYS
 
         private void mnuBack_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
             parent.Visible = true;
         }
 
@@ -60,19 +52,20 @@ namespace TestSYS
                 return;
             }
 
-            // CHECK IF STUDENT OR LECTURER            
-            if (Convert.ToInt32(txtID.Text) < 9000)
+            // CHECK IF STUDENT OR LECTURER
+            var config = new Config();
+            if (Convert.ToInt32(txtID.Text) < Convert.ToInt32(config.MaxStudentId)) 
             {
-                logStud = new Student();
+                loginStudent = new Student();
 
-                if (logStud.validStudLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
+                if (loginStudent.validStudentLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
                 {
                     // get and set details
-                    logStud.getStudDetails(Convert.ToInt16(txtID.Text));
+                    loginStudent.getStudDetails(Convert.ToInt16(txtID.Text));
                     
-                    frmMenu frmNext = new frmMenu(logStud.getFName(), logStud.getStudId());
+                    var frmNext = new frmMenu(loginStudent.getFName(), loginStudent.getStudId());
 
-                    this.Close();
+                    Close();
                     frmNext.Show();
                 }
                 else
@@ -84,16 +77,16 @@ namespace TestSYS
             }
             else
             {
-                logLec = new Lecturer();
+                loginLecturer = new Lecturer();
 
-                if (logLec.validLecLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
+                if (loginLecturer.validLecLogin((Convert.ToInt16(txtID.Text)), txtPassWord.Text))
                 {
                     // get and set details
-                    logLec.getLecDetails(Convert.ToInt16(txtID.Text));                 
+                    loginLecturer.getLecDetails(Convert.ToInt16(txtID.Text));                 
                     
-                    frmMenu frmNext = new frmMenu(logLec.getFName(), logLec.getLecId());
+                    var frmNext = new frmMenu(loginLecturer.getFName(), loginLecturer.getLecId());
                     
-                    this.Close();
+                    Close();
                     frmNext.Show();
                 }
                 else
